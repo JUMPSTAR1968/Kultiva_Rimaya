@@ -8,6 +8,24 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/A1_Main Menu.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/A2_Meet The Team.unity
+    guid: 321b77dff7f034d42b36d1ca359834f5
+  - enabled: 1
+    path: Assets/Scenes/A3_Options.unity
+    guid: eac4e727fd30942488c5444c2da92daf
+  - enabled: 1
+    path: Assets/Scenes/A4_SoundTest.unity
+    guid: 1c6d848690ed48743a089f92ad4f4418
+  - enabled: 1
+    path: Assets/Scenes/B_Game Select.unity
+    guid: c3cb0a2c31026d342bece58e0c044274
+  - enabled: 1
+    path: Assets/Scenes/C1_May Tatlong Bibe.unity
+    guid: aee27ebb237651842ad91f553ad6d292
+  - enabled: 1
+    path: Assets/Scenes/C2_Bahay Kubo.unity
+    guid: 5d969fdde6bd7f84b9e172a93b11427d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
