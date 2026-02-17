@@ -7,13 +7,21 @@ public class FatDuckMovement : MonoBehaviour
     private bool _isDragging = false;
 
     [Header("Movement Limits")]
-    public float minY = -4.0f; // Adjust these in the Inspector
+    public float minY = -4.0f;
     public float maxY = 4.0f;
+
+    // --- NEW SECTIONS ADDED BELOW ---
+    [Header("Weight Settings")]
+    [Tooltip("Higher = Heavier/Fatter. Try 0.5 for heavy, 1.0 for very fat.")]
+    [Range(0.01f, 2.0f)]
+    public float smoothTime = 0.5f;
+
+    private float _yVelocity = 0.0f; // Required to track speed for SmoothDamp
+    // --------------------------------
 
     void Update()
     {
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
-        // The 10f here is the distance from the camera to the duck
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, 10f));
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
@@ -28,19 +36,30 @@ public class FatDuckMovement : MonoBehaviour
 
         if (_isDragging && Mouse.current.leftButton.isPressed)
         {
-            // 1. Calculate the intended new Y position
-            float newY = mouseWorldPos.y + _offset.y;
+            // 1. Calculate the intended target position
+            float targetY = mouseWorldPos.y + _offset.y;
 
             // 2. Clamp the value so it stays between min and max
-            newY = Mathf.Clamp(newY, minY, maxY);
+            targetY = Mathf.Clamp(targetY, minY, maxY);
 
-            // 3. Apply the clamped position
-            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+            // 3. APPLY HEAVINESS:
+            // This replaces the old instant movement. 
+            // It makes the duck "trail" behind the mouse vertically.
+            float sluggishY = Mathf.SmoothDamp(
+                transform.position.y,
+                targetY,
+                ref _yVelocity,
+                smoothTime
+            );
+
+            // 4. Apply the position
+            transform.position = new Vector3(transform.position.x, sluggishY, transform.position.z);
         }
 
         if (Mouse.current.leftButton.wasReleasedThisFrame)
         {
             _isDragging = false;
+            _yVelocity = 0; // Stop the movement instantly when released
         }
     }
 }
