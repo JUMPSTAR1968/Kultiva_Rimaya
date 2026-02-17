@@ -1085,8 +1085,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1410922506}
-  - {fileID: 682529916}
   - {fileID: 2008681594}
+  - {fileID: 682529916}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1106,7 +1106,7 @@ GameObject:
   - component: {fileID: 2008681596}
   - component: {fileID: 2008681595}
   m_Layer: 5
-  m_Name: Choose!
+  m_Name: Header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
