@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: db5b3c0627f854ccb83dc55422d15b75
+guid: 5a78abeb21640ca40b218914a1c007c3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4191511602922700279
-    second: layer2_0
+      213: 7932798033344189819
+    second: grass_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,17 +96,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: layer2_0
+      name: grass_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 962
-        width: 2327
-        height: 458
+        y: 0
+        width: 2027
+        height: 1105
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9024ddb9762c4d5c0800000000000000
-      internalID: -4191511602922700279
+      spriteID: b75d56418c5f61e60800000000000000
+      internalID: 7932798033344189819
       vertices: []
       indices: 
       edges: []
@@ -135,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      layer2_0: -4191511602922700279
+      grass_0: 7932798033344189819
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
