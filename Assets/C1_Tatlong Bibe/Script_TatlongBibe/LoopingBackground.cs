@@ -2,51 +2,37 @@ using UnityEngine;
 
 public class LoopingBackground : MonoBehaviour
 {
-    [Header("Settings")]
     public float scrollSpeed = 5f;
-    public int backgroundCount = 3;
 
-    private float width;
-    private bool isReady = false; // Safety switch
+    // The width of your background image
+    private float imageWidth = 18.8f;
+    private int backgroundCount = 3;
 
-    void Start()
-    {
-        // 1. Look for the sprite on THIS object first
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+    // Buffer keeps it on screen longer
+    private float viewBuffer = 10.0f;
 
-        // 2. If not found, look into the CHILDREN (the layers inside)
-        if (sr == null)
-        {
-            sr = GetComponentInChildren<SpriteRenderer>();
-        }
-
-        // 3. If we found it, measure it!
-        if (sr != null)
-        {
-            width = sr.bounds.size.x;
-            isReady = true;
-        }
-        else
-        {
-            // If we still can't find it, show a clear error
-            Debug.LogError("Help! I (" + gameObject.name + ") can't find a SpriteRenderer inside me or my children.");
-        }
-    }
+    // NEW: How many seconds to wait before recycling starts
+    public float startDelay = 2.0f;
+    private float timer = 0f;
 
     void Update()
     {
-        // Only run if we successfully found the width
-        if (!isReady) return;
-
-        // Move to the left
+        // 1. Always Move Left (Scrolling never stops)
         transform.Translate(Vector3.left * scrollSpeed * Time.deltaTime);
 
-        // Check if we need to jump
-        // We use the world position to check
-        if (transform.position.x <= -width)
+        // 2. Count up the timer
+        timer += Time.deltaTime;
+
+        // 3. Only check for Teleporting AFTER the delay
+        if (timer > startDelay)
         {
-            Vector3 jumpOffset = Vector3.right * (width * backgroundCount);
-            transform.position += jumpOffset;
+            // If the object is WAY off to the left...
+            if (transform.position.x < -(imageWidth + viewBuffer))
+            {
+                // Teleport to the far right
+                Vector3 jumpOffset = Vector3.right * (imageWidth * backgroundCount);
+                transform.position += jumpOffset;
+            }
         }
     }
 }
