@@ -4,7 +4,11 @@
 TagManager:
   serializedVersion: 3
   tags:
+<<<<<<< HEAD
   - Obstacle
+=======
+  - Activator
+>>>>>>> main
   layers:
   - Default
   - TransparentFX
@@ -42,5 +46,11 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+<<<<<<< HEAD
+=======
+  - name: Arrows
+    uniqueID: 1328742141
+    locked: 0
+>>>>>>> main
   m_RenderingLayers:
   - Default
