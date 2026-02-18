@@ -156,7 +156,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.13333334, g: 0.54509807, b: 0.13333334, a: 0}
+  m_BackGroundColor: {r: 0.88235295, g: 0.75686276, b: 0.43137255, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -544,11 +544,9 @@ MonoBehaviour:
     Mateo Adora - UI and Sound Designer
 
     Brylle
-    Matias - Programming
+    Matias - Programmer
 
-    Isaiah See - Programming
-
-'
+    Isaiah See - Programmer'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c010935f8100838408c982f8184d08ab, type: 2}
   m_sharedMaterial: {fileID: 1251256876651271043, guid: c010935f8100838408c982f8184d08ab, type: 2}
@@ -557,8 +555,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294638335
-  m_fontColor: {r: 1, g: 0.9803922, b: 0.9803922, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -935,6 +933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f297a6a94d1af444aaef80b4aed86e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneNav
+  transitionDelay: 0.6
   clickSound: {fileID: 8300000, guid: 7f58644762020d74b9cf5d7c1adcea09, type: 3}
 --- !u!4 &1457509119
 Transform:
@@ -1196,17 +1195,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Meet The Team!
+  m_text: Meet the Team!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: da8b7f0f5fc39a14e971b5fcbbbdd100, type: 2}
-  m_sharedMaterial: {fileID: 1251256876651271043, guid: da8b7f0f5fc39a14e971b5fcbbbdd100, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c18a9e992d6bf43468f4d30a2aef53d2, type: 2}
+  m_sharedMaterial: {fileID: 3389108493110477676, guid: c18a9e992d6bf43468f4d30a2aef53d2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278512639
-  m_fontColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+    rgba: 4281032821
+  m_fontColor: {r: 0.45882353, g: 0.3764706, b: 0.16862746, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1229,7 +1228,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
