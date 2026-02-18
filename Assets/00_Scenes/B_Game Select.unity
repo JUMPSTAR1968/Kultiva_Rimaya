@@ -215,6 +215,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1706436867}
+        m_TargetAssemblyTypeName: SceneNav, Assembly-CSharp
+        m_MethodName: GoToScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: C1_May Tatlong Bibe
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &87102778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1104,16 +1116,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1687467517}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
+      - m_Target: {fileID: 1706436867}
+        m_TargetAssemblyTypeName: SceneNav, Assembly-CSharp
+        m_MethodName: GoToScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: C2_Bahay Kubo
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1625885045
@@ -1327,6 +1339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f297a6a94d1af444aaef80b4aed86e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneNav
+  transitionDelay: 0.6
   clickSound: {fileID: 8300000, guid: 7f58644762020d74b9cf5d7c1adcea09, type: 3}
 --- !u!4 &1706436868
 Transform:
