@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2156238138578819251}
   - component: {fileID: 4268341372257732959}
   - component: {fileID: 8641750665602269823}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Boulder_0
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 7.08, y: 1.06}
+  m_Size: {x: 7.08, y: 3}
   m_EdgeRadius: 0
 --- !u!114 &8641750665602269823
 MonoBehaviour:

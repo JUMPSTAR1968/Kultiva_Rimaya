@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - Activator
+  - Obstacle
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Obstacles
   - Water
   - UI
   - 
