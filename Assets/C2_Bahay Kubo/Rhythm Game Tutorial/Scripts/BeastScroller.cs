@@ -17,10 +17,10 @@ public class BeastScroller : MonoBehaviour
     {
         if (hasStarted)
         {
-            if (Input.anyKeyDown)
+           /* if (Input.anyKeyDown)
             {
                 hasStarted = true;
-            }
+            } */
         }
 
         else 
