@@ -3,74 +3,67 @@ using System.Collections.Generic;
 
 public class SimpleRandomizer : MonoBehaviour
 {
-    [Header("Grid Settings")]
-    public GameObject spritePrefab;
-    public int spawnCount = 10;        // Total sprites to spawn
-    public Vector2Int gridSize = new Vector2Int(5, 5); // Number of columns and rows
-    public float cellSize = 1.0f;      // Size of each grid square
+    [Header("Pool of Sprites")]
+    public GameObject[] spritePrefabs;
 
-    // To keep track of taken spots
-    private HashSet<Vector2> occupiedPositions = new HashSet<Vector2>();
+    [Header("Grid Settings")]
+    public int columns = 10;        // Number of chunks horizontally
+    public int rows = 10;           // Number of chunks vertically
+    public float cellSize = 2.0f;   // Size of each individual chunk/cell
+
+    [Header("Randomization")]
+    [Range(0, 100)]
+    public float spawnChance = 70f; // Percent chance a chunk will contain a sprite
+    public float jitterAmount = 0.5f; // How much to move the sprite from the cell center
 
     void Start()
     {
-        SpawnInGrid();
+        if (spritePrefabs.Length == 0) return;
+        GenerateGrid();
     }
 
-    void SpawnInGrid()
+    void GenerateGrid()
     {
-        // Safety check: Don't try to spawn more than the grid can hold
-        int maxPossible = gridSize.x * gridSize.y;
-        if (spawnCount > maxPossible)
+        // Calculate the starting point so the grid is centered on the Spawner object
+        Vector2 offset = new Vector2((columns * cellSize) / 2, (rows * cellSize) / 2);
+
+        for (int x = 0; x < columns; x++)
         {
-            Debug.LogWarning("Spawn count is higher than available grid slots! Capping to max.");
-            spawnCount = maxPossible;
-        }
-
-        int spawned = 0;
-        int attempts = 0;
-        int maxAttempts = 200; // Total attempts to fill the count
-
-        while (spawned < spawnCount && attempts < maxAttempts)
-        {
-            attempts++;
-
-            // 1. Pick a random X and Y integer based on grid dimensions
-            int randomX = Random.Range(0, gridSize.x);
-            int randomY = Random.Range(0, gridSize.y);
-
-            // 2. Calculate the actual world position based on cell size
-            // We subtract half the grid size to center the spawner on the GameObject
-            Vector2 gridPos = new Vector2(
-                (randomX - gridSize.x / 2f) * cellSize + (cellSize / 2f),
-                (randomY - gridSize.y / 2f) * cellSize + (cellSize / 2f)
-            );
-
-            // 3. Check if this specific grid coordinate is already in our HashSet
-            if (!occupiedPositions.Contains(gridPos))
+            for (int y = 0; y < rows; y++)
             {
-                Instantiate(spritePrefab, gridPos, Quaternion.identity, transform);
-                occupiedPositions.Add(gridPos); // Mark this spot as "Taken"
-                spawned++;
+                // 1. Roll the dice to see if we spawn anything in this chunk
+                if (Random.Range(0f, 100f) <= spawnChance)
+                {
+                    // 2. Calculate the center of the current cell
+                    float posX = (x * cellSize) - offset.x + (cellSize / 2);
+                    float posY = (y * cellSize) - offset.y + (cellSize / 2);
+
+                    // 3. Add Jitter so it's not a perfect, robotic grid
+                    posX += Random.Range(-jitterAmount, jitterAmount);
+                    posY += Random.Range(-jitterAmount, jitterAmount);
+
+                    Vector3 finalPos = new Vector3(posX, posY, 0);
+
+                    // 4. Pick a random sprite and spawn it
+                    int randomIndex = Random.Range(0, spritePrefabs.Length);
+                    Instantiate(spritePrefabs[randomIndex], finalPos, Quaternion.identity, transform);
+                }
             }
         }
     }
 
-    // Visualizes the grid in the Editor
+    // Visualizes the chunks in the editor
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.gray;
-        for (int x = 0; x < gridSize.x; x++)
+        Gizmos.color = Color.yellow;
+        Vector2 offset = new Vector2((columns * cellSize) / 2, (rows * cellSize) / 2);
+
+        for (int x = 0; x < columns; x++)
         {
-            for (int y = 0; y < gridSize.y; y++)
+            for (int y = 0; y < rows; y++)
             {
-                Vector3 pos = new Vector3(
-                    (x - gridSize.x / 2f) * cellSize + (cellSize / 2f),
-                    (y - gridSize.y / 2f) * cellSize + (cellSize / 2f),
-                    0
-                ) + transform.position;
-                
-                Gizmos.DrawWireCube(pos, new Vector3(cellSize * 0.9f, cellSize * 0.9f, 0));
+                Vector3 pos = new Vector3((x * cellSize) - offset.x + (cellSize / 2), (y * cellSize) - offset.y + (cellSize / 2), 0);
+                Gizmos.DrawWireCube(pos + transform.position, new Vector3(cellSize, cellSize, 0));
             }
         }
     }
