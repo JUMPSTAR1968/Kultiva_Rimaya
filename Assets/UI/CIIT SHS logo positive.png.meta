@@ -1,0 +1,702 @@
+fileFormatVersion: 2
+guid: 0d6316df43a02ff439a6f6702e40ca8f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7811043643992405249
+    second: CIIT SHS logo positive_0
+  - first:
+      213: -2467915072529359810
+    second: CIIT SHS logo positive_1
+  - first:
+      213: -1529103708881101918
+    second: CIIT SHS logo positive_2
+  - first:
+      213: -5985349296967486279
+    second: CIIT SHS logo positive_3
+  - first:
+      213: 3769805780323202295
+    second: CIIT SHS logo positive_4
+  - first:
+      213: -3352171082629859573
+    second: CIIT SHS logo positive_5
+  - first:
+      213: -7704657257218043952
+    second: CIIT SHS logo positive_6
+  - first:
+      213: 7125505657251848127
+    second: CIIT SHS logo positive_7
+  - first:
+      213: 3609007918792729973
+    second: CIIT SHS logo positive_8
+  - first:
+      213: -1317509852633309714
+    second: CIIT SHS logo positive_9
+  - first:
+      213: 670539261814520322
+    second: CIIT SHS logo positive_10
+  - first:
+      213: 6903914345260672058
+    second: CIIT SHS logo positive_11
+  - first:
+      213: -2935985688711082167
+    second: CIIT SHS logo positive_12
+  - first:
+      213: -523993896340892215
+    second: CIIT SHS logo positive_13
+  - first:
+      213: 2377974142989972577
+    second: CIIT SHS logo positive_14
+  - first:
+      213: -1097222568783268080
+    second: CIIT SHS logo positive_15
+  - first:
+      213: 4839545486472524500
+    second: CIIT SHS logo positive_16
+  - first:
+      213: -6029052332403793939
+    second: CIIT SHS logo positive_17
+  - first:
+      213: -107796625166960562
+    second: CIIT SHS logo positive_18
+  - first:
+      213: 2538570578437434997
+    second: CIIT SHS logo positive_19
+  - first:
+      213: -608584868107891992
+    second: CIIT SHS logo positive_20
+  - first:
+      213: 5692583443034189345
+    second: CIIT SHS logo positive_21
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 555
+        height: 623
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ffa82c2c039999390800000000000000
+      internalID: -7811043643992405249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_1
+      rect:
+        serializedVersion: 2
+        x: 662
+        y: 42
+        width: 135
+        height: 603
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3c1e0e215430cdd0800000000000000
+      internalID: -2467915072529359810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_2
+      rect:
+        serializedVersion: 2
+        x: 950
+        y: 42
+        width: 135
+        height: 603
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2abd86f374887cae0800000000000000
+      internalID: -1529103708881101918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_3
+      rect:
+        serializedVersion: 2
+        x: 1189
+        y: 42
+        width: 500
+        height: 603
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b47e91b684cfeca0800000000000000
+      internalID: -5985349296967486279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_4
+      rect:
+        serializedVersion: 2
+        x: 1813
+        y: 487
+        width: 127
+        height: 167
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f4f068426a015430800000000000000
+      internalID: 3769805780323202295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_5
+      rect:
+        serializedVersion: 2
+        x: 2246
+        y: 628
+        width: 32
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b07b2813922ba71d0800000000000000
+      internalID: -3352171082629859573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_6
+      rect:
+        serializedVersion: 2
+        x: 1960
+        y: 486
+        width: 119
+        height: 129
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0df026bab0f831590800000000000000
+      internalID: -7704657257218043952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_7
+      rect:
+        serializedVersion: 2
+        x: 2104
+        y: 489
+        width: 111
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbf588984a1e2e260800000000000000
+      internalID: 7125505657251848127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_8
+      rect:
+        serializedVersion: 2
+        x: 2247
+        y: 489
+        width: 31
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 575663fa495c51230800000000000000
+      internalID: 3609007918792729973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_9
+      rect:
+        serializedVersion: 2
+        x: 2304
+        y: 486
+        width: 131
+        height: 129
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eedd6bdf4c347bde0800000000000000
+      internalID: -1317509852633309714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_10
+      rect:
+        serializedVersion: 2
+        x: 2460
+        y: 489
+        width: 73
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20a386ce7eb3e4900800000000000000
+      internalID: 670539261814520322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_11
+      rect:
+        serializedVersion: 2
+        x: 1824
+        y: 267
+        width: 135
+        height: 162
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a346cfcb481afcf50800000000000000
+      internalID: 6903914345260672058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_12
+      rect:
+        serializedVersion: 2
+        x: 1994
+        y: 406
+        width: 33
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94fceb652984147d0800000000000000
+      internalID: -2935985688711082167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_13
+      rect:
+        serializedVersion: 2
+        x: 2212
+        y: 267
+        width: 111
+        height: 169
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c5d028d3566ab8f0800000000000000
+      internalID: -523993896340892215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_14
+      rect:
+        serializedVersion: 2
+        x: 1996
+        y: 267
+        width: 30
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1643bfd42e2400120800000000000000
+      internalID: 2377974142989972577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_15
+      rect:
+        serializedVersion: 2
+        x: 2053
+        y: 230
+        width: 127
+        height: 163
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 017b12413e1e5c0f0800000000000000
+      internalID: -1097222568783268080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_16
+      rect:
+        serializedVersion: 2
+        x: 1819
+        y: 33
+        width: 126
+        height: 167
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d23a8b9af4892340800000000000000
+      internalID: 4839545486472524500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_17
+      rect:
+        serializedVersion: 2
+        x: 1965
+        y: 33
+        width: 115
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: defd4d2d8d0845ca0800000000000000
+      internalID: -6029052332403793939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_18
+      rect:
+        serializedVersion: 2
+        x: 2102
+        y: 35
+        width: 111
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e48ffe06a87018ef0800000000000000
+      internalID: -107796625166960562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_19
+      rect:
+        serializedVersion: 2
+        x: 2237
+        y: 33
+        width: 131
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57e650dbd70da3320800000000000000
+      internalID: 2538570578437434997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_20
+      rect:
+        serializedVersion: 2
+        x: 2386
+        y: 33
+        width: 132
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ea40c0794fdd87f0800000000000000
+      internalID: -608584868107891992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CIIT SHS logo positive_21
+      rect:
+        serializedVersion: 2
+        x: 2544
+        y: 35
+        width: 31
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12ea2581b7e100f40800000000000000
+      internalID: 5692583443034189345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      CIIT SHS logo positive_0: -7811043643992405249
+      CIIT SHS logo positive_1: -2467915072529359810
+      CIIT SHS logo positive_10: 670539261814520322
+      CIIT SHS logo positive_11: 6903914345260672058
+      CIIT SHS logo positive_12: -2935985688711082167
+      CIIT SHS logo positive_13: -523993896340892215
+      CIIT SHS logo positive_14: 2377974142989972577
+      CIIT SHS logo positive_15: -1097222568783268080
+      CIIT SHS logo positive_16: 4839545486472524500
+      CIIT SHS logo positive_17: -6029052332403793939
+      CIIT SHS logo positive_18: -107796625166960562
+      CIIT SHS logo positive_19: 2538570578437434997
+      CIIT SHS logo positive_2: -1529103708881101918
+      CIIT SHS logo positive_20: -608584868107891992
+      CIIT SHS logo positive_21: 5692583443034189345
+      CIIT SHS logo positive_3: -5985349296967486279
+      CIIT SHS logo positive_4: 3769805780323202295
+      CIIT SHS logo positive_5: -3352171082629859573
+      CIIT SHS logo positive_6: -7704657257218043952
+      CIIT SHS logo positive_7: 7125505657251848127
+      CIIT SHS logo positive_8: 3609007918792729973
+      CIIT SHS logo positive_9: -1317509852633309714
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

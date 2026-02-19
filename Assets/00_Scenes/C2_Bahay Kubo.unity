@@ -506,9 +506,9 @@ Transform:
   m_GameObject: {fileID: 458483463}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -0.7, y: 2.3, z: 0}
+  m_LocalScale: {x: 1.045, y: 1.045, z: 1.045}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 759231070}
   - {fileID: 1118179710}
@@ -2312,6 +2312,7 @@ GameObject:
   - component: {fileID: 1777312330}
   - component: {fileID: 1777312332}
   - component: {fileID: 1777312331}
+  - component: {fileID: 1777312333}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2360,9 +2361,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
-  orthographic: 1
-  orthographic size: 5
+  field of view: 90
+  orthographic: 0
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2387,7 +2388,7 @@ Transform:
   m_GameObject: {fileID: 1777312326}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.94358605, y: 0.47141343, z: -18.811378}
+  m_LocalPosition: {x: -0.5, y: 0.5, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2482,6 +2483,27 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!114 &1777312333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777312326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92687bc29c92b4adeb0cdf78797ca796, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SimpleRandomizer
+  spritePrefabs:
+  - {fileID: 6926738561900631083, guid: d87d5dcf2b88e4056976bbdc29660170, type: 3}
+  - {fileID: 5243324973262966044, guid: 8eaad601993374e3ca28318b7f4f1866, type: 3}
+  - {fileID: 8264902223565844950, guid: 8563b661b16b64a908392ca2c4654a5e, type: 3}
+  columns: 10
+  rows: 3
+  cellSize: 1.5
+  spawnChance: 70
+  jitterAmount: 0
 --- !u!1 &1914866165
 GameObject:
   m_ObjectHideFlags: 0
