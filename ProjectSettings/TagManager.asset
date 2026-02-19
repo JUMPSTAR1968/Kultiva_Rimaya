@@ -8,7 +8,11 @@ TagManager:
   - Obstacle
 =======
   - Activator
+<<<<<<< Updated upstream
 >>>>>>> main
+=======
+  - Obstacle
+>>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX
