@@ -24,27 +24,29 @@ public class SimpleRandomizer : MonoBehaviour
 
     void GenerateGrid()
     {
-        // Calculate the starting point so the grid is centered on the Spawner object
-        Vector2 offset = new Vector2((columns * cellSize) / 2, (rows * cellSize) / 2);
+        // Calculate the total offset to center the entire grid on the Spawner object
+        Vector2 gridOffset = new Vector2((columns * cellSize) / 2, (rows * cellSize) / 2);
 
         for (int x = 0; x < columns; x++)
         {
             for (int y = 0; y < rows; y++)
             {
-                // 1. Roll the dice to see if we spawn anything in this chunk
                 if (Random.Range(0f, 100f) <= spawnChance)
                 {
-                    // 2. Calculate the center of the current cell
-                    float posX = (x * cellSize) - offset.x + (cellSize / 2);
-                    float posY = (y * cellSize) - offset.y + (cellSize / 2);
+                    // Calculate position: 
+                    // (x * cellSize) = start of cell
+                    // - gridOffset = centers the whole group
+                    // + (cellSize / 2) = MOVES SPAWN TO CENTER OF THE CELL
+                    float posX = (x * cellSize) - gridOffset.x + (cellSize / 2);
+                    float posY = (y * cellSize) - gridOffset.y + (cellSize / 2);
 
-                    // 3. Add Jitter so it's not a perfect, robotic grid
+                    // Add Jitter (if 0, this does nothing)
                     posX += Random.Range(-jitterAmount, jitterAmount);
                     posY += Random.Range(-jitterAmount, jitterAmount);
 
-                    Vector3 finalPos = new Vector3(posX, posY, 0);
+                    // Pivot Check: Add transform.position so the grid follows the Spawner object
+                    Vector3 finalPos = new Vector3(posX, posY, 0) + transform.position;
 
-                    // 4. Pick a random sprite and spawn it
                     int randomIndex = Random.Range(0, spritePrefabs.Length);
                     Instantiate(spritePrefabs[randomIndex], finalPos, Quaternion.identity, transform);
                 }
