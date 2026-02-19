@@ -3,67 +3,36 @@ using UnityEngine;
 
 public class DuckHealth : MonoBehaviour
 {
-    [Header("Health Settings")]
-    public int maxHealth = 3;
-    private int currentHealth;
-
-    [Header("I-Frames Settings")]
-    public float iFrameDuration = 2f;    // How long the duck is invincible (seconds)
-    public int numberOfFlashes = 5;      // How many times it flashes
-
     private SpriteRenderer spriteRenderer;
     private bool isInvincible = false;
+    public float iFrameDuration = 2f;
 
     void Start()
     {
-        currentHealth = maxHealth;
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    // This detects when the duck hits a trigger collider
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Check if we hit an obstacle AND we are not currently invincible
-        if (collision.CompareTag("Obstacle") && !isInvincible)
+        // If we hit an obstacle and aren't invincible and the game isn't over
+        if (collision.CompareTag("Obstacle") && !isInvincible && !GameManager.Instance.isGameOver)
         {
-            TakeDamage();
-        }
-    }
-
-    void TakeDamage()
-    {
-        currentHealth--;
-        Debug.Log("Ouch! Health remaining: " + currentHealth);
-
-        if (currentHealth <= 0)
-        {
-            Debug.Log("Game Over!");
-            // We will add Game Over logic here later!
-        }
-        else
-        {
-            // Start the flashing and invincibility process
+            GameManager.Instance.LoseHealth(); // Tell the manager we got hit!
             StartCoroutine(FlashRoutine());
         }
     }
 
-    // A Coroutine that handles the flashing effect over time
     IEnumerator FlashRoutine()
     {
-        isInvincible = true; // Turn on shield
-
-        // Loop to make the duck flash
-        for (int i = 0; i < numberOfFlashes; i++)
+        isInvincible = true;
+        float elapsed = 0;
+        while (elapsed < iFrameDuration)
         {
-            // Make duck slightly transparent (red=1, green=1, blue=1, alpha=0.5)
-            spriteRenderer.color = new Color(1, 1, 1, 0.5f);
-            yield return new WaitForSeconds(iFrameDuration / (numberOfFlashes * 2));
-
-            // Make duck fully solid again
-            spriteRenderer.color = Color.white;
-            yield return new WaitForSeconds(iFrameDuration / (numberOfFlashes * 2));
+            spriteRenderer.enabled = !spriteRenderer.enabled; // Toggle visibility to flash
+            yield return new WaitForSeconds(0.1f);
+            elapsed += 0.1f;
         }
-
-        isInvincible = false; // Turn off shield
+        spriteRenderer.enabled = true; // Ensure sprite is visible at the end
+        isInvincible = false;
     }
 }

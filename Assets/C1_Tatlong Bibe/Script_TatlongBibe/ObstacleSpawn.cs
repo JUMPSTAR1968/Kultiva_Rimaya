@@ -25,6 +25,11 @@ public class ObstacleSpawn : MonoBehaviour
             SpawnObstacle();
             timer = 0f; // Reset the loop
         }
+        // If the game is over, don't run the timer or spawn anything
+        if (GameManager.Instance != null && GameManager.Instance.isGameOver) return;
+
+        timer += Time.deltaTime;
+        // ... rest of your code ...
     }
 
     void SpawnObstacle()
