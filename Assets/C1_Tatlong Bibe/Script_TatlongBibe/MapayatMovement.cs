@@ -22,6 +22,14 @@ public class MapayatMovement : MonoBehaviour
 
     void Update()
     {
+        // If the game is stopped, stop all movement calculations immediately
+        if (GameManager.Instance != null && GameManager.Instance.isGameOver)
+        {
+            return;
+        }
+
+        // ... your existing movement code here ...
+
         Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, 10f));
 
