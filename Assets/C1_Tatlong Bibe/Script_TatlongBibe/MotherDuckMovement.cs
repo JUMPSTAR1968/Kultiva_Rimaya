@@ -22,11 +22,13 @@ public class MotherDuckAI : MonoBehaviour
     private float timer = 0f;
     private float targetY;
     private float fixedX;
+    private Vector2 originalPos;
 
     void Start()
     {
         fixedX = transform.position.x;
         targetY = transform.position.y;
+        originalPos = this.transform.position;
     }
 
     void Update()
@@ -46,8 +48,16 @@ public class MotherDuckAI : MonoBehaviour
                 }
                 break;
             case DuckState.Cooldown:
-                if (timer <= 0) currentState = DuckState.Normal;
+                float SlerpOgY = Mathf.MoveTowards(transform.position.y, originalPos.y, moveSpeed * Time.deltaTime);
+                this.transform.position = new Vector2(fixedX, SlerpOgY);
+                if (timer <= 0 && transform.position.y == originalPos.y) 
+                {
+                    currentState = DuckState.Normal;
+                    targetY = originalPos.y;
+                };    
+                
                 break;
+            
         }
 
         // Apply movement
