@@ -1,60 +1,98 @@
 using UnityEngine;
 
+public enum DuckState { Normal, Dodging, Cooldown }
+
 public class MotherDuckAI : MonoBehaviour
 {
     [Header("Detection")]
-    public Vector2 boxSize = new Vector2(1f, 1f); // Narrow vision is key!
-    public float lookAheadDistance = 4f; // Don't look too far ahead
+    public float circleRadius = 0.45f;
+    public float lookAheadDistance = 2.5f;
     public LayerMask obstacleLayer;
-    public float moveSpeed = 10f; // Faster move prevents getting 'caught'
 
-    [Header("River Setup")]
-    public float riverTopY = 1.32f;
-    public float riverBottomY = -2.6f;
+    [Header("Movement & Borders")]
+    public float moveSpeed = 6f;
+    public float laneDistance = 1.2f;
+    public float topBorder = 1.3f;
+    public float bottomBorder = -1.5f; // ENSURE THIS IS NEGATIVE IN INSPECTOR
 
-    private Vector3 targetPosition;
-    private bool isMoving = false;
+    [Header("Anti-Twitch Timing")]
+    public float cooldownDuration = 0.5f;
+
+    private DuckState currentState = DuckState.Normal;
+    private float timer = 0f;
+    private float targetY;
     private float fixedX;
 
     void Start()
     {
         fixedX = transform.position.x;
-        targetPosition = transform.position;
+        targetY = transform.position.y;
     }
 
     void Update()
     {
-        // 1. ARRIVAL CHECK
-        // If we are close to the target, stop moving and allow new detections
-        if (Mathf.Abs(transform.position.y - targetPosition.y) < 0.05f)
+        if (timer > 0) timer -= Time.deltaTime;
+
+        switch (currentState)
         {
-            isMoving = false;
+            case DuckState.Normal:
+                HandleObstacleDetection();
+                break;
+            case DuckState.Dodging:
+                if (Mathf.Abs(transform.position.y - targetY) < 0.05f)
+                {
+                    currentState = DuckState.Cooldown;
+                    timer = cooldownDuration;
+                }
+                break;
+            case DuckState.Cooldown:
+                if (timer <= 0) currentState = DuckState.Normal;
+                break;
         }
 
-        // 2. DETECTION (Only if NOT currently moving)
-        if (!isMoving)
-        {
-            RaycastHit2D hit = Physics2D.BoxCast(transform.position, boxSize, 0f, Vector2.right, lookAheadDistance, obstacleLayer);
-
-            if (hit.collider != null && hit.collider.CompareTag("Obstacle"))
-            {
-                isMoving = true; // Lock into a move
-
-                // Switch to the OTHER lane and STAY THERE
-                float newY = (transform.position.y > (riverTopY + riverBottomY) / 2) ? riverBottomY : riverTopY;
-                targetPosition = new Vector3(fixedX, newY, 0);
-            }
-        }
-
-        // 3. ACTUAL MOVEMENT
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+        // Apply movement
+        float newY = Mathf.MoveTowards(transform.position.y, targetY, moveSpeed * Time.deltaTime);
+        transform.position = new Vector3(fixedX, newY, 0);
     }
 
-    // REMEMBER: ONLY ONE OF THESE!
-    void OnDrawGizmos()
+    void HandleObstacleDetection()
     {
-        Gizmos.color = isMoving ? Color.red : Color.green;
-        Gizmos.DrawWireCube(transform.position, boxSize);
-        Gizmos.DrawLine(transform.position, transform.position + Vector3.right * lookAheadDistance);
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position, circleRadius, Vector2.right, lookAheadDistance, obstacleLayer);
+
+        if (hit.collider != null && hit.collider.gameObject != gameObject)
+        {
+            float yDir = 0;
+
+            // 1. Check if we are too close to the Top Border
+            if (transform.position.y >= topBorder - 0.3f)
+            {
+                yDir = -1f; // Force Down
+            }
+            // 2. Check if we are too close to the Bottom Border
+            else if (transform.position.y <= bottomBorder + 0.3f)
+            {
+                yDir = 1f; // Force Up
+            }
+            // 3. If in the middle, decide based on where the rock is
+            else
+            {
+                // If hit normal is neutral, we check our Y position
+                // If we are above 0, go Down. If we are below 0, go Up.
+                yDir = (transform.position.y > 0) ? -1f : 1f;
+            }
+
+            targetY = transform.position.y + (yDir * laneDistance);
+            // Safety Clamp: Never let targetY go outside the borders
+            targetY = Mathf.Clamp(targetY, bottomBorder, topBorder);
+
+            currentState = DuckState.Dodging;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(new Vector3(fixedX - 2, topBorder, 0), new Vector3(fixedX + 2, topBorder, 0));
+        Gizmos.DrawLine(new Vector3(fixedX - 2, bottomBorder, 0), new Vector3(fixedX + 2, bottomBorder, 0));
     }
 }
