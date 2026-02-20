@@ -1008,7 +1008,7 @@ MonoBehaviour:
   maxMultiplier: 5
   minMultiplier: 1
   waitBeforeDecay: 3
-  decaySpeed: 0.1
+  decaySpeed: 0.5
   comboText: {fileID: 1085476747}
 --- !u!61 &858352326
 BoxCollider2D:
