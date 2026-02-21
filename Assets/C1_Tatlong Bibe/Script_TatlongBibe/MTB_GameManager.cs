@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement; // Useful for restarting later
 
-public class GameManager : MonoBehaviour
+public class MTB_GameManager : MonoBehaviour
 {
-    public static GameManager Instance; // This lets other scripts find the manager easily
+    public static MTB_GameManager Instance; // This lets other scripts find the manager easily
 
     [Header("Global Stats")]
     public int sharedHealth = 3;

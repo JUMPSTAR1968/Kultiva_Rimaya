@@ -22,7 +22,7 @@ public class FatDuckMovement : MonoBehaviour
     void Update()
     {
         // If the game is stopped, stop all movement calculations immediately
-        if (GameManager.Instance != null && GameManager.Instance.isGameOver)
+        if (MTB_GameManager.Instance != null && MTB_GameManager.Instance.isGameOver)
         {
             return;
         }

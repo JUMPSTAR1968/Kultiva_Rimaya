@@ -21,7 +21,7 @@ public class NoteObject : MonoBehaviour
             {
                 gameObject.SetActive(false);
 
-                GameManager.instance.NoteHit();
+                BK_GameManager.instance.NoteHit();
             }
         }
     }
@@ -39,7 +39,7 @@ public class NoteObject : MonoBehaviour
         {
             canBePressed = false;
 
-            GameManager.instance.NoteMissed();
+            BK_GameManager.instance.NoteMissed();
         }
     }
 }

@@ -2,7 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class BK_GameManager : MonoBehaviour
 {
 
     public AudioSource theMusic;
@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     public BeastScroller theBS;
 
-    public static GameManager instance;
+    public static BK_GameManager instance;
 
     public int currentScore;
     public int scorePerNote = 100;

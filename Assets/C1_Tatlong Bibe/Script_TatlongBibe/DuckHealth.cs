@@ -15,9 +15,9 @@ public class DuckHealth : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // If we hit an obstacle and aren't invincible and the game isn't over
-        if (collision.CompareTag("Obstacle") && !isInvincible && !GameManager.Instance.isGameOver)
+        if (collision.CompareTag("Obstacle") && !isInvincible && !MTB_GameManager.Instance.isGameOver)
         {
-            GameManager.Instance.LoseHealth(); // Tell the manager we got hit!
+            MTB_GameManager.Instance.LoseHealth(); // Tell the manager we got hit!
             StartCoroutine(FlashRoutine());
         }
     }
