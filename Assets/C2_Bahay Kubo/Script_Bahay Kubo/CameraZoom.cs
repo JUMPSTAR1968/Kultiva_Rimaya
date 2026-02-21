@@ -1,42 +1,58 @@
 using UnityEngine;
-using UnityEngine.InputSystem; // ✅ Required for new Input System
+using System.Collections; // <--- THIS WAS MISSING!
 
-public class CameraZoom : MonoBehaviour
+public class CameraIntroZoom : MonoBehaviour
 {
-    private float zoom;
-    private float zoomMultiplier = 4f;
-    private float minZoom = 2f;
-    private float maxZoom = 8f;
-    private float velocity = 0f;
-    private float smoothTime = 0.25f;
+    [Header("Camera Settings")]
+    public Camera mainCamera;
+    public Transform playerTransform;
+    
+    [Header("Zoom Values")]
+    public float startSize = 15f;     
+    public float targetSize = 5f;      
+    public float waitDuration = 5f;    
+    public float zoomSpeed = 2f;       
 
-    [SerializeField] private Camera cam;
+    private bool isZooming = false;
 
-    private void Start()
+    void Start()
     {
-        zoom = cam.orthographicSize;
+        if (mainCamera == null) mainCamera = Camera.main;
+        mainCamera.orthographicSize = startSize;
+
+        StartCoroutine(StartZoomSequence());
     }
 
-    private void Update()
+    IEnumerator StartZoomSequence()
     {
-        if (Mouse.current != null)
+        yield return new WaitForSeconds(waitDuration);
+        isZooming = true;
+    }
+
+    void Update()
+{
+    if (isZooming && playerTransform != null)
+    {
+        // Smoothly change the Camera Size
+        mainCamera.orthographicSize = Mathf.MoveTowards(
+            mainCamera.orthographicSize, 
+            targetSize, 
+            zoomSpeed * Time.deltaTime
+        );
+
+        // Calculate target: Player's X/Y but keep Camera's Z at -10
+        Vector3 targetPos = new Vector3(playerTransform.position.x, playerTransform.position.y, -10f);
+        
+        // Use SmoothDamp or a faster Lerp to ensure the camera reaches the player 
+        // at the same time the zoom finishes
+        transform.position = Vector3.Lerp(transform.position, targetPos, zoomSpeed * Time.deltaTime);
+
+        if (Mathf.Abs(mainCamera.orthographicSize - targetSize) < 0.01f)
         {
-            // Read mouse scroll value (Y axis)
-            float scroll = Mouse.current.scroll.ReadValue().y;
-
-            // Adjust zoom
-            zoom -= scroll * zoomMultiplier * Time.deltaTime;
-
-            // Clamp zoom range
-            zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
-
-            // Smooth transition
-            cam.orthographicSize = Mathf.SmoothDamp(
-                cam.orthographicSize,
-                zoom,
-                ref velocity,
-                smoothTime
-            );
+            // Final snap to ensure perfect alignment
+            transform.position = targetPos;
+            isZooming = false;
         }
     }
+}
 }
