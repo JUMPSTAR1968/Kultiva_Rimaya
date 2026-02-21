@@ -2031,9 +2031,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SequentialSpawner
   vegetablePrefabs:
-  - {fileID: 331575437351890688, guid: 8ab20572a39154abdab07ecb31bf123c, type: 3}
-  - {fileID: 6735155823210825881, guid: 731e0809c1c9c4eee965818ec286ebc2, type: 3}
-  - {fileID: 943282173396297896, guid: c45ddb2cc914946a9bf4afe4b145d399, type: 3}
+  - {fileID: 5685267405377816283, guid: 1046f6706d7a64631bb784c0f1f074b2, type: 3}
+  - {fileID: 7745087048163050250, guid: 866355afd65d5475c99133245547d982, type: 3}
+  - {fileID: 5640708472923971766, guid: 16554dcc8058e4db6b31d90929ce921a, type: 3}
+  - {fileID: 155494617237914370, guid: f0d01b254a2ea4f35a1af7843c766e9b, type: 3}
+  - {fileID: 1404362971067377588, guid: 92c5538c4197042b4b436d6c134fd570, type: 3}
+  - {fileID: 8013906901517774167, guid: b10dc579108774b1a887816ab0e8e5e3, type: 3}
+  - {fileID: 4919037098985810967, guid: 0ec3266884dc84db3bda4a90d7f18e46, type: 3}
+  - {fileID: 5891412619027438170, guid: b6eae61b87b7d4d85bde0893cc00ec48, type: 3}
+  - {fileID: 5843074573428199808, guid: c3a8d6c2c026d42a8b2b3b7df8e29267, type: 3}
+  - {fileID: 9211216072436538350, guid: 2afe021f904d945d5906570dd783f4bf, type: 3}
+  - {fileID: 4778974256842555054, guid: 223cf0babb0004a7b8b8225d1ac09da7, type: 3}
+  - {fileID: 6665675555436827659, guid: 546513607d3d54ff8a6240249e3c7e7e, type: 3}
+  - {fileID: 2724802772495954972, guid: 974f7f939e0f1482993c176d4b8fda74, type: 3}
+  - {fileID: 4715859542496511274, guid: 157a25225fb1d4b9bbab118d179ab3df, type: 3}
+  - {fileID: 2024328039474307557, guid: c89283aa171214f4b8c1e1bf788f135d, type: 3}
+  - {fileID: 5629960571006874159, guid: f4b5fe5ecb50f4b7ba7abd7f5142aa2e, type: 3}
+  - {fileID: 1964520805862515051, guid: c3a98dda098f14b18bdd745f635d0d3a, type: 3}
+  - {fileID: 7982530157104804250, guid: 1a3f5353dda9c4d5fbccbbf325ae4ed1, type: 3}
   columns: 16
   rows: 4
   cellSize: 0.9
