@@ -2012,7 +2012,7 @@ GameObject:
   - component: {fileID: 1499728832}
   - component: {fileID: 1499728831}
   m_Layer: 0
-  m_Name: Chunk Radomizer
+  m_Name: Sequential Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2030,14 +2030,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bed73b5b87624bb1a14fae7a5de15c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChunkRandomizer
-  spritePrefabs:
-  - {fileID: 943282173396297896, guid: c45ddb2cc914946a9bf4afe4b145d399, type: 3}
+  vegetablePrefabs:
   - {fileID: 331575437351890688, guid: 8ab20572a39154abdab07ecb31bf123c, type: 3}
   - {fileID: 6735155823210825881, guid: 731e0809c1c9c4eee965818ec286ebc2, type: 3}
+  - {fileID: 943282173396297896, guid: c45ddb2cc914946a9bf4afe4b145d399, type: 3}
   columns: 18
   rows: 4
   cellSize: 0.8
-  spawnChance: 40
   jitterAmount: 0
 --- !u!4 &1499728832
 Transform:
