@@ -656,6 +656,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 458483465}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &600798507
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 600798508}
+  m_Layer: 0
+  m_Name: Zoomed IN target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &600798508
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600798507}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.75, y: -2.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &738513091
 GameObject:
   m_ObjectHideFlags: 0
@@ -2294,6 +2325,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256761415}
   m_CullTransparentMesh: 1
+--- !u!1 &1499728830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1499728832}
+  - component: {fileID: 1499728831}
+  m_Layer: 0
+  m_Name: Chunk Radomizer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1499728831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499728830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bed73b5b87624bb1a14fae7a5de15c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChunkRandomizer
+  spritePrefabs: []
+  columns: 18
+  rows: 4
+  cellSize: 0.8
+  spawnChance: 70
+  jitterAmount: 0.5
+--- !u!4 &1499728832
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499728830}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.95, y: -2.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1528428244
 GameObject:
   m_ObjectHideFlags: 0
@@ -2837,7 +2918,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2862,7 +2943,7 @@ Transform:
   m_GameObject: {fileID: 1777312326}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.94358605, y: 0.47141343, z: -18.811378}
+  m_LocalPosition: {x: -0.9, y: -0.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2924,7 +3005,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04472e73bfc9f4294ad9e63992c34363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraZoom
-  cam: {fileID: 1777312328}
+  mainCamera: {fileID: 1777312328}
+  playerTransform: {fileID: 600798508}
+  startSize: 5
+  targetSize: 3.5
+  waitDuration: 2
+  zoomSpeed: 1
 --- !u!114 &1777312332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3398,6 +3484,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1777312329}
+  - {fileID: 1499728832}
+  - {fileID: 600798508}
   - {fileID: 134171780}
   - {fileID: 2097777813}
   - {fileID: 458483465}
