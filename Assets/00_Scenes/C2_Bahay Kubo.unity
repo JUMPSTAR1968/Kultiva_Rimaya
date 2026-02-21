@@ -681,7 +681,7 @@ Transform:
   m_GameObject: {fileID: 600798507}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.75, y: -2.2, z: 0}
+  m_LocalPosition: {x: -5, y: -2.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1905,8 +1905,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -350.25, y: 303.25}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -724.6665, y: 481.9414}
+  m_SizeDelta: {x: 470, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1085476747
 MonoBehaviour:
@@ -1955,8 +1955,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 100
+  m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2918,7 +2918,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 5.52
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2943,7 +2943,7 @@ Transform:
   m_GameObject: {fileID: 1777312326}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.9, y: -0.5, z: -10}
+  m_LocalPosition: {x: 0, y: -0.15, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3007,9 +3007,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraZoom
   mainCamera: {fileID: 1777312328}
   playerTransform: {fileID: 600798508}
-  startSize: 5
-  targetSize: 3.5
-  waitDuration: 2
+  startSize: 5.5
+  targetSize: 2.5
+  waitDuration: 1
   zoomSpeed: 1
 --- !u!114 &1777312332
 MonoBehaviour:
