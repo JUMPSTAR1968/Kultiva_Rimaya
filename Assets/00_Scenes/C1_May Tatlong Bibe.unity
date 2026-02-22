@@ -685,11 +685,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 538511446}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 958.5313, y: 540.9543}
+  m_AnchoredPosition: {x: -1.4686279, y: 0.95422363}
   m_SizeDelta: {x: 1912.6498, y: 1069.172}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &334866697
@@ -1347,6 +1347,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1949716962}
+  - {fileID: 207368142}
+  - {fileID: 994301519}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1732,7 +1734,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -3972499574639609, guid: 7acb74d6182bcfb4d8e71fd97460cca4, type: 3}
+  m_Sprite: {fileID: -589286881291095695, guid: 9b1736bfa71886849953e658763074c9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1752,7 +1754,7 @@ Transform:
   m_GameObject: {fileID: 736114007}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.25, y: -0.03, z: 0}
+  m_LocalPosition: {x: -7.25, y: 0.03, z: 0}
   m_LocalScale: {x: 0.5165, y: 0.5165, z: 0.5165}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1796,7 +1798,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.55, y: 2.24}
+    oldSize: {x: 4.1, y: 2.24}
     newSize: {x: 0.21, y: 0.21}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1844,15 +1846,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MotherDuckDodge
   circleRadius: 0.45
-  lookAheadDistance: 10
+  lookAheadDistance: 4.06
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 1
-  moveSpeed: 6
+  dodgeSpeed: 8
+  returnSpeed: 0.14
   laneDistance: 1.2
   topBorder: 1.3
   bottomBorder: -1.5
-  cooldownDuration: 0.5
+  safePassDistance: 1
 --- !u!114 &736114013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1870,11 +1873,12 @@ MonoBehaviour:
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 8
-  moveSpeed: 3
+  dodgeSpeed: 8
+  returnSpeed: 3
   laneDistance: 1.2
   topBorder: 1.3
   bottomBorder: -1.5
-  cooldownDuration: 0.5
+  safePassDistance: 1
 --- !u!1 &786858206
 GameObject:
   m_ObjectHideFlags: 0
@@ -2073,6 +2077,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 319026dbf95b3804787bcd3f19176351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DuckHealth
+  damagedSprite: {fileID: 0}
   iFrameDuration: 2
 --- !u!50 &800286175
 Rigidbody2D:
@@ -2231,7 +2236,7 @@ Transform:
   m_GameObject: {fileID: 800286173}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.66, y: 0.12, z: 0}
+  m_LocalPosition: {x: -4.33, y: -0.01, z: 0}
   m_LocalScale: {x: 0.5165, y: 0.5165, z: 0.5165}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2695,11 +2700,11 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 538511446}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 998, y: 491}
+  m_AnchoredPosition: {x: 38, y: -49}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1034317597
@@ -2870,7 +2875,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FeedbackUI
   feedbackText: {fileID: 994301517}
   missOverlay: {fileID: 207368140}
-  fadeDuration: 0.5
+  fadeSpeed: 2
 --- !u!4 &1071972215
 Transform:
   m_ObjectHideFlags: 0
@@ -4728,6 +4733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 319026dbf95b3804787bcd3f19176351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DuckHealth
+  damagedSprite: {fileID: 0}
   iFrameDuration: 2
 --- !u!50 &2093061538
 Rigidbody2D:
@@ -4794,7 +4800,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.1, y: 2.24}
+    oldSize: {x: 3.55, y: 2.24}
     newSize: {x: 4.1, y: 2.62}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -4864,7 +4870,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -589286881291095695, guid: 9b1736bfa71886849953e658763074c9, type: 3}
+  m_Sprite: {fileID: -3972499574639609, guid: 7acb74d6182bcfb4d8e71fd97460cca4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4884,7 +4890,7 @@ Transform:
   m_GameObject: {fileID: 2093061536}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.62, y: 0.12, z: 0}
+  m_LocalPosition: {x: -1.62, y: -0.02, z: 0}
   m_LocalScale: {x: 0.5165, y: 0.5165, z: 0.5165}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5053,6 +5059,4 @@ SceneRoots:
   - {fileID: 96016181}
   - {fileID: 1145695564}
   - {fileID: 538511446}
-  - {fileID: 207368142}
-  - {fileID: 994301519}
   - {fileID: 1071972215}
