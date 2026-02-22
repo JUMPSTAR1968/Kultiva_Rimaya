@@ -2365,6 +2365,7 @@ MonoBehaviour:
   rows: 3
   cellSize: 2
   jitterAmount: 0
+  pausePanel: {fileID: 972770742}
   restartButton: {fileID: 1770118726}
 --- !u!4 &1499728832
 Transform:
