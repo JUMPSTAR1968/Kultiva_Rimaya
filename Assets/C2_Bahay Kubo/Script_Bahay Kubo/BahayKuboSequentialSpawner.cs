@@ -7,7 +7,6 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     public GameObject[] vegetablePrefabs;
 
     [Header("Song Structure")]
-    // The number of vegetables in each line: 4, 3, 4, 2, 4, 1
     private int[] batchSizes = { 4, 3, 4, 2, 4, 1 };
     private int currentPhase = 0; 
     private int nextExpectedIndexInBatch = 0; 
@@ -18,11 +17,17 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     public float cellSize = 1.8f;
     public float jitterAmount = 0.3f;
 
+    [Header("Game State & UI")]
+    public GameObject restartButton; // Drag your Restart Button here
+    private bool isGameOver = false; 
     private List<GameObject> activeVegetables = new List<GameObject>();
     private int globalVegetableOffset = 0; 
 
     void Start()
     {
+        // Hide restart button at the very beginning
+        if (restartButton != null) restartButton.SetActive(false);
+
         if (vegetablePrefabs.Length < 18)
         {
             Debug.LogWarning("The song usually has 18 vegetables. Check your prefab list!");
@@ -36,7 +41,7 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
 
         if (currentPhase >= batchSizes.Length)
         {
-            Debug.Log("Song Finished! Re-starting from the beginning.");
+            Debug.Log("<color=yellow>Song Finished! Re-starting...</color>");
             currentPhase = 0;
             globalVegetableOffset = 0;
         }
@@ -71,6 +76,8 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
 
     public void TryHarvest(int clickedID, GameObject vegetableObj)
     {
+        if (isGameOver) return;
+
         if (clickedID == nextExpectedIndexInBatch)
         {
             nextExpectedIndexInBatch++;
@@ -79,11 +86,7 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
             if (nextExpectedIndexInBatch < currentBatchEnd)
             {
                 string nextVegName = vegetablePrefabs[nextExpectedIndexInBatch].name;
-                Debug.Log($"<color=green>Correct veggie!</color> Next veggie to find is: <b>{nextVegName}</b>");
-            }
-            else
-            {
-                Debug.Log("<color=cyan>Correct veggie!</color> Line complete! Moving to next batch...");
+                Debug.Log($"<color=green>Correct!</color> Next is: <b>{nextVegName}</b>");
             }
 
             Destroy(vegetableObj);
@@ -98,11 +101,40 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         else
         {
             string targetVegName = vegetablePrefabs[nextExpectedIndexInBatch].name;
-            Debug.Log($"<color=red>Wrong veggie!</color> You should have clicked: <b>{targetVegName}</b>");
+            Debug.Log($"<color=red>Wrong!</color> Target: <b>{targetVegName}</b>");
             
-            // Note: Ensure HealthManager.Instance is set up in your project to avoid new errors
-            if(HealthManager.Instance != null) HealthManager.Instance.TakeDamage(1);
+            if(HealthManager.Instance != null)
+            {
+                HealthManager.Instance.TakeDamage(1);
+                
+                if (HealthManager.Instance.currentHealth <= 0)
+                {
+                    TriggerGameOver();
+                }
+            }
         }
+    }
+
+    private void TriggerGameOver()
+    {
+        isGameOver = true;
+        Debug.Log("<color=black><b>GAME OVER!</b></color>");
+        
+        // Show the restart button so the player can try again
+        if (restartButton != null) restartButton.SetActive(true);
+    }
+
+    public void RestartGame()
+    {
+        isGameOver = false;
+        currentPhase = 0;
+        globalVegetableOffset = 0;
+        nextExpectedIndexInBatch = 0;
+
+        if (restartButton != null) restartButton.SetActive(false);
+        if (HealthManager.Instance != null) HealthManager.Instance.ResetHealth();
+
+        SpawnCurrentBatch();
     }
 
     private List<Vector2Int> GetShuffledCells()
@@ -128,21 +160,15 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         activeVegetables.Clear();
     }
 
-    // --- NEW: THE GIZMO CODE TO SHOW THE GRID ---
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Vector2 offset = new Vector2((columns * cellSize) / 2, (rows * cellSize) / 2);
-
         for (int x = 0; x < columns; x++)
         {
             for (int y = 0; y < rows; y++)
             {
-                Vector3 pos = new Vector3(
-                    (x * cellSize) - offset.x + (cellSize / 2), 
-                    (y * cellSize) - offset.y + (cellSize / 2), 
-                    0
-                );
+                Vector3 pos = new Vector3((x * cellSize) - offset.x + (cellSize / 2), (y * cellSize) - offset.y + (cellSize / 2), 0);
                 Gizmos.DrawWireCube(pos + transform.position, new Vector3(cellSize, cellSize, 0));
             }
         }

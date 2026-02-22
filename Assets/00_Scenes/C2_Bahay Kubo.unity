@@ -2365,6 +2365,7 @@ MonoBehaviour:
   rows: 3
   cellSize: 2
   jitterAmount: 0
+  restartButton: {fileID: 1770118726}
 --- !u!4 &1499728832
 Transform:
   m_ObjectHideFlags: 0
@@ -3113,7 +3114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0acc3ed91f9b95b4a9f064abae5c059a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BeatScroller
-  beatTempo: 0
+  beatTempo: 120
   hasStarted: 0
 --- !u!1 &1914866165
 GameObject:
