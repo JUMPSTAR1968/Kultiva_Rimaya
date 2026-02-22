@@ -109,6 +109,9 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
             // 3. Wrong vegetable clicked logic
             string targetVegName = vegetablePrefabs[nextExpectedIndexInBatch].name;
             Debug.Log($"<color=red>Wrong veggie!</color> You should have clicked: <b>{targetVegName}</b>");
+
+            // NEW: Punish the player for clicking the wrong vegetable!
+            HealthManager.Instance.TakeDamage(1);
         }
     }
 
