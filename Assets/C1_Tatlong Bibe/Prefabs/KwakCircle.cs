@@ -4,9 +4,14 @@ using UnityEngine.UI;
 public class KwakCircle : MonoBehaviour
 {
     public RectTransform approachRing;
+
     private float targetHitTime;
     private float leadTime;
     private AudioSource audioClock;
+    private bool isProcessed = false;
+
+    private float perfectWindow = 0.12f;
+    private float okWindow = 0.25f;
 
     public void Setup(float target, AudioSource source, float lead)
     {
@@ -17,32 +22,61 @@ public class KwakCircle : MonoBehaviour
 
     void Update()
     {
-        if (audioClock == null) return;
+        if (audioClock == null || isProcessed) return;
 
-        // Calculate progress from 0.0 (spawn) to 1.0 (hit time)
         float timeRemaining = targetHitTime - audioClock.time;
         float progress = 1.0f - (timeRemaining / leadTime);
-
-        // Scale from 3x size down to 1x size
         float currentScale = Mathf.Lerp(3.0f, 1.0f, progress);
 
         if (approachRing != null)
             approachRing.localScale = new Vector3(currentScale, currentScale, 1f);
 
-        // Auto-destroy if the player misses it (e.g., 0.2 seconds after the hit time)
-        if (audioClock.time > targetHitTime + 0.2f)
+        if (audioClock.time > targetHitTime + okWindow)
         {
-            Debug.Log("MISSED!");
-            Destroy(gameObject);
+            TriggerMiss();
         }
     }
 
     public void OnPlayerClick()
     {
-        float accuracy = Mathf.Abs(audioClock.time - targetHitTime);
-        if (accuracy <= 0.12f) Debug.Log("<color=cyan>PERFECTLY TIMED!</color>");
-        else if (accuracy <= 0.25f) Debug.Log("<color=yellow>GOOD</color>");
-        else Debug.Log("<color=orange>POORLY TIMED</color>");
+        if (isProcessed) return;
+
+        float diff = audioClock.time - targetHitTime;
+        float absDiff = Mathf.Abs(diff);
+
+        // Updated these lines to point to FeedbackManager
+        if (absDiff <= perfectWindow)
+        {
+            FeedbackManager.Instance.ShowFeedback("PERFECT!", Color.cyan);
+        }
+        else if (diff > perfectWindow && diff <= okWindow)
+        {
+            FeedbackManager.Instance.ShowFeedback("LATE", Color.yellow);
+        }
+        else if (diff < -perfectWindow && diff >= -okWindow)
+        {
+            FeedbackManager.Instance.ShowFeedback("EARLY", Color.orange);
+        }
+        else
+        {
+            TriggerMiss();
+            return;
+        }
+
+        FinishNote();
+    }
+
+    private void TriggerMiss()
+    {
+        if (isProcessed) return;
+        // Updated this line to point to FeedbackManager
+        FeedbackManager.Instance.ShowFeedback("MISS", Color.red);
+        FinishNote();
+    }
+
+    private void FinishNote()
+    {
+        isProcessed = true;
         Destroy(gameObject);
     }
 }

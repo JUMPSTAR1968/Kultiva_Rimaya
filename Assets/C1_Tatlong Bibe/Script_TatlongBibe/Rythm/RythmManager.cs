@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class RythmManager : MonoBehaviour
 {
@@ -8,7 +7,7 @@ public class RythmManager : MonoBehaviour
     public RectTransform spawnZone;
     public float[] kwakTimings;
 
-    public float leadTime = 1.0f; // How many seconds before the beat the circle appears
+    public float leadTime = 1.0f; // Notes appear 1 second before the beat
     private int nextNoteIndex = 0;
 
     void Start()
@@ -20,28 +19,25 @@ public class RythmManager : MonoBehaviour
     {
         if (songSource == null || nextNoteIndex >= kwakTimings.Length) return;
 
-        // Check if it's time to spawn the next note (Target Time minus Lead Time)
+        // Spawn logic: Check if song time has reached (Target - LeadTime)
         if (songSource.time >= kwakTimings[nextNoteIndex] - leadTime)
         {
             SpawnKwak(kwakTimings[nextNoteIndex]);
-            nextNoteIndex++; // Move to the next timestamp in the array
+            nextNoteIndex++;
         }
     }
 
     void SpawnKwak(float targetTime)
     {
         GameObject newNote = Instantiate(kwakPrefab, spawnZone);
+        newNote.transform.localScale = Vector3.one; // Fix scale issues
 
-        // Ensure the scale is correct (UI instantiation often messes this up)
-        newNote.transform.localScale = Vector3.one;
-
-        // Moves the circle to a random spot inside your NoteContainer
+        // Random position inside the spawnZone
         float rx = Random.Range(-spawnZone.rect.width / 2, spawnZone.rect.width / 2);
         float ry = Random.Range(-spawnZone.rect.height / 2, spawnZone.rect.height / 2);
-
         newNote.GetComponent<RectTransform>().anchoredPosition = new Vector2(rx, ry);
-        newNote.GetComponent<KwakCircle>().Setup(targetTime, songSource, leadTime);
 
-        Debug.Log("Spawned Kwak for time: " + targetTime);
+        // Pass data to the circle
+        newNote.GetComponent<KwakCircle>().Setup(targetTime, songSource, leadTime);
     }
 }
