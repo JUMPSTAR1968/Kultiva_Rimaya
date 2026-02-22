@@ -830,8 +830,8 @@ MonoBehaviour:
   - {fileID: 8168060436436749290, guid: 73ad2dc1a510590448f821572dea76a1, type: 3}
   spawnRate: 5
   spawnX: 12
-  riverTopY: 0.5
-  riverBottomY: -1.5
+  riverTopY: 1.5
+  riverBottomY: -2.6
 --- !u!4 &346919504
 Transform:
   m_ObjectHideFlags: 0
