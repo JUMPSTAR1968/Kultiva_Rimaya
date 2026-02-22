@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1038063927884875343}
   - component: {fileID: 8176974297898984337}
   - component: {fileID: 6530084893758847870}
+  - component: {fileID: 8899880535361987414}
   m_Layer: 0
   m_Name: Sigarilyas_0
   m_TagString: Untagged
@@ -137,3 +138,17 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 10.88, y: 10.78}
   m_EdgeRadius: 0
+--- !u!114 &8899880535361987414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8277337691162981257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa60a7f495d694174ad7aeb96e55dffd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VegetableClick
+  spawner: {fileID: 0}
+  vegetableID: 0
