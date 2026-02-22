@@ -2361,10 +2361,12 @@ MonoBehaviour:
   - {fileID: 5629960571006874159, guid: f4b5fe5ecb50f4b7ba7abd7f5142aa2e, type: 3}
   - {fileID: 1964520805862515051, guid: c3a98dda098f14b18bdd745f635d0d3a, type: 3}
   - {fileID: 7982530157104804250, guid: 1a3f5353dda9c4d5fbccbbf325ae4ed1, type: 3}
-  columns: 16
-  rows: 4
-  cellSize: 0.9
+  columns: 3
+  rows: 3
+  cellSize: 1.3
   jitterAmount: 0
+  pausePanel: {fileID: 972770742}
+  restartButton: {fileID: 1770118726}
 --- !u!4 &1499728832
 Transform:
   m_ObjectHideFlags: 0
@@ -3113,7 +3115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0acc3ed91f9b95b4a9f064abae5c059a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BeatScroller
-  beatTempo: 0
+  beatTempo: 120
   hasStarted: 0
 --- !u!1 &1914866165
 GameObject:

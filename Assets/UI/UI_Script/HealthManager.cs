@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class HealthManager : MonoBehaviour
 {
-    // THIS LINE MAKES IT GLOBAL
     public static HealthManager Instance;
 
     [Header("Game Modes")]
@@ -20,7 +19,6 @@ public class HealthManager : MonoBehaviour
 
     void Awake()
     {
-        // Set up the global reference
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
@@ -42,8 +40,15 @@ public class HealthManager : MonoBehaviour
         if (currentHealth == 0)
         {
             Debug.Log("GAME OVER! ZERO HEARTS!");
-            // You can trigger your Game Over panel here later
         }
+    }
+
+    // --- NEW: CALL THIS TO REFILL HEARTS ---
+    public void ResetHealth()
+    {
+        currentHealth = maxHealth;
+        UpdateHearts();
+        Debug.Log("Health Reset to: " + currentHealth);
     }
 
     private void UpdateHearts()

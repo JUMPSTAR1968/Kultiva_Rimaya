@@ -7,10 +7,9 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     public GameObject[] vegetablePrefabs;
 
     [Header("Song Structure")]
-    // The number of vegetables in each line: 4, 3, 4, 2, 4, 1
     private int[] batchSizes = { 4, 3, 4, 2, 4, 1 };
-    private int currentPhase = 0; // Which line of the song we are on
-    private int nextExpectedIndexInBatch = 0; // Progress within the current batch
+    private int currentPhase = 0; 
+    private int nextExpectedIndexInBatch = 0; 
 
     [Header("Grid Settings")]
     public int columns = 6;
@@ -18,26 +17,27 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     public float cellSize = 1.8f;
     public float jitterAmount = 0.3f;
 
+    [Header("Game State & UI")]
+    public GameObject pausePanel;    
+    public GameObject restartButton; 
+    private bool isGameOver = false; 
     private List<GameObject> activeVegetables = new List<GameObject>();
-    private int globalVegetableOffset = 0; // Starting point in the prefab array for the current batch
+    private int globalVegetableOffset = 0; 
 
     void Start()
     {
-        if (vegetablePrefabs.Length < 18)
-        {
-            Debug.LogWarning("The song usually has 18 vegetables. Check your prefab list!");
-        }
+        if (pausePanel != null) pausePanel.SetActive(false);
+        if (restartButton != null) restartButton.SetActive(true);
+
         SpawnCurrentBatch();
     }
 
     public void SpawnCurrentBatch()
     {
-        // 1. Clear previous batch
         ClearGarden();
 
         if (currentPhase >= batchSizes.Length)
         {
-            Debug.Log("Song Finished! Re-starting from the beginning.");
             currentPhase = 0;
             globalVegetableOffset = 0;
         }
@@ -46,7 +46,6 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         List<Vector2Int> allCells = GetShuffledCells();
         Vector2 gridOffset = new Vector2((columns * cellSize) / 2, (rows * cellSize) / 2);
 
-        // 2. Spawn only the vegetables for this specific line of the song
         for (int i = 0; i < countToSpawn; i++)
         {
             int prefabIndex = globalVegetableOffset + i;
@@ -59,7 +58,6 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
 
             GameObject newVeg = Instantiate(vegetablePrefabs[prefabIndex], finalPos, Quaternion.identity, transform);
 
-            // Set up click logic
             VegetableClick clickScript = newVeg.GetComponent<VegetableClick>();
             if (clickScript != null)
             {
@@ -70,35 +68,34 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         }
 
         nextExpectedIndexInBatch = globalVegetableOffset;
+
+        // --- DEBUG: SHOW THE FIRST VEGETABLE OF THE NEW BATCH ---
+        string firstVeg = vegetablePrefabs[nextExpectedIndexInBatch].name;
+        Debug.Log($"<color=white>New Batch Started!</color> First vegetable to find: <b>{firstVeg}</b>");
     }
 
     public void TryHarvest(int clickedID, GameObject vegetableObj)
     {
-        // 1. Check if the clicked vegetable matches the next one in the song sequence
+        if (isGameOver) return;
+
+        // --- LOGIC: CHECK IF CLICKED ID MATCHES THE SEQUENCE ---
         if (clickedID == nextExpectedIndexInBatch)
         {
             nextExpectedIndexInBatch++;
-
-            // Determine the next vegetable's name for the log
             int currentBatchEnd = globalVegetableOffset + batchSizes[currentPhase];
+            
+            Destroy(vegetableObj);
 
             if (nextExpectedIndexInBatch < currentBatchEnd)
             {
-                // There are still veggies left in this specific line of the song
+                // --- DEBUG: SHOW THE NEXT TARGET AFTER A CORRECT CLICK ---
                 string nextVegName = vegetablePrefabs[nextExpectedIndexInBatch].name;
-                Debug.Log($"<color=green>Correct veggie!</color> Next veggie to find is: <b>{nextVegName}</b>");
+                Debug.Log($"<color=green>Correct!</color> Next vegetable to harvest: <b>{nextVegName}</b>");
             }
             else
             {
-                // The batch is finished
-                Debug.Log("<color=cyan>Correct veggie!</color> Line complete! Moving to next batch...");
-            }
-
-            Destroy(vegetableObj);
-
-            // 2. Check if the current line (batch) of the song is finished
-            if (nextExpectedIndexInBatch >= currentBatchEnd)
-            {
+                Debug.Log("<color=cyan>Batch Complete!</color> Preparing next line of the song...");
+                
                 globalVegetableOffset += batchSizes[currentPhase];
                 currentPhase++;
                 Invoke("SpawnCurrentBatch", 0.5f);
@@ -106,13 +103,35 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         }
         else
         {
-            // 3. Wrong vegetable clicked logic
+            // --- DEBUG: SHOW THE CORRECT TARGET AFTER A MISTAKE ---
             string targetVegName = vegetablePrefabs[nextExpectedIndexInBatch].name;
-            Debug.Log($"<color=red>Wrong veggie!</color> You should have clicked: <b>{targetVegName}</b>");
+            Debug.Log($"<color=red>Wrong Veggie!</color> You should be looking for: <b>{targetVegName}</b>");
 
-            // NEW: Punish the player for clicking the wrong vegetable!
-            HealthManager.Instance.TakeDamage(1);
+            if(HealthManager.Instance != null)
+            {
+                HealthManager.Instance.TakeDamage(1);
+                if (HealthManager.Instance.currentHealth <= 0) TriggerGameOver();
+            }
         }
+    }
+
+    private void TriggerGameOver()
+    {
+        isGameOver = true;
+        Debug.Log("<color=black><b>GAME OVER!</b></color> Use the Retry button to restart.");
+        if (pausePanel != null) pausePanel.SetActive(true);
+    }
+
+    public void RestartGame()
+    {
+        isGameOver = false;
+        if (pausePanel != null) pausePanel.SetActive(false);
+        if (HealthManager.Instance != null) HealthManager.Instance.ResetHealth();
+
+        currentPhase = 0;
+        globalVegetableOffset = 0;
+        nextExpectedIndexInBatch = 0;
+        SpawnCurrentBatch();
     }
 
     private List<Vector2Int> GetShuffledCells()
@@ -136,5 +155,19 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     {
         foreach (GameObject veg in activeVegetables) if (veg != null) Destroy(veg);
         activeVegetables.Clear();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Vector2 offset = new Vector2((columns * cellSize) / 2, (rows * cellSize) / 2);
+        for (int x = 0; x < columns; x++)
+        {
+            for (int y = 0; y < rows; y++)
+            {
+                Vector3 pos = new Vector3((x * cellSize) - offset.x + (cellSize / 2), (y * cellSize) - offset.y + (cellSize / 2), 0);
+                Gizmos.DrawWireCube(pos + transform.position, new Vector3(cellSize, cellSize, 0));
+            }
+        }
     }
 }
