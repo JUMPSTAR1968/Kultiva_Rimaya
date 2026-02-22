@@ -2363,7 +2363,7 @@ MonoBehaviour:
   - {fileID: 7982530157104804250, guid: 1a3f5353dda9c4d5fbccbbf325ae4ed1, type: 3}
   columns: 3
   rows: 3
-  cellSize: 1.3
+  cellSize: 2
   jitterAmount: 0
   pausePanel: {fileID: 972770742}
   restartButton: {fileID: 1770118726}
@@ -2376,7 +2376,7 @@ Transform:
   m_GameObject: {fileID: 1499728830}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.95, y: -2.2, z: 0}
+  m_LocalPosition: {x: 0, y: -2.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
