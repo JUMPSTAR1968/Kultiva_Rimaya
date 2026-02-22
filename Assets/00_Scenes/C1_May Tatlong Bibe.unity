@@ -1846,12 +1846,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MotherDuckDodge
   circleRadius: 0.45
-  lookAheadDistance: 4.06
+  lookAheadDistance: 3.51
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 1
   dodgeSpeed: 8
-  returnSpeed: 0.14
+  returnSpeed: 1.85
   laneDistance: 1.2
   topBorder: 1.3
   bottomBorder: -1.5
@@ -1869,12 +1869,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MotherDuckAI
   circleRadius: 0.45
-  lookAheadDistance: 9
+  lookAheadDistance: 3.72
   obstacleLayer:
     serializedVersion: 2
     m_Bits: 8
   dodgeSpeed: 8
-  returnSpeed: 3
+  returnSpeed: 0.25
   laneDistance: 1.2
   topBorder: 1.3
   bottomBorder: -1.5
@@ -2077,7 +2077,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 319026dbf95b3804787bcd3f19176351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DuckHealth
-  damagedSprite: {fileID: 0}
+  damagedSprite: {fileID: -1642263794991642025, guid: d75b03176db7c8640b3c72646fc53cf2, type: 3}
   iFrameDuration: 2
 --- !u!50 &800286175
 Rigidbody2D:
@@ -4733,7 +4733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 319026dbf95b3804787bcd3f19176351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DuckHealth
-  damagedSprite: {fileID: 0}
+  damagedSprite: {fileID: -4200073614608430063, guid: f1514fd3af24a934d8c37e2849a6e354, type: 3}
   iFrameDuration: 2
 --- !u!50 &2093061538
 Rigidbody2D:
