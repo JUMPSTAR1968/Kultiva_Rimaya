@@ -6,23 +6,25 @@ public class MotherDuckAI : MonoBehaviour
 {
     [Header("Detection")]
     public float circleRadius = 0.45f;
-    public float lookAheadDistance = 2.5f;
+    public float lookAheadDistance = 1.5f;
     public LayerMask obstacleLayer;
 
     [Header("Movement & Borders")]
-    public float moveSpeed = 6f;
+    public float dodgeSpeed = 8f;
+    public float returnSpeed = 3f;
     public float laneDistance = 1.2f;
     public float topBorder = 1.3f;
-    public float bottomBorder = -1.5f; // ENSURE THIS IS NEGATIVE IN INSPECTOR
+    public float bottomBorder = -1.5f;
 
-    [Header("Anti-Twitch Timing")]
-    public float cooldownDuration = 0.5f;
+    [Header("Passing Clearance")]
+    public float safePassDistance = 1.0f;
 
     private DuckState currentState = DuckState.Normal;
-    private float timer = 0f;
     private float targetY;
     private float fixedX;
     private Vector2 originalPos;
+
+    private Transform currentObstacle;
 
     void Start()
     {
@@ -33,69 +35,79 @@ public class MotherDuckAI : MonoBehaviour
 
     void Update()
     {
-        if (timer > 0) timer -= Time.deltaTime;
-
         switch (currentState)
         {
             case DuckState.Normal:
                 HandleObstacleDetection();
                 break;
+
             case DuckState.Dodging:
                 if (Mathf.Abs(transform.position.y - targetY) < 0.05f)
                 {
                     currentState = DuckState.Cooldown;
-                    timer = cooldownDuration;
                 }
                 break;
+
             case DuckState.Cooldown:
-                float SlerpOgY = Mathf.MoveTowards(transform.position.y, originalPos.y, moveSpeed * Time.deltaTime);
-                this.transform.position = new Vector2(fixedX, SlerpOgY);
-                if (timer <= 0 && transform.position.y == originalPos.y) 
+                bool isObstacleGone = (currentObstacle == null);
+                bool hasObstaclePassed = false;
+
+                if (!isObstacleGone)
                 {
-                    currentState = DuckState.Normal;
+                    hasObstaclePassed = currentObstacle.position.x < (transform.position.x - safePassDistance);
+                }
+
+                if (isObstacleGone || hasObstaclePassed)
+                {
                     targetY = originalPos.y;
-                };    
-                
+
+                    if (Mathf.Abs(transform.position.y - originalPos.y) < 0.05f)
+                    {
+                        currentState = DuckState.Normal;
+                    }
+                }
                 break;
-            
         }
 
-        // Apply movement
-        float newY = Mathf.MoveTowards(transform.position.y, targetY, moveSpeed * Time.deltaTime);
+        float currentSpeed = (targetY == originalPos.y) ? returnSpeed : dodgeSpeed;
+        float newY = Mathf.MoveTowards(transform.position.y, targetY, currentSpeed * Time.deltaTime);
         transform.position = new Vector3(fixedX, newY, 0);
     }
 
     void HandleObstacleDetection()
     {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, circleRadius, Vector2.right, lookAheadDistance, obstacleLayer);
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, circleRadius, Vector2.right, lookAheadDistance, obstacleLayer);
 
-        if (hit.collider != null && hit.collider.gameObject != gameObject)
+        foreach (RaycastHit2D hit in hits)
         {
-            float yDir = 0;
-
-            // 1. Check if we are too close to the Top Border
-            if (transform.position.y >= topBorder - 0.3f)
+            if (hit.collider != null && hit.collider.gameObject != gameObject && hit.collider.CompareTag("Obstacle"))
             {
-                yDir = -1f; // Force Down
-            }
-            // 2. Check if we are too close to the Bottom Border
-            else if (transform.position.y <= bottomBorder + 0.3f)
-            {
-                yDir = 1f; // Force Up
-            }
-            // 3. If in the middle, decide based on where the rock is
-            else
-            {
-                // If hit normal is neutral, we check our Y position
-                // If we are above 0, go Down. If we are below 0, go Up.
-                yDir = (transform.position.y > 0) ? -1f : 1f;
-            }
+                float yDir = 0;
 
-            targetY = transform.position.y + (yDir * laneDistance);
-            // Safety Clamp: Never let targetY go outside the borders
-            targetY = Mathf.Clamp(targetY, bottomBorder, topBorder);
+                // 1. If too close to top border, force DOWN
+                if (transform.position.y >= topBorder - 0.3f)
+                {
+                    yDir = -1f;
+                }
+                // 2. If too close to bottom border, force UP
+                else if (transform.position.y <= bottomBorder + 0.3f)
+                {
+                    yDir = 1f;
+                }
+                // 3. THE FIX: If in the safe middle area, pick UP or DOWN randomly!
+                else
+                {
+                    // This is a 50/50 coin flip. Random.value gives a number between 0.0 and 1.0.
+                    yDir = (Random.value > 0.5f) ? 1f : -1f;
+                }
 
-            currentState = DuckState.Dodging;
+                targetY = transform.position.y + (yDir * laneDistance);
+                targetY = Mathf.Clamp(targetY, bottomBorder, topBorder);
+
+                currentObstacle = hit.collider.transform;
+                currentState = DuckState.Dodging;
+                break;
+            }
         }
     }
 
@@ -104,5 +116,9 @@ public class MotherDuckAI : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(new Vector3(fixedX - 2, topBorder, 0), new Vector3(fixedX + 2, topBorder, 0));
         Gizmos.DrawLine(new Vector3(fixedX - 2, bottomBorder, 0), new Vector3(fixedX + 2, bottomBorder, 0));
+
+        Gizmos.color = Color.red;
+        float drawX = Application.isPlaying ? fixedX : transform.position.x;
+        Gizmos.DrawLine(new Vector3(drawX, transform.position.y, 0), new Vector3(drawX + lookAheadDistance, transform.position.y, 0));
     }
 }
