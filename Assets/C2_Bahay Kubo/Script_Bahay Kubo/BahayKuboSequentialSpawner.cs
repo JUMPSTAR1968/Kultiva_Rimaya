@@ -18,18 +18,15 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     public float jitterAmount = 0.3f;
 
     [Header("Game State & UI")]
-    public GameObject pausePanel;    // Drag your PausePanel here
-    public GameObject restartButton; // Drag your Btn_Restart here
+    public GameObject pausePanel;    
+    public GameObject restartButton; 
     private bool isGameOver = false; 
     private List<GameObject> activeVegetables = new List<GameObject>();
     private int globalVegetableOffset = 0; 
 
     void Start()
     {
-        // On start, the pause panel is usually hidden
         if (pausePanel != null) pausePanel.SetActive(false);
-        
-        // We keep the restart button active so it's visible whenever the pause panel is opened
         if (restartButton != null) restartButton.SetActive(true);
 
         SpawnCurrentBatch();
@@ -71,20 +68,34 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         }
 
         nextExpectedIndexInBatch = globalVegetableOffset;
+
+        // --- DEBUG: SHOW THE FIRST VEGETABLE OF THE NEW BATCH ---
+        string firstVeg = vegetablePrefabs[nextExpectedIndexInBatch].name;
+        Debug.Log($"<color=white>New Batch Started!</color> First vegetable to find: <b>{firstVeg}</b>");
     }
 
     public void TryHarvest(int clickedID, GameObject vegetableObj)
     {
         if (isGameOver) return;
 
+        // --- LOGIC: CHECK IF CLICKED ID MATCHES THE SEQUENCE ---
         if (clickedID == nextExpectedIndexInBatch)
         {
             nextExpectedIndexInBatch++;
             int currentBatchEnd = globalVegetableOffset + batchSizes[currentPhase];
+            
             Destroy(vegetableObj);
 
-            if (nextExpectedIndexInBatch >= currentBatchEnd)
+            if (nextExpectedIndexInBatch < currentBatchEnd)
             {
+                // --- DEBUG: SHOW THE NEXT TARGET AFTER A CORRECT CLICK ---
+                string nextVegName = vegetablePrefabs[nextExpectedIndexInBatch].name;
+                Debug.Log($"<color=green>Correct!</color> Next vegetable to harvest: <b>{nextVegName}</b>");
+            }
+            else
+            {
+                Debug.Log("<color=cyan>Batch Complete!</color> Preparing next line of the song...");
+                
                 globalVegetableOffset += batchSizes[currentPhase];
                 currentPhase++;
                 Invoke("SpawnCurrentBatch", 0.5f);
@@ -92,6 +103,10 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         }
         else
         {
+            // --- DEBUG: SHOW THE CORRECT TARGET AFTER A MISTAKE ---
+            string targetVegName = vegetablePrefabs[nextExpectedIndexInBatch].name;
+            Debug.Log($"<color=red>Wrong Veggie!</color> You should be looking for: <b>{targetVegName}</b>");
+
             if(HealthManager.Instance != null)
             {
                 HealthManager.Instance.TakeDamage(1);
@@ -103,17 +118,13 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     private void TriggerGameOver()
     {
         isGameOver = true;
-        Debug.Log("<color=red>GAME OVER!</color>");
-        
-        // Automatically open the pause panel so the user sees the Restart button
+        Debug.Log("<color=black><b>GAME OVER!</b></color> Use the Retry button to restart.");
         if (pausePanel != null) pausePanel.SetActive(true);
     }
 
     public void RestartGame()
     {
         isGameOver = false;
-
-        // Close the panel and reset everything
         if (pausePanel != null) pausePanel.SetActive(false);
         if (HealthManager.Instance != null) HealthManager.Instance.ResetHealth();
 
