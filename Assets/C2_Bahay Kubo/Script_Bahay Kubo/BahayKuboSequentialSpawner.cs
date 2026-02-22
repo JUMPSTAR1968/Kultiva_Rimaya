@@ -8,8 +8,8 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
 
     [Header("Song Structure")]
     private int[] batchSizes = { 4, 3, 4, 2, 4, 1 };
-    private int currentPhase = 0; 
-    private int nextExpectedIndexInBatch = 0; 
+    private int currentPhase = 0;
+    private int nextExpectedIndexInBatch = 0;
 
     [Header("Grid Settings")]
     public int columns = 6;
@@ -17,12 +17,16 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     public float cellSize = 1.8f;
     public float jitterAmount = 0.3f;
 
+    [Header("Rhythm Settings")]
+    public AudioSource bahayKuboAudio;
+    public float hitWindow = 0.5f;
+
     [Header("Game State & UI")]
-    public GameObject pausePanel;    
-    public GameObject restartButton; 
-    private bool isGameOver = false; 
+    public GameObject pausePanel;
+    public GameObject restartButton;
+    private bool isGameOver = false;
     private List<GameObject> activeVegetables = new List<GameObject>();
-    private int globalVegetableOffset = 0; 
+    private int globalVegetableOffset = 0;
 
     void Start()
     {
@@ -30,6 +34,35 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         if (restartButton != null) restartButton.SetActive(true);
 
         SpawnCurrentBatch();
+    }
+
+    void Update()
+    {
+        // Safety checks to prevent errors
+        if (isGameOver || bahayKuboAudio == null || !bahayKuboAudio.isPlaying) return;
+        if (SongManager.Instance == null || SongManager.Instance.beatmap == null) return;
+
+        // Ensure we don't look past the end of the beatmap list
+        if (nextExpectedIndexInBatch < SongManager.Instance.beatmap.Count)
+        {
+            float currentTime = bahayKuboAudio.time;
+            float targetTime = SongManager.Instance.beatmap[nextExpectedIndexInBatch].timestamp;
+
+            // --- AUTO-SKIP LOGIC ---
+            // If the song is past the target timestamp AND past the hit window, mark it as missed
+            if (currentTime > (targetTime + hitWindow))
+            {
+                Debug.Log($"<color=orange>Missed {vegetablePrefabs[nextExpectedIndexInBatch].name}!</color> Auto-skipping...");
+
+                if (HealthManager.Instance != null)
+                {
+                    HealthManager.Instance.TakeDamage(1);
+                    if (HealthManager.Instance.currentHealth <= 0) TriggerGameOver();
+                }
+
+                HandleVegetableProgress();
+            }
+        }
     }
 
     public void SpawnCurrentBatch()
@@ -68,57 +101,62 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         }
 
         nextExpectedIndexInBatch = globalVegetableOffset;
-
-        // --- DEBUG: SHOW THE FIRST VEGETABLE OF THE NEW BATCH ---
-        string firstVeg = vegetablePrefabs[nextExpectedIndexInBatch].name;
-        Debug.Log($"<color=white>New Batch Started!</color> First vegetable to find: <b>{firstVeg}</b>");
     }
 
     public void TryHarvest(int clickedID, GameObject vegetableObj)
     {
         if (isGameOver) return;
 
-        // --- LOGIC: CHECK IF CLICKED ID MATCHES THE SEQUENCE ---
-        if (clickedID == nextExpectedIndexInBatch)
-        {
-            nextExpectedIndexInBatch++;
-            int currentBatchEnd = globalVegetableOffset + batchSizes[currentPhase];
-            
-            Destroy(vegetableObj);
+        float clickTime = bahayKuboAudio.time;
+        float targetTimestamp = SongManager.Instance.beatmap[clickedID].timestamp;
 
-            if (nextExpectedIndexInBatch < currentBatchEnd)
+        // Check if the click is within the rhythm window
+        if (Mathf.Abs(clickTime - targetTimestamp) <= hitWindow)
+        {
+            if (clickedID == nextExpectedIndexInBatch)
             {
-                // --- DEBUG: SHOW THE NEXT TARGET AFTER A CORRECT CLICK ---
-                string nextVegName = vegetablePrefabs[nextExpectedIndexInBatch].name;
-                Debug.Log($"<color=green>Correct!</color> Next vegetable to harvest: <b>{nextVegName}</b>");
+                Destroy(vegetableObj);
+                HandleVegetableProgress();
             }
             else
             {
-                Debug.Log("<color=cyan>Batch Complete!</color> Preparing next line of the song...");
-                
-                globalVegetableOffset += batchSizes[currentPhase];
-                currentPhase++;
-                Invoke("SpawnCurrentBatch", 0.5f);
+                // Wrong sequence click
+                Penalty();
             }
         }
         else
         {
-            // --- DEBUG: SHOW THE CORRECT TARGET AFTER A MISTAKE ---
-            string targetVegName = vegetablePrefabs[nextExpectedIndexInBatch].name;
-            Debug.Log($"<color=red>Wrong Veggie!</color> You should be looking for: <b>{targetVegName}</b>");
+            // Wrong timing click
+            Penalty();
+        }
+    }
 
-            if(HealthManager.Instance != null)
-            {
-                HealthManager.Instance.TakeDamage(1);
-                if (HealthManager.Instance.currentHealth <= 0) TriggerGameOver();
-            }
+    private void HandleVegetableProgress()
+    {
+        nextExpectedIndexInBatch++;
+
+        int currentBatchEnd = globalVegetableOffset + batchSizes[currentPhase];
+
+        if (nextExpectedIndexInBatch >= currentBatchEnd)
+        {
+            globalVegetableOffset += batchSizes[currentPhase];
+            currentPhase++;
+            Invoke("SpawnCurrentBatch", 0.5f);
+        }
+    }
+
+    private void Penalty()
+    {
+        if (HealthManager.Instance != null)
+        {
+            HealthManager.Instance.TakeDamage(1);
+            if (HealthManager.Instance.currentHealth <= 0) TriggerGameOver();
         }
     }
 
     private void TriggerGameOver()
     {
         isGameOver = true;
-        Debug.Log("<color=black><b>GAME OVER!</b></color> Use the Retry button to restart.");
         if (pausePanel != null) pausePanel.SetActive(true);
     }
 
@@ -155,19 +193,5 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     {
         foreach (GameObject veg in activeVegetables) if (veg != null) Destroy(veg);
         activeVegetables.Clear();
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Vector2 offset = new Vector2((columns * cellSize) / 2, (rows * cellSize) / 2);
-        for (int x = 0; x < columns; x++)
-        {
-            for (int y = 0; y < rows; y++)
-            {
-                Vector3 pos = new Vector3((x * cellSize) - offset.x + (cellSize / 2), (y * cellSize) - offset.y + (cellSize / 2), 0);
-                Gizmos.DrawWireCube(pos + transform.position, new Vector3(cellSize, cellSize, 0));
-            }
-        }
     }
 }
