@@ -2361,9 +2361,9 @@ MonoBehaviour:
   - {fileID: 5629960571006874159, guid: f4b5fe5ecb50f4b7ba7abd7f5142aa2e, type: 3}
   - {fileID: 1964520805862515051, guid: c3a98dda098f14b18bdd745f635d0d3a, type: 3}
   - {fileID: 7982530157104804250, guid: 1a3f5353dda9c4d5fbccbbf325ae4ed1, type: 3}
-  columns: 16
-  rows: 4
-  cellSize: 0.9
+  columns: 3
+  rows: 3
+  cellSize: 2
   jitterAmount: 0
 --- !u!4 &1499728832
 Transform:
