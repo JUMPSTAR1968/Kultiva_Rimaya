@@ -3,8 +3,8 @@ guid: 5f846cf02c0039a46a08597452aedaa8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3132924502918746994
-    second: talong_0
+      213: -902410572903705768
+    second: Talong_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: talong_0
+      name: Talong_0
       rect:
         serializedVersion: 2
-        x: 19
-        y: 22
-        width: 26
-        height: 26
+        x: 370
+        y: 426
+        width: 448
+        height: 466
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 273d6988c326a7b20800000000000000
-      internalID: 3132924502918746994
+      spriteID: 85394887d5ef973f0800000000000000
+      internalID: -902410572903705768
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      talong_0: 3132924502918746994
+      Talong_0: -902410572903705768
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

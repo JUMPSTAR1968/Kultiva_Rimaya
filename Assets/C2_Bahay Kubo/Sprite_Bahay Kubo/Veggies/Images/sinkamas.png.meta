@@ -3,8 +3,8 @@ guid: 0fd9935fbf1d0eb43a416eaf43665d20
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1159406749400583881
-    second: sinkamas_0
+      213: 4366840889227207442
+    second: Sinkamas_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sinkamas_0
+      name: Sinkamas_0
       rect:
         serializedVersion: 2
-        x: 20
-        y: 24
-        width: 27
-        height: 35
+        x: 370
+        y: 445
+        width: 504
+        height: 652
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 731b9c744b5f8efe0800000000000000
-      internalID: -1159406749400583881
+      spriteID: 213e909f6a22a9c30800000000000000
+      internalID: 4366840889227207442
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      sinkamas_0: -1159406749400583881
+      Sinkamas_0: 4366840889227207442
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -3,8 +3,8 @@ guid: 6f3eb5ecb1f3a49449cb03657fce49ab
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2942795765433550690
-    second: kundol_0
+      213: -1791215880993450727
+    second: Kundol_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: kundol_0
+      name: Kundol_0
       rect:
         serializedVersion: 2
-        x: 14
-        y: 21
-        width: 27
-        height: 43
+        x: 278
+        y: 408
+        width: 466
+        height: 763
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e983fcac7d61927d0800000000000000
-      internalID: -2942795765433550690
+      spriteID: 915d85185a25427e0800000000000000
+      internalID: -1791215880993450727
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      kundol_0: -2942795765433550690
+      Kundol_0: -1791215880993450727
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

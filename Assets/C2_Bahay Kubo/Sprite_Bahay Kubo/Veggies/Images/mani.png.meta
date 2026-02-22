@@ -3,8 +3,8 @@ guid: e9bf9f77a0a17e74291339cb2e6062e8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7571514699579703403
-    second: mani_0
+      213: -4656816806104605241
+    second: Mani_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mani_0
+      name: Mani_0
       rect:
         serializedVersion: 2
-        x: 18
-        y: 19
-        width: 22
-        height: 45
+        x: 352
+        y: 370
+        width: 373
+        height: 801
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b60c810f08c631960800000000000000
-      internalID: 7571514699579703403
+      spriteID: 7cdd018a9c9af5fb0800000000000000
+      internalID: -4656816806104605241
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      mani_0: 7571514699579703403
+      Mani_0: -4656816806104605241
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

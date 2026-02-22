@@ -3,8 +3,8 @@ guid: 74894b8131cc0964395547dc0c118d54
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5425641083117689523
-    second: labanos_0
+      213: -1867488588714142230
+    second: Labanos_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: labanos_0
+      name: Labanos_0
       rect:
         serializedVersion: 2
-        x: 25
-        y: 43
-        width: 19
-        height: 20
+        x: 482
+        y: 816
+        width: 318
+        height: 336
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3badefd91dfbb4b40800000000000000
-      internalID: 5425641083117689523
+      spriteID: ae5199fd5095516e0800000000000000
+      internalID: -1867488588714142230
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      labanos_0: 5425641083117689523
+      Labanos_0: -1867488588714142230
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6987c31cb34239c4a8ca084461689031
+guid: 8e857a073de75c74b9d3b6e9b5cb61f5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2895157278119961449
-    second: Untitled design_0
+      213: 1017553385682797154
+    second: Sigarilyas_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Untitled design_0
+      name: Sigarilyas_0
       rect:
         serializedVersion: 2
-        x: 184
-        y: 554
-        width: 496
-        height: 249
+        x: 73
+        y: 556
+        width: 1061
+        height: 336
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 79cd5c47bc552d7d0800000000000000
-      internalID: -2895157278119961449
+      spriteID: 2628e9db9631f1e00800000000000000
+      internalID: 1017553385682797154
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Untitled design_0: -2895157278119961449
+      Sigarilyas_0: 1017553385682797154
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

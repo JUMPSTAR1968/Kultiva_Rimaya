@@ -3,8 +3,8 @@ guid: e7c65332cbd8f2d4e80861b3a0a0d3c2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4944678672063999342
-    second: luya_0
+      213: 4891632680316773809
+    second: Luya_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: luya_0
+      name: Luya_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 29
-        width: 45
-        height: 41
+        y: 556
+        width: 818
+        height: 744
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e6d23d0ed070f9440800000000000000
-      internalID: 4944678672063999342
+      spriteID: 1b529f9710292e340800000000000000
+      internalID: 4891632680316773809
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      luya_0: 4944678672063999342
+      Luya_0: 4891632680316773809
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

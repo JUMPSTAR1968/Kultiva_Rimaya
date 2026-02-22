@@ -3,8 +3,8 @@ guid: bf131de6af10bbe4fbd36cea3403c2c8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3135872633696714023
-    second: mustasa_0
+      213: -2988656419577288086
+    second: Mustasa_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mustasa_0
+      name: Mustasa_0
       rect:
         serializedVersion: 2
-        x: 21
-        y: 21
-        width: 20
-        height: 47
+        x: 408
+        y: 408
+        width: 336
+        height: 837
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 72d7c58bb8bd48b20800000000000000
-      internalID: 3135872633696714023
+      spriteID: a6aa76b22d82686d0800000000000000
+      internalID: -2988656419577288086
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      mustasa_0: 3135872633696714023
+      Mustasa_0: -2988656419577288086
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

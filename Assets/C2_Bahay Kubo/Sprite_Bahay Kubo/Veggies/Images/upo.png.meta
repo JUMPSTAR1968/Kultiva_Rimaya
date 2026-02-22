@@ -3,8 +3,8 @@ guid: c5bb5b2509553034899772b5c20c2d70
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7674360094387471781
-    second: upo_0
+      213: -8875179394189127068
+    second: Upo_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: upo_0
+      name: Upo_0
       rect:
         serializedVersion: 2
-        x: 25
-        y: 36
-        width: 14
-        height: 32
+        x: 482
+        y: 686
+        width: 225
+        height: 559
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5a5066868ddc08a60800000000000000
-      internalID: 7674360094387471781
+      spriteID: 4629d7b1d5705d480800000000000000
+      internalID: -8875179394189127068
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      upo_0: 7674360094387471781
+      Upo_0: -8875179394189127068
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

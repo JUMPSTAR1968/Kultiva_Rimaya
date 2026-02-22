@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e8b125f96d0eb274194b0bf08573b147
+guid: 3a9672db9d8e4d843a2b6f429518ba57
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7297101437133478760
-    second: Sigariliyas_0
+      213: 8938456072568032485
+    second: Bataw_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Sigariliyas_0
+      name: Bataw_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 29
-        width: 59
-        height: 20
+        x: 222
+        y: 667
+        width: 596
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 894aaa597ec7bba90800000000000000
-      internalID: -7297101437133478760
+      spriteID: 5ecc9d5a076cb0c70800000000000000
+      internalID: 8938456072568032485
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Sigariliyas_0: -7297101437133478760
+      Bataw_0: 8938456072568032485
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

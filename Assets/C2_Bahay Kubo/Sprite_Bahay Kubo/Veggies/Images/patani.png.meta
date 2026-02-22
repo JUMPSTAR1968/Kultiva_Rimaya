@@ -3,8 +3,8 @@ guid: e13d906ac778c1b47b3083275d44a078
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6035253152568061236
-    second: patani_0
+      213: -3211825458475435324
+    second: Patani_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: patani_0
+      name: Patani_0
       rect:
         serializedVersion: 2
-        x: 14
-        y: 22
-        width: 13
-        height: 34
+        x: 278
+        y: 426
+        width: 206
+        height: 596
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cc2df9fdb397e3ca0800000000000000
-      internalID: -6035253152568061236
+      spriteID: 4caf30333cd4d63d0800000000000000
+      internalID: -3211825458475435324
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      patani_0: -6035253152568061236
+      Patani_0: -3211825458475435324
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

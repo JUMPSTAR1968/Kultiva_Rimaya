@@ -3,8 +3,8 @@ guid: be97b29e36f56684ba69d1076b33e52e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2841920854973159057
-    second: kamatis_0
+      213: 261856688808907143
+    second: Kamatis_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: kamatis_0
+      name: Kamatis_0
       rect:
         serializedVersion: 2
-        x: 19
-        y: 18
-        width: 29
-        height: 36
+        x: 352
+        y: 333
+        width: 540
+        height: 671
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1961370e5f7807720800000000000000
-      internalID: 2841920854973159057
+      spriteID: 781d386654d42a300800000000000000
+      internalID: 261856688808907143
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      kamatis_0: 2841920854973159057
+      Kamatis_0: 261856688808907143
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
