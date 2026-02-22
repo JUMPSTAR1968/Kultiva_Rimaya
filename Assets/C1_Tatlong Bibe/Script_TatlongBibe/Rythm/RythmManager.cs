@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class RythmManager : MonoBehaviour
 {
@@ -6,8 +7,8 @@ public class RythmManager : MonoBehaviour
     public GameObject kwakPrefab;
     public RectTransform spawnZone;
     public float[] kwakTimings;
-    public float preemptionTime = 1.0f;
 
+    public float leadTime = 1.0f; // How many seconds before the beat the circle appears
     private int nextNoteIndex = 0;
 
     void Start()
@@ -17,33 +18,30 @@ public class RythmManager : MonoBehaviour
 
     void Update()
     {
-        if (nextNoteIndex < kwakTimings.Length)
+        if (songSource == null || nextNoteIndex >= kwakTimings.Length) return;
+
+        // Check if it's time to spawn the next note (Target Time minus Lead Time)
+        if (songSource.time >= kwakTimings[nextNoteIndex] - leadTime)
         {
-            if (songSource.time >= kwakTimings[nextNoteIndex] - preemptionTime)
-            {
-                SpawnKwak(kwakTimings[nextNoteIndex]);
-                nextNoteIndex++;
-            }
+            SpawnKwak(kwakTimings[nextNoteIndex]);
+            nextNoteIndex++; // Move to the next timestamp in the array
         }
     }
 
     void SpawnKwak(float targetTime)
     {
-        // 1. Create the note as a child of the NoteContainer
         GameObject newNote = Instantiate(kwakPrefab, spawnZone);
 
-        // 2. YOUR LOGIC START: Calculate random position based on the SpawnZone size
+        // Ensure the scale is correct (UI instantiation often messes this up)
+        newNote.transform.localScale = Vector3.one;
+
+        // Moves the circle to a random spot inside your NoteContainer
         float rx = Random.Range(-spawnZone.rect.width / 2, spawnZone.rect.width / 2);
         float ry = Random.Range(-spawnZone.rect.height / 2, spawnZone.rect.height / 2);
 
-        // 3. YOUR LOGIC END: Apply that position to the new note
         newNote.GetComponent<RectTransform>().anchoredPosition = new Vector2(rx, ry);
+        newNote.GetComponent<KwakCircle>().Setup(targetTime, songSource, leadTime);
 
-        // 4. Connect to the KwakCircle script
-        KwakCircle circleScript = newNote.GetComponent<KwakCircle>();
-        if (circleScript != null)
-        {
-            circleScript.Setup(targetTime, songSource);
-        }
+        Debug.Log("Spawned Kwak for time: " + targetTime);
     }
 }
