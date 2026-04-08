@@ -1530,7 +1530,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -119.24, y: -43.3}
+  m_AnchoredPosition: {x: -119.23999, y: -43.30005}
   m_SizeDelta: {x: 150, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &568580196
@@ -1680,6 +1680,7 @@ GameObject:
   - component: {fileID: 736114011}
   - component: {fileID: 736114010}
   - component: {fileID: 736114013}
+  - component: {fileID: 736114014}
   m_Layer: 0
   m_Name: Brown duck (Transparent)_0
   m_TagString: Untagged
@@ -1739,7 +1740,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.21, y: 0.21}
+  m_Size: {x: 4.1, y: 2.24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1799,7 +1800,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 4.1, y: 2.24}
-    newSize: {x: 0.21, y: 0.21}
+    newSize: {x: 4.1, y: 2.24}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1879,6 +1880,19 @@ MonoBehaviour:
   topBorder: 1.3
   bottomBorder: -1.5
   safePassDistance: 1
+--- !u!114 &736114014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736114007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9a04513098c3984f8ea1060e1814629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenAligner
+  screenPositionX: 0.11
 --- !u!1 &786858206
 GameObject:
   m_ObjectHideFlags: 0
@@ -2058,6 +2072,7 @@ GameObject:
   - component: {fileID: 800286176}
   - component: {fileID: 800286175}
   - component: {fileID: 800286174}
+  - component: {fileID: 800286180}
   m_Layer: 0
   m_Name: White duck (Transparent)_0
   m_TagString: Untagged
@@ -2242,6 +2257,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &800286180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800286173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9a04513098c3984f8ea1060e1814629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenAligner
+  screenPositionX: 0.468
 --- !u!1 &836699572
 GameObject:
   m_ObjectHideFlags: 0
@@ -4727,6 +4755,7 @@ GameObject:
   - component: {fileID: 2093061539}
   - component: {fileID: 2093061538}
   - component: {fileID: 2093061537}
+  - component: {fileID: 2093061543}
   m_Layer: 0
   m_Name: Mallard (Transparent)_0
   m_TagString: Untagged
@@ -4835,7 +4864,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FatDuckMovement
   minY: -2.6
   maxY: 1.5
-  smoothTime: 0.5
+  smoothTime: 0.713
 --- !u!212 &2093061541
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4909,6 +4938,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2093061543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093061536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9a04513098c3984f8ea1060e1814629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenAligner
+  screenPositionX: 0.298
 --- !u!1 &2131234651
 GameObject:
   m_ObjectHideFlags: 0
