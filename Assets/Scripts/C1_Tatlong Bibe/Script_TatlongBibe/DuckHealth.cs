@@ -29,10 +29,15 @@ public class DuckHealth : MonoBehaviour
         // If we hit an obstacle and aren't invincible and the game isn't over
         if (collision.CompareTag("Obstacle") && !isInvincible && !MTB_GameManager.Instance.isGameOver)
         {
-            // Tell the global HealthManager to remove 1 heart!
-            HealthManager.Instance.TakeDamage(1);
+            // NEW: Only remove a visual UI heart if we are NOT on Easy mode!
+            if (GameSettings.CurrentDifficulty != Difficulty.Easy)
+            {
+                HealthManager.Instance.TakeDamage(1);
+            }
 
             MTB_GameManager.Instance.LoseHealth(); // Tell the manager we got hit!
+
+            // The duck will still flash and play the "ouch" face, but won't lose health on Easy!
             StartCoroutine(FlashRoutine());
         }
     }
