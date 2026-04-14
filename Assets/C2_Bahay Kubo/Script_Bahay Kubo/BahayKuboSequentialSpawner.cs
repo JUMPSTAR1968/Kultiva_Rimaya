@@ -154,10 +154,25 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         }
     }
 
-    private void TriggerGameOver()
+   private void TriggerGameOver()
     {
         isGameOver = true;
-        if (pausePanel != null) pausePanel.SetActive(true);
+
+        // 1. Force stop the music immediately
+        if (bahayKuboAudio != null)
+        {
+            bahayKuboAudio.Stop();
+            Debug.Log("Music stopped: Player lost all lives.");
+        }
+
+        // 2. Clear remaining vegetables so the screen isn't cluttered
+        ClearGarden();
+
+        // 3. Show the Game Over / Pause panel
+        if (pausePanel != null) 
+        {
+            pausePanel.SetActive(true);
+        }
     }
 
     public void RestartGame()
