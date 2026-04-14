@@ -36,25 +36,48 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     }
 
     void Update()
+{
+    // Don't process if the game is over or audio isn't playing
+    if (isGameOver || bahayKuboAudio == null || !bahayKuboAudio.isPlaying) return;
+
+    if (SongManager.Instance != null && nextExpectedIndexInBeatmap < SongManager.Instance.beatmap.Count)
     {
-        if (isGameOver || bahayKuboAudio == null || !bahayKuboAudio.isPlaying) return;
+        float currentTime = bahayKuboAudio.time;
+        float targetTime = SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].timestamp;
 
-        // --- AUTO-SKIP MISSES ---
-        // Range Check: Ensure we don't go past the list size
-        if (SongManager.Instance != null && nextExpectedIndexInBeatmap < SongManager.Instance.beatmap.Count)
+        // If the song has moved past the 'hit window'
+        if (currentTime > (targetTime + hitWindow))
         {
-            float currentTime = bahayKuboAudio.time;
-            float targetTime = SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].timestamp;
+            Debug.Log($"<color=red>Time's up! {SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].vegetableName} disappeared.</color>");
+            
+            // NEW: Remove the specific vegetable that was missed
+            RemoveMissedVegetable(nextExpectedIndexInBeatmap);
+            
+            ApplyPenalty();
+            HandleProgress();
+        }
+    }
+}
 
-            // If the song has moved past the 'hit window' for the current veggie
-            if (currentTime > (targetTime + hitWindow))
+private void RemoveMissedVegetable(int missedID)
+{
+    // Look through active vegetables for the one with the matching ID
+    for (int i = activeVegetables.Count - 1; i >= 0; i--)
+    {
+        GameObject veg = activeVegetables[i];
+        if (veg != null)
+        {
+            VegetableClick script = veg.GetComponent<VegetableClick>();
+            if (script != null && script.vegetableID == missedID)
             {
-                Debug.Log($"<color=orange>Missed {SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].vegetableName}!</color>");
-                ApplyPenalty();
-                HandleProgress();
+                // Visual feedback: You could trigger a "poof" effect here
+                Destroy(veg);
+                activeVegetables.RemoveAt(i);
+                break; // Found it, stop looking
             }
         }
     }
+}
 
     public void SpawnCurrentBatch()
     {
