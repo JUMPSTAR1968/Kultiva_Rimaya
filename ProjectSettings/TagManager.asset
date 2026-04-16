@@ -46,5 +46,8 @@ TagManager:
   - name: Arrows
     uniqueID: 1328742141
     locked: 0
+  - name: Dialogue
+    uniqueID: 1208739185
+    locked: 0
   m_RenderingLayers:
   - Default
