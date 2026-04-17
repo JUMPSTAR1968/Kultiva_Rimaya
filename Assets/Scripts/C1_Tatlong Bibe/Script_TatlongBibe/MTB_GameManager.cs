@@ -6,6 +6,8 @@ public class MTB_GameManager : MonoBehaviour
 {
     public static MTB_GameManager Instance;
 
+    [SerializeField] TriggerDialogue triggerDialogue;
+
     [Header("Global Stats")]
     public int sharedHealth = 3;
     private int maxHealth = 3; // Remembers if the max is 3 (Medium) or 1 (Hard)
@@ -41,6 +43,7 @@ public class MTB_GameManager : MonoBehaviour
                 maxHealth = 3;
                 sharedHealth = 3;
                 if (healthBarUI != null) healthBarUI.SetActive(true);
+                triggerDialogue.Interact();
                 break;
 
             case Difficulty.Hard:
