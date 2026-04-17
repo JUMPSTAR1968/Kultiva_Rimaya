@@ -277,6 +277,7 @@ MonoBehaviour:
   shrinkScale: 0.9
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
+  overrideGhostRipple: 0
 --- !u!1 &929481893516678255
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,6 +515,7 @@ GameObject:
   - component: {fileID: 5820368797563048352}
   - component: {fileID: 6277034806924474435}
   - component: {fileID: 3822521217163201435}
+  - component: {fileID: 1028092215037484864}
   m_Layer: 5
   m_Name: NextButton
   m_TagString: Untagged
@@ -662,6 +664,19 @@ MonoBehaviour:
   shrinkScale: 0.9
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
+  overrideGhostRipple: 0
+--- !u!114 &1028092215037484864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697448307269934248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5651a57d83457074ba087a96ab43a499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonPointersBridge
 --- !u!1 &2177045172960505616
 GameObject:
   m_ObjectHideFlags: 0
@@ -1107,6 +1122,7 @@ MonoBehaviour:
   shrinkScale: 0.9
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
+  overrideGhostRipple: 0
 --- !u!1 &4365020649113280819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1646,6 +1662,7 @@ MonoBehaviour:
   shrinkScale: 0.9
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
+  overrideGhostRipple: 0
 --- !u!1 &6530769820299774820
 GameObject:
   m_ObjectHideFlags: 0
@@ -2145,6 +2162,7 @@ MonoBehaviour:
   shrinkScale: 0.9
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
+  overrideGhostRipple: 0
 --- !u!1 &7838693415378674459
 GameObject:
   m_ObjectHideFlags: 0

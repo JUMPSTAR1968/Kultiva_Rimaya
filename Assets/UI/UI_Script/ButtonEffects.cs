@@ -11,9 +11,11 @@ public class ButtonEffects : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     [Header("Ghost Settings (Smooth)")]
     [SerializeField] float rippleExpansionSize = 1.8f;
-    [SerializeField] float rippleFadeTime = 0.4f;
+    [SerializeField] public float rippleFadeTime = 0.4f;
 
     private Vector3 originalScale;
+
+    [SerializeField] private bool overrideGhostRipple = false;
 
     void Awake()
     {
@@ -35,7 +37,7 @@ public class ButtonEffects : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         transform.localScale = originalScale;
 
         // Trigger the smooth "Afterimage" ghost
-        CreateGhostRipple();
+        if (!overrideGhostRipple) CreateGhostRipple();
     }
 
     // --- 3. THE GHOST (Smooth Animation) ---

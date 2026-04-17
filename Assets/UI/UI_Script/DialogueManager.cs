@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -54,11 +55,21 @@ public class DialogueManager : MonoBehaviour {
     private bool isPlaying = false;
     private bool isAwaitingAdvance = false;
 
+    [SerializeField] private GameObject nextButton;
+    public ButtonPointersBridge nextButtonBridge;
+    private bool wasNextButtonReleased;
+
+    private void ListenToButtonRelease()
+    {
+        wasNextButtonReleased = true;
+    }
+
     private void Awake() {
         if (Instance != null && Instance != this) {
             Destroy(gameObject);
             return;
         }
+
         Instance = this;
         
         foreach (var binding in inspectorFaces) {
@@ -66,13 +77,45 @@ public class DialogueManager : MonoBehaviour {
                 faceDictionary.Add(binding.faceName, binding.faceImage);
             }
         }
+
         dialogueArea.SetActive(false);
+
+        nextButton.SetActive(false);
+    }
+
+    private void Start()
+    {
+        nextButtonBridge.OnPointerUpEvent += ListenToButtonRelease;
+    }
+
+    private void StartWaitingAdvance()
+    {
+        isAwaitingAdvance = true;
+        nextButton.SetActive(true);
+    }
+
+    IEnumerator HideNextButtonAfterRipple()
+    {
+        float timer = 0;
+
+        // Cache the value once before starting the loop
+        float rippleDuration = nextButton.GetComponent<ButtonEffects>().rippleFadeTime;
+
+        while (timer < rippleDuration * 2)
+        {
+            timer += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        nextButton.SetActive(false);
     }
 
     private void Update() {
-        if (isAwaitingAdvance) { //todo: adapt next button logic
+        if (isAwaitingAdvance && wasNextButtonReleased) {
             isAwaitingAdvance = false;
-            //ProcessNextLine();
+            wasNextButtonReleased = false;
+            StartCoroutine(HideNextButtonAfterRipple());
+            ProcessNextLine();
         }
     }
 
@@ -271,7 +314,7 @@ public class DialogueManager : MonoBehaviour {
             currentIndex++;
         }
 
-        isAwaitingAdvance = true;
+        StartWaitingAdvance();
     }
 
     private void EndDialogue() {
