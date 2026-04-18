@@ -1,5 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
+using UnityEngine.UI;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class BahayKuboSequentialSpawner : MonoBehaviour
 {
@@ -24,6 +27,7 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     [Header("Game State & UI")]
     public GameObject pausePanel;
     public GameObject restartButton;
+    public TextMeshProUGUI _scoreLabel;
     private bool isGameOver = false;
     private List<GameObject> activeVegetables = new List<GameObject>();
     private int globalVegetableOffset = 0;
@@ -54,6 +58,9 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
                 HandleProgress();
             }
         }
+
+        // Update Score Text
+        _scoreLabel.text = SongManager.Instance.ScoreCount.ToString();
     }
 
     public void SpawnCurrentBatch()
@@ -125,6 +132,8 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     private void HandleProgress()
     {
         // Keep increasing the index to move through the 36+ element Beatmap list
+        SongManager.Instance.ScoreCount++;
+        Debug.Log($"Score Count: {SongManager.Instance.ScoreCount}");
         nextExpectedIndexInBeatmap++;
 
         int currentBatchEnd = globalVegetableOffset + batchSizes[currentPhase];
@@ -149,6 +158,9 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     {
         if (HealthManager.Instance != null)
         {
+            SongManager.Instance.ResetScore();
+            Debug.Log($"Score Counter Reset: {SongManager.Instance.ScoreCount}");
+
             HealthManager.Instance.TakeDamage(1);
             if (HealthManager.Instance.currentHealth <= 0) TriggerGameOver();
         }
@@ -169,6 +181,7 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         bahayKuboAudio.Stop();
         bahayKuboAudio.Play();
 
+        SongManager.Instance.ResetScore();
         currentPhase = 0;
         globalVegetableOffset = 0;
         nextExpectedIndexInBeatmap = 0;
