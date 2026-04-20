@@ -40,68 +40,72 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         SpawnCurrentBatch();
     }
 
-    void Update()
+void Update()
+{
+    if (isGameOver || bahayKuboAudio == null || !bahayKuboAudio.isPlaying) return;
+
+    if (SongManager.Instance != null && nextExpectedIndexInBeatmap < SongManager.Instance.beatmap.Count)
     {
-        if (isGameOver || bahayKuboAudio == null || !bahayKuboAudio.isPlaying) return;
+        float currentTime = bahayKuboAudio.time;
+        float targetTime = SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].timestamp;
 
-        if (SongManager.Instance != null && nextExpectedIndexInBeatmap < SongManager.Instance.beatmap.Count)
+        if (currentTime > (targetTime + hitWindow))
         {
-            float currentTime = bahayKuboAudio.time;
-            float targetTime = SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].timestamp;
-
-            // AUTO-SKIP MISS: If the song moved past the hit window
-            if (currentTime > (targetTime + hitWindow))
-            {
-                Debug.Log($"Missed {SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].vegetableName}!");
-                RemoveMissedVegetable(nextExpectedIndexInBeatmap);
-                ApplyPenalty();
-                HandleProgress();
-            }
+            Debug.Log($"Missed {SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].vegetableName}");
+            
+            // This method MUST remove the veggie from the list
+            RemoveMissedVegetable(nextExpectedIndexInBeatmap);
+            
+            ApplyPenalty();
+            
+            // HandleProgress will check if it's time for the next batch
+            HandleProgress();
         }
     }
+}
 
     public void TryHarvest(int clickedID, GameObject vegetableObj)
-{
-    if (isGameOver) return;
-
-    float clickTime = bahayKuboAudio.time;
-    if (SongManager.Instance == null || clickedID >= SongManager.Instance.beatmap.Count) return;
-
-    float targetTimestamp = SongManager.Instance.beatmap[clickedID].timestamp;
-    float timeDifference = clickTime - targetTimestamp;
-
-    // DEBUG: Check these numbers in your Console to see why it's failing
-    Debug.Log($"Clicked ID: {clickedID} | Target: {nextExpectedIndexInBeatmap} | Diff: {timeDifference:F2}");
-
-    bool isCorrectVeggie = (clickedID == nextExpectedIndexInBeatmap);
-    bool isOnBeat = Mathf.Abs(timeDifference) <= hitWindow;
-
-    // 1. SUCCESS: Correct vegetable and inside the window
-    if (isCorrectVeggie && isOnBeat)
     {
-        activeVegetables.Remove(vegetableObj);
-        Destroy(vegetableObj);
-        HandleProgress();
+        if (isGameOver) return;
+
+        float clickTime = bahayKuboAudio.time;
+        if (SongManager.Instance == null || clickedID >= SongManager.Instance.beatmap.Count) return;
+
+        float targetTimestamp = SongManager.Instance.beatmap[clickedID].timestamp;
+        float timeDifference = clickTime - targetTimestamp;
+
+        // DEBUG: Check these numbers in your Console to see why it's failing
+        Debug.Log($"Clicked ID: {clickedID} | Target: {nextExpectedIndexInBeatmap} | Diff: {timeDifference:F2}");
+
+        bool isCorrectVeggie = (clickedID == nextExpectedIndexInBeatmap);
+        bool isOnBeat = Mathf.Abs(timeDifference) <= hitWindow;
+
+        // 1. SUCCESS: Correct vegetable and inside the window
+        if (isCorrectVeggie && isOnBeat)
+        {
+            activeVegetables.Remove(vegetableObj);
+            Destroy(vegetableObj);
+            HandleProgress();
+        }
+        // 2. TOO EARLY: Correct vegetable, but the song hasn't reached the window yet
+        else if (isCorrectVeggie && timeDifference < -hitWindow)
+        {
+            ShowFeedback(vegetableObj, "Too Early!");
+            ApplyPenalty();
+        }
+        // 3. WRONG VEGETABLE: User clicked the wrong one entirely
+        else if (!isCorrectVeggie)
+        {
+            ShowFeedback(vegetableObj, "Mali!");
+            ApplyPenalty();
+        }
+        // 4. TOO LATE: Correct vegetable, but window has passed (usually handled by Update auto-miss)
+        else
+        {
+            ShowFeedback(vegetableObj, "Too Late!");
+            ApplyPenalty();
+        }
     }
-    // 2. TOO EARLY: Correct vegetable, but the song hasn't reached the window yet
-    else if (isCorrectVeggie && timeDifference < -hitWindow)
-    {
-        ShowFeedback(vegetableObj, "Too Early!");
-        ApplyPenalty();
-    }
-    // 3. WRONG VEGETABLE: User clicked the wrong one entirely
-    else if (!isCorrectVeggie)
-    {
-        ShowFeedback(vegetableObj, "Mali!");
-        ApplyPenalty();
-    }
-    // 4. TOO LATE: Correct vegetable, but window has passed (usually handled by Update auto-miss)
-    else
-    {
-        ShowFeedback(vegetableObj, "Too Late!");
-        ApplyPenalty();
-    }
-}
 
     private void ShowFeedback(GameObject vegetableObj, string message)
     {
@@ -117,9 +121,9 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
             // Move UI to the vegetable's screen position
             Vector3 screenPos = Camera.main.WorldToScreenPoint(vegetableObj.transform.position);
             feedbackPopup.transform.position = screenPos + popupOffset;
-            
+
             feedbackPopup.SetActive(true);
-            CancelInvoke("HideFeedback"); 
+            CancelInvoke("HideFeedback");
             Invoke("HideFeedback", 0.6f);
         }
     }
@@ -177,19 +181,55 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         }
     }
 
-    private void HandleProgress()
+    private void UpdateEasyHint()
     {
-        nextExpectedIndexInBeatmap++;
-        int currentBatchEnd = globalVegetableOffset + batchSizes[currentPhase];
-
-        if (nextExpectedIndexInBeatmap >= currentBatchEnd)
+        // Loop through all active vegetables on screen
+        foreach (GameObject veg in activeVegetables)
         {
-            globalVegetableOffset += batchSizes[currentPhase];
-            currentPhase++;
-            if (currentPhase >= batchSizes.Length) currentPhase = 0;
-            Invoke("SpawnCurrentBatch", 0.5f);
+            if (veg == null) continue;
+
+            VegetableClick script = veg.GetComponent<VegetableClick>();
+            if (script != null)
+            {
+                // If this vegetable's ID matches what the song wants next, turn on hint
+                bool isNext = (script.vegetableID == nextExpectedIndexInBeatmap);
+                script.SetHint(isNext);
+            }
         }
     }
+ private void HandleProgress()
+{
+    // 1. Move to the next index in the song's beatmap
+    nextExpectedIndexInBeatmap++;
+
+    // Calculate where the current visual batch should end
+    int currentBatchEnd = globalVegetableOffset + batchSizes[currentPhase];
+
+    // 2. Check if we have finished all vegetables in the current batch
+    if (nextExpectedIndexInBeatmap >= currentBatchEnd)
+    {
+        // Update the offset to start the next batch's indices
+        globalVegetableOffset += batchSizes[currentPhase];
+        
+        // Move to the next phase in the song structure
+        currentPhase++;
+
+        // Loop the phases if we reach the end of the batchSizes array
+        if (currentPhase >= batchSizes.Length)
+        {
+            currentPhase = 0;
+        }
+
+        // Clear any lingering nulls and spawn the next set
+        ClearGarden(); 
+        Invoke("SpawnCurrentBatch", 0.3f);
+    }
+    else
+    {
+        // If the batch isn't over, just update the hint for the next veggie
+        UpdateEasyHint();
+    }
+}
 
     private void ApplyPenalty()
     {

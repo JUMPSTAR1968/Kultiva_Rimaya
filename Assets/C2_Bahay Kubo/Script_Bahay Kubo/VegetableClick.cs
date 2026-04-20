@@ -9,11 +9,11 @@ public class VegetableClick : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool isFlashing = false;
 
-    private void Awake()
-    {
-        // Get the renderer so we can change its color
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
+private void Awake()
+{
+    spriteRenderer = GetComponent<SpriteRenderer>();
+    originalScale = transform.localScale; // Capture the scale from the prefab
+}
 
     private void OnMouseDown()
     {
@@ -61,4 +61,21 @@ public class VegetableClick : MonoBehaviour
 
         isFlashing = false;
     }
+private Vector3 originalScale;
+
+public void SetHint(bool active)
+{
+    if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
+    
+    if (active)
+    {
+        spriteRenderer.color = new Color(1f, 1f, 0.5f); // Yellow hint
+        transform.localScale = originalScale * 1.1f;    // Grow only 10% bigger
+    }
+    else
+    {
+        spriteRenderer.color = Color.white;
+        transform.localScale = originalScale;           // Back to original
+    }
+}
 }
