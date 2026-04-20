@@ -32,6 +32,9 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     private List<GameObject> activeVegetables = new List<GameObject>();
     private int globalVegetableOffset = 0;
 
+    [Header("Grace Period")]
+    private bool isGracePeriodActive = false; // Tracks if the next mistake is "free"
+
     void Start()
     {
         if (pausePanel != null) pausePanel.SetActive(false);
@@ -40,29 +43,29 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         SpawnCurrentBatch();
     }
 
-void Update()
-{
-    if (isGameOver || bahayKuboAudio == null || !bahayKuboAudio.isPlaying) return;
-
-    if (SongManager.Instance != null && nextExpectedIndexInBeatmap < SongManager.Instance.beatmap.Count)
+    void Update()
     {
-        float currentTime = bahayKuboAudio.time;
-        float targetTime = SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].timestamp;
+        if (isGameOver || bahayKuboAudio == null || !bahayKuboAudio.isPlaying) return;
 
-        if (currentTime > (targetTime + hitWindow))
+        if (SongManager.Instance != null && nextExpectedIndexInBeatmap < SongManager.Instance.beatmap.Count)
         {
-            Debug.Log($"Missed {SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].vegetableName}");
-            
-            // This method MUST remove the veggie from the list
-            RemoveMissedVegetable(nextExpectedIndexInBeatmap);
-            
-            ApplyPenalty();
-            
-            // HandleProgress will check if it's time for the next batch
-            HandleProgress();
+            float currentTime = bahayKuboAudio.time;
+            float targetTime = SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].timestamp;
+
+            if (currentTime > (targetTime + hitWindow))
+            {
+                Debug.Log($"Missed {SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].vegetableName}");
+
+                // This method MUST remove the veggie from the list
+                RemoveMissedVegetable(nextExpectedIndexInBeatmap);
+
+                ApplyPenalty();
+
+                // HandleProgress will check if it's time for the next batch
+                HandleProgress();
+            }
         }
     }
-}
 
     public void TryHarvest(int clickedID, GameObject vegetableObj)
     {
@@ -197,46 +200,70 @@ void Update()
             }
         }
     }
- private void HandleProgress()
-{
-    // 1. Move to the next index in the song's beatmap
-    nextExpectedIndexInBeatmap++;
-
-    // Calculate where the current visual batch should end
-    int currentBatchEnd = globalVegetableOffset + batchSizes[currentPhase];
-
-    // 2. Check if we have finished all vegetables in the current batch
-    if (nextExpectedIndexInBeatmap >= currentBatchEnd)
+    private void HandleProgress()
     {
-        // Update the offset to start the next batch's indices
-        globalVegetableOffset += batchSizes[currentPhase];
-        
-        // Move to the next phase in the song structure
-        currentPhase++;
+        // 1. Move to the next index in the song's beatmap
+        nextExpectedIndexInBeatmap++;
 
-        // Loop the phases if we reach the end of the batchSizes array
-        if (currentPhase >= batchSizes.Length)
+        // Calculate where the current visual batch should end
+        int currentBatchEnd = globalVegetableOffset + batchSizes[currentPhase];
+
+        // 2. Check if we have finished all vegetables in the current batch
+        if (nextExpectedIndexInBeatmap >= currentBatchEnd)
         {
-            currentPhase = 0;
-        }
+            // Update the offset to start the next batch's indices
+            globalVegetableOffset += batchSizes[currentPhase];
 
-        // Clear any lingering nulls and spawn the next set
-        ClearGarden(); 
-        Invoke("SpawnCurrentBatch", 0.3f);
+            // Move to the next phase in the song structure
+            currentPhase++;
+
+            // Loop the phases if we reach the end of the batchSizes array
+            if (currentPhase >= batchSizes.Length)
+            {
+                currentPhase = 0;
+            }
+
+            // Clear any lingering nulls and spawn the next set
+            ClearGarden();
+            Invoke("SpawnCurrentBatch", 0.3f);
+        }
+        else
+        {
+            // If the batch isn't over, just update the hint for the next veggie
+            UpdateEasyHint();
+        }
     }
-    else
-    {
-        // If the batch isn't over, just update the hint for the next veggie
-        UpdateEasyHint();
-    }
-}
 
     private void ApplyPenalty()
     {
         if (HealthManager.Instance != null)
         {
-            HealthManager.Instance.TakeDamage(1);
-            if (HealthManager.Instance.currentHealth <= 0) TriggerGameOver();
+            // If we DON'T have a grace period active, this is the FIRST mistake
+            if (!isGracePeriodActive)
+            {
+                isGracePeriodActive = true;
+                Debug.Log("<color=cyan>Grace Period Activated! Next mistake will cost a life.</color>");
+
+                // Optional: Provide visual feedback like a shield icon or text
+                if (feedbackText != null)
+                {
+                    // We keep the "Mali" popup but maybe change the text or color
+                    feedbackText.text = "Ingat! (Warning)";
+                }
+            }
+            else
+            {
+                // If Grace Period WAS active, this is the SECOND mistake
+                isGracePeriodActive = false; // Reset grace
+                HealthManager.Instance.TakeDamage(1);
+
+                Debug.Log("<color=red>Life Lost! Grace Period reset.</color>");
+
+                if (HealthManager.Instance.currentHealth <= 0)
+                {
+                    TriggerGameOver();
+                }
+            }
         }
     }
 
@@ -251,6 +278,7 @@ void Update()
     public void RestartGame()
     {
         isGameOver = false;
+        isGracePeriodActive = false; // Reset the mistake counter
         if (pausePanel != null) pausePanel.SetActive(false);
         if (HealthManager.Instance != null) HealthManager.Instance.ResetHealth();
 
