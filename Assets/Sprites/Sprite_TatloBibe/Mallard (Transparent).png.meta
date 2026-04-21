@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 56917f403f20e474980529ba72eede40
+guid: 9b1736bfa71886849953e658763074c9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 131568234011644117
-    second: Rimaya UI Button_Dark Green_0
+      213: -589286881291095695
+    second: Mallard (Transparent)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Rimaya UI Button_Dark Green_0
+      name: Mallard (Transparent)_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 240
-        height: 240
+        x: 446
+        y: 595
+        width: 410
+        height: 224
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 38, y: 39, z: 39, w: 38}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5d05dfb9c9c63d100800000000000000
-      internalID: 131568234011644117
+      spriteID: 171b8d124be62d7f0800000000000000
+      internalID: -589286881291095695
       vertices: []
       indices: 
       edges: []
@@ -138,8 +138,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 495fcf68a558c374eac89b09f0ec7343
-    internalID: 0
+    spriteID: fbdc724db5976124886f6a15eb94e269
+    internalID: -631343746
     vertices: []
     indices: 
     edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Rimaya UI Button_Dark Green_0: 131568234011644117
+      Mallard (Transparent)_0: -589286881291095695
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

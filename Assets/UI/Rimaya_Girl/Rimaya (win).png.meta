@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9b1736bfa71886849953e658763074c9
+guid: 1baff21da5c64c5438aef7a91bfcbe0a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -589286881291095695
-    second: Mallard (Transparent)_0
+      213: 8270004570656503260
+    second: Rimaya (win)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Mallard (Transparent)_0
+      name: Rimaya (win)_0
       rect:
         serializedVersion: 2
-        x: 446
-        y: 595
-        width: 410
-        height: 224
+        x: 0
+        y: 0
+        width: 558
+        height: 985
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 171b8d124be62d7f0800000000000000
-      internalID: -589286881291095695
+      spriteID: cd576d43755f4c270800000000000000
+      internalID: 8270004570656503260
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: fbdc724db5976124886f6a15eb94e269
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Mallard (Transparent)_0: -589286881291095695
+      Rimaya (win)_0: 8270004570656503260
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

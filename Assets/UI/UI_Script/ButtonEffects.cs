@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class ButtonEffects : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -10,9 +11,11 @@ public class ButtonEffects : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     [Header("Ghost Settings (Smooth)")]
     [SerializeField] float rippleExpansionSize = 1.8f;
-    [SerializeField] float rippleFadeTime = 0.4f;
+    [SerializeField] public float rippleFadeTime = 0.4f;
 
     private Vector3 originalScale;
+
+    [SerializeField] private bool overrideGhostRipple = false;
 
     void Awake()
     {
@@ -34,13 +37,13 @@ public class ButtonEffects : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         transform.localScale = originalScale;
 
         // Trigger the smooth "Afterimage" ghost
-        CreateGhostRipple();
+        if (!overrideGhostRipple) CreateGhostRipple();
     }
 
     // --- 3. THE GHOST (Smooth Animation) ---
     void CreateGhostRipple()
     {
-        GameObject ghost = Instantiate(gameObject, transform.position, transform.rotation, transform.parent);
+        GameObject ghost = Instantiate(gameObject, transform);
 
         // 1. CLEANUP SCRIPT
         Destroy(ghost.GetComponent<ButtonEffects>());
@@ -52,8 +55,25 @@ public class ButtonEffects : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         var textComponent = ghost.GetComponentInChildren<TMPro.TextMeshProUGUI>();
         if (textComponent != null) Destroy(textComponent.gameObject);
 
-        // 3. FIX HIERARCHY (The fix from above)
-        ghost.transform.SetSiblingIndex(transform.GetSiblingIndex());
+        /* 
+         Centering the anchors and pivot of ghost clones,
+         because the original pause button's anchors and pivot are originally set to top left,
+         and the ghost animation has to ripple from the middle of original button, not top left -Arjan
+         */
+        RectTransform ghostRectTransform = ghost.GetComponent<RectTransform>();
+        RectTransform originalRectTransform = GetComponent<RectTransform>();
+
+        if (ghostRectTransform != null) {
+            ghostRectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+            ghostRectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+            ghostRectTransform.pivot = new Vector2(0.5f, 0.5f);
+
+            ghostRectTransform.anchoredPosition = Vector2.zero;
+
+            ghostRectTransform.SetParent(transform.parent);
+
+            ghostRectTransform.SetSiblingIndex(transform.GetSiblingIndex());
+        }
 
         StartCoroutine(AnimateGhost(ghost));
     }
