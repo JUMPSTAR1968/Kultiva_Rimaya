@@ -1,16 +1,17 @@
 using UnityEngine;
-using UnityEngine.UI; // Required for the Text component
+using UnityEngine.UI; 
 using System.Collections.Generic;
 
 public class BahayKuboSequentialSpawner : MonoBehaviour
 {
-    [Header("Vegetable Pool (All 18 in Project Order)")]
+    [Header("Vegetable Pool")]
     public GameObject[] vegetablePrefabs;
 
     [Header("Song Structure")]
     private int[] batchSizes = { 4, 3, 4, 2, 4, 1 };
     private int currentPhase = 0;
     private int nextExpectedIndexInBeatmap = 0;
+    private int difficultyCycle = 0; // 0=Easy, 1=Medium, 2=Hard
 
     [Header("Grid Settings")]
     public int columns = 3;
@@ -23,9 +24,8 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
 
     [Header("Game State & UI")]
     public GameObject pausePanel;
-    public GameObject restartButton;
-    public GameObject feedbackPopup; // The UI Object (Canvas Child)
-    public Text feedbackText;        // The Text component on the popup
+    public GameObject feedbackPopup; 
+    public Text feedbackText;        
     public Vector3 popupOffset = new Vector3(0, 50f, 0);
 
     private bool isGameOver = false;
@@ -33,14 +33,51 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     private int globalVegetableOffset = 0;
 
     [Header("Grace Period")]
-    private bool isGracePeriodActive = false; // Tracks if the next mistake is "free"
+    private bool isGracePeriodActive = false; 
+    private bool allowGracePeriod = true;    
 
     void Start()
     {
+        // 1. LINK TO GAMESELECTMANAGER: Set starting point based on user choice
+        int startingCycle = 0;
+        if (GameSettings.CurrentDifficulty == Difficulty.Medium) startingCycle = 1;
+        else if (GameSettings.CurrentDifficulty == Difficulty.Hard) startingCycle = 2;
+
+        // 2. Initialize Rules
+        UpdateRulesForCycle(startingCycle);
+
+        // 3. UI Setup
         if (pausePanel != null) pausePanel.SetActive(false);
-        if (restartButton != null) restartButton.SetActive(true);
         if (feedbackPopup != null) feedbackPopup.SetActive(false);
+        
         SpawnCurrentBatch();
+    }
+
+    // This is the method that was missing/renamed!
+    private void UpdateRulesForCycle(int cycle)
+    {
+        difficultyCycle = cycle;
+        
+        if (cycle == 0) // EASY
+        { 
+            hitWindow = 0.8f; 
+            allowGracePeriod = true; 
+            Debug.Log("<color=green>BK: Starting Easy Mode</color>");
+        }
+        else if (cycle == 1) // MEDIUM
+        { 
+            hitWindow = 0.5f; 
+            allowGracePeriod = false; 
+            Debug.Log("<color=yellow>BK: Starting Medium Mode</color>");
+        }
+        else // HARD
+        { 
+            hitWindow = 0.3f; 
+            allowGracePeriod = false; 
+            Debug.Log("<color=red>BK: Starting Hard Mode</color>");
+        }
+        
+        isGracePeriodActive = false; 
     }
 
     void Update()
@@ -54,14 +91,8 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
 
             if (currentTime > (targetTime + hitWindow))
             {
-                Debug.Log($"Missed {SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].vegetableName}");
-
-                // This method MUST remove the veggie from the list
                 RemoveMissedVegetable(nextExpectedIndexInBeatmap);
-
                 ApplyPenalty();
-
-                // HandleProgress will check if it's time for the next batch
                 HandleProgress();
             }
         }
@@ -77,87 +108,87 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         float targetTimestamp = SongManager.Instance.beatmap[clickedID].timestamp;
         float timeDifference = clickTime - targetTimestamp;
 
-        // DEBUG: Check these numbers in your Console to see why it's failing
-        Debug.Log($"Clicked ID: {clickedID} | Target: {nextExpectedIndexInBeatmap} | Diff: {timeDifference:F2}");
-
         bool isCorrectVeggie = (clickedID == nextExpectedIndexInBeatmap);
         bool isOnBeat = Mathf.Abs(timeDifference) <= hitWindow;
 
-        // 1. SUCCESS: Correct vegetable and inside the window
         if (isCorrectVeggie && isOnBeat)
         {
             activeVegetables.Remove(vegetableObj);
             Destroy(vegetableObj);
             HandleProgress();
         }
-        // 2. TOO EARLY: Correct vegetable, but the song hasn't reached the window yet
-        else if (isCorrectVeggie && timeDifference < -hitWindow)
-        {
-            ShowFeedback(vegetableObj, "Too Early!");
-            ApplyPenalty();
-        }
-        // 3. WRONG VEGETABLE: User clicked the wrong one entirely
-        else if (!isCorrectVeggie)
-        {
-            ShowFeedback(vegetableObj, "Mali!");
-            ApplyPenalty();
-        }
-        // 4. TOO LATE: Correct vegetable, but window has passed (usually handled by Update auto-miss)
         else
         {
-            ShowFeedback(vegetableObj, "Too Late!");
+            string msg = !isCorrectVeggie ? "Mali!" : (timeDifference < 0 ? "Too Early!" : "Too Late!");
+            ShowFeedback(vegetableObj, msg);
             ApplyPenalty();
         }
     }
 
-    private void ShowFeedback(GameObject vegetableObj, string message)
+    private void ApplyPenalty()
     {
-        // 1. Visual Flash Red on the object
-        VegetableClick clickScript = vegetableObj.GetComponent<VegetableClick>();
-        if (clickScript != null) clickScript.FlashRed();
+        if (isGameOver) return;
 
-        // 2. Spatial UI Popup
-        if (feedbackPopup != null)
+        if (HealthManager.Instance != null)
         {
-            if (feedbackText != null) feedbackText.text = message;
-
-            // Move UI to the vegetable's screen position
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(vegetableObj.transform.position);
-            feedbackPopup.transform.position = screenPos + popupOffset;
-
-            feedbackPopup.SetActive(true);
-            CancelInvoke("HideFeedback");
-            Invoke("HideFeedback", 0.6f);
-        }
-    }
-
-    private void HideFeedback()
-    {
-        if (feedbackPopup != null) feedbackPopup.SetActive(false);
-    }
-
-    private void RemoveMissedVegetable(int missedID)
-    {
-        for (int i = activeVegetables.Count - 1; i >= 0; i--)
-        {
-            GameObject veg = activeVegetables[i];
-            if (veg != null)
+            if (allowGracePeriod && !isGracePeriodActive)
             {
-                VegetableClick script = veg.GetComponent<VegetableClick>();
-                if (script != null && script.vegetableID == missedID)
+                isGracePeriodActive = true;
+                if (feedbackText != null) feedbackText.text = "Ingat!";
+            }
+            else
+            {
+                isGracePeriodActive = false; 
+                HealthManager.Instance.TakeDamage(1);
+                
+                if (HealthManager.Instance.currentHealth <= 0)
                 {
-                    Destroy(veg);
-                    activeVegetables.RemoveAt(i);
-                    break;
+                    TriggerGameOver();
                 }
             }
         }
     }
 
+    private void TriggerGameOver()
+    {
+        isGameOver = true;
+        if (bahayKuboAudio != null) bahayKuboAudio.Stop();
+        ClearGarden();
+        if (pausePanel != null) pausePanel.SetActive(true);
+    }
+
+    public void RestartGame()
+    {
+        isGameOver = false;
+        
+        // Reset based on initial Menu choice
+        int startingCycle = 0;
+        if (GameSettings.CurrentDifficulty == Difficulty.Medium) startingCycle = 1;
+        else if (GameSettings.CurrentDifficulty == Difficulty.Hard) startingCycle = 2;
+
+        currentPhase = 0;
+        globalVegetableOffset = 0;
+        nextExpectedIndexInBeatmap = 0;
+        
+        UpdateRulesForCycle(startingCycle);
+
+        if (pausePanel != null) pausePanel.SetActive(false);
+        if (HealthManager.Instance != null) HealthManager.Instance.ResetHealth();
+        
+        if (bahayKuboAudio != null)
+        {
+            bahayKuboAudio.Stop();
+            bahayKuboAudio.time = 0;
+            bahayKuboAudio.Play();
+        }
+        
+        SpawnCurrentBatch();
+    }
+
     public void SpawnCurrentBatch()
     {
         ClearGarden();
-        if (currentPhase >= batchSizes.Length) currentPhase = 0;
+        if (difficultyCycle > 2) return; 
 
         int countToSpawn = batchSizes[currentPhase];
         List<Vector2Int> allCells = GetShuffledCells();
@@ -178,117 +209,92 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
             if (clickScript != null)
             {
                 clickScript.spawner = this;
-                clickScript.vegetableID = globalVegetableOffset + i;
+                clickScript.vegetableID = nextExpectedIndexInBeatmap + i; 
             }
             activeVegetables.Add(newVeg);
         }
+        UpdateEasyHint();
     }
 
     private void UpdateEasyHint()
     {
-        // Loop through all active vegetables on screen
+        // Hint only shows if the CURRENT mode is Easy
+        bool showHint = (difficultyCycle == 0);
         foreach (GameObject veg in activeVegetables)
         {
             if (veg == null) continue;
-
             VegetableClick script = veg.GetComponent<VegetableClick>();
             if (script != null)
             {
-                // If this vegetable's ID matches what the song wants next, turn on hint
-                bool isNext = (script.vegetableID == nextExpectedIndexInBeatmap);
-                script.SetHint(isNext);
+                script.SetHint(showHint && script.vegetableID == nextExpectedIndexInBeatmap);
             }
         }
     }
+
     private void HandleProgress()
     {
-        // 1. Move to the next index in the song's beatmap
         nextExpectedIndexInBeatmap++;
+        
+        int currentBatchStart = 0;
+        for(int i=0; i<currentPhase; i++) currentBatchStart += batchSizes[i];
+        currentBatchStart += (difficultyCycle * 18); 
 
-        // Calculate where the current visual batch should end
-        int currentBatchEnd = globalVegetableOffset + batchSizes[currentPhase];
-
-        // 2. Check if we have finished all vegetables in the current batch
-        if (nextExpectedIndexInBeatmap >= currentBatchEnd)
+        if (nextExpectedIndexInBeatmap >= currentBatchStart + batchSizes[currentPhase])
         {
-            // Update the offset to start the next batch's indices
-            globalVegetableOffset += batchSizes[currentPhase];
-
-            // Move to the next phase in the song structure
             currentPhase++;
 
-            // Loop the phases if we reach the end of the batchSizes array
             if (currentPhase >= batchSizes.Length)
             {
-                currentPhase = 0;
-            }
-
-            // Clear any lingering nulls and spawn the next set
-            ClearGarden();
-            Invoke("SpawnCurrentBatch", 0.3f);
-        }
-        else
-        {
-            // If the batch isn't over, just update the hint for the next veggie
-            UpdateEasyHint();
-        }
-    }
-
-    private void ApplyPenalty()
-    {
-        if (HealthManager.Instance != null)
-        {
-            // If we DON'T have a grace period active, this is the FIRST mistake
-            if (!isGracePeriodActive)
-            {
-                isGracePeriodActive = true;
-                Debug.Log("<color=cyan>Grace Period Activated! Next mistake will cost a life.</color>");
-
-                // Optional: Provide visual feedback like a shield icon or text
-                if (feedbackText != null)
+                currentPhase = 0; 
+                globalVegetableOffset = 0; 
+                
+                int nextCycle = difficultyCycle + 1;
+                if (nextCycle <= 2)
                 {
-                    // We keep the "Mali" popup but maybe change the text or color
-                    feedbackText.text = "Ingat! (Warning)";
+                    UpdateRulesForCycle(nextCycle);
+                    Invoke("SpawnCurrentBatch", 0.5f);
                 }
+                else { TriggerGameOver(); } // Won game
             }
             else
             {
-                // If Grace Period WAS active, this is the SECOND mistake
-                isGracePeriodActive = false; // Reset grace
-                HealthManager.Instance.TakeDamage(1);
-
-                Debug.Log("<color=red>Life Lost! Grace Period reset.</color>");
-
-                if (HealthManager.Instance.currentHealth <= 0)
-                {
-                    TriggerGameOver();
-                }
+                globalVegetableOffset += batchSizes[currentPhase - 1];
+                Invoke("SpawnCurrentBatch", 0.5f);
             }
+        }
+        else { UpdateEasyHint(); }
+    }
+
+    private void ShowFeedback(GameObject vegetableObj, string message)
+    {
+        VegetableClick clickScript = vegetableObj.GetComponent<VegetableClick>();
+        if (clickScript != null) clickScript.FlashRed();
+
+        if (feedbackPopup != null)
+        {
+            if (feedbackText != null) feedbackText.text = message;
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(vegetableObj.transform.position);
+            feedbackPopup.transform.position = screenPos + popupOffset;
+            feedbackPopup.SetActive(true);
+            CancelInvoke("HideFeedback");
+            Invoke("HideFeedback", 0.6f);
         }
     }
 
-    private void TriggerGameOver()
+    private void HideFeedback() => feedbackPopup.SetActive(false);
+
+    private void RemoveMissedVegetable(int missedID)
     {
-        isGameOver = true;
-        if (bahayKuboAudio != null) bahayKuboAudio.Stop();
-        ClearGarden();
-        if (pausePanel != null) pausePanel.SetActive(true);
-    }
-
-    public void RestartGame()
-    {
-        isGameOver = false;
-        isGracePeriodActive = false; // Reset the mistake counter
-        if (pausePanel != null) pausePanel.SetActive(false);
-        if (HealthManager.Instance != null) HealthManager.Instance.ResetHealth();
-
-        bahayKuboAudio.Stop();
-        bahayKuboAudio.Play();
-
-        currentPhase = 0;
-        globalVegetableOffset = 0;
-        nextExpectedIndexInBeatmap = 0;
-        SpawnCurrentBatch();
+        for (int i = activeVegetables.Count - 1; i >= 0; i--)
+        {
+            GameObject veg = activeVegetables[i];
+            if (veg != null && veg.GetComponent<VegetableClick>().vegetableID == missedID)
+            {
+                Destroy(veg);
+                activeVegetables.RemoveAt(i);
+                break;
+            }
+        }
     }
 
     private List<Vector2Int> GetShuffledCells()
