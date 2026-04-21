@@ -39,83 +39,59 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     private bool isGracePeriodActive = false;
     private bool allowGracePeriod = true;
 
-    void Start()
+void Start()
+{
+    // 1. Set starting point based on user choice
+    int startingCycle = 0;
+    if (GameSettings.CurrentDifficulty == Difficulty.Medium) startingCycle = 1;
+    else if (GameSettings.CurrentDifficulty == Difficulty.Hard) startingCycle = 2;
+
+    // 2. Initialize Rules (This now handles the Hearts automatically)
+    UpdateRulesForCycle(startingCycle);
+
+    // 3. UI Setup
+    if (pausePanel != null) pausePanel.SetActive(false);
+    if (feedbackPopup != null) feedbackPopup.SetActive(false);
+
+    SpawnCurrentBatch();
+}
+private void UpdateRulesForCycle(int cycle)
+{
+    difficultyCycle = cycle;
+    
+    // --- NEW: HANDLE HEART VISIBILITY MID-GAME ---
+    if (heartIcons != null && heartIcons.Length > 0)
     {
-        // 1. LINK TO GAMESELECTMANAGER: Set starting point based on user choice
-        int startingCycle = 0;
-        if (GameSettings.CurrentDifficulty == Difficulty.Medium) startingCycle = 1;
-        else if (GameSettings.CurrentDifficulty == Difficulty.Hard) startingCycle = 2;
-
-        // 2. Initialize Rules
-        UpdateRulesForCycle(startingCycle);
-
-        // 3. UI Setup
-        if (pausePanel != null) pausePanel.SetActive(false);
-        if (feedbackPopup != null) feedbackPopup.SetActive(false);
-
-        // 4. Health UI Setup (Filtering hearts visually)
-        if (heartIcons != null && heartIcons.Length > 0)
+        if (cycle == 0) // Easy Mode
         {
-            if (GameSettings.CurrentDifficulty == Difficulty.Easy)
-            {
-                // Hide all hearts for Infinite mode
-                foreach (GameObject heart in heartIcons)
-                {
-                    if (heart != null) heart.SetActive(false);
-                }
-                Debug.Log("UI: Hearts hidden for Easy Mode.");
-            }
-            else if (GameSettings.CurrentDifficulty == Difficulty.Hard)
-            {
-                // Show only the first heart, hide the rest
-                for (int i = 0; i < heartIcons.Length; i++)
-                {
-                    if (heartIcons[i] != null)
-                    {
-                        heartIcons[i].SetActive(i == 0); // Active only if index is 0
-                    }
-                }
-                Debug.Log("UI: Only 1 heart visible for Hard Mode.");
-            }
-            else
-            {
-                // Medium Mode: Ensure all 3 are visible
-                foreach (GameObject heart in heartIcons)
-                {
-                    if (heart != null) heart.SetActive(true);
-                }
-            }
-        }
-
-        SpawnCurrentBatch();
-    }
-
-    // This is the method that was missing/renamed!
-    private void UpdateRulesForCycle(int cycle)
-    {
-        difficultyCycle = cycle;
-
-        if (cycle == 0) // EASY
-        {
+            foreach (GameObject heart in heartIcons) if (heart != null) heart.SetActive(false);
             hitWindow = 0.8f;
             allowGracePeriod = true;
-            Debug.Log("<color=green>BK: Starting Easy Mode</color>");
+            Debug.Log("<color=green>BK: Easy Mode - Hearts Hidden</color>");
         }
-        else if (cycle == 1) // MEDIUM
+        else if (cycle == 1) // Medium Mode
         {
+            // Turn hearts BACK ON when moving from Easy to Medium
+            foreach (GameObject heart in heartIcons) if (heart != null) heart.SetActive(true);
             hitWindow = 0.5f;
             allowGracePeriod = false;
-            Debug.Log("<color=yellow>BK: Starting Medium Mode</color>");
+            Debug.Log("<color=yellow>BK: Medium Mode - Hearts Restored</color>");
         }
-        else // HARD
+        else // Hard Mode
         {
+            // Show only the first heart
+            for (int i = 0; i < heartIcons.Length; i++)
+            {
+                if (heartIcons[i] != null) heartIcons[i].SetActive(i == 0);
+            }
             hitWindow = 0.3f;
             allowGracePeriod = false;
-            Debug.Log("<color=red>BK: Starting Hard Mode</color>");
+            Debug.Log("<color=red>BK: Hard Mode - One Heart Only</color>");
         }
-
-        isGracePeriodActive = false;
     }
+
+    isGracePeriodActive = false; 
+}
 
     void Update()
     {
@@ -162,56 +138,55 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         }
     }
 
-    private void ApplyPenalty()
-    {
-        if (isGameOver) return;
+private void ApplyPenalty()
+{
+    if (isGameOver) return;
 
-        // 1. EASY MODE: The "Infinite Health" logic
-        if (GameSettings.CurrentDifficulty == Difficulty.Easy)
+    // 1. Check current cycle (0 = Easy, 1 = Medium, 2 = Hard)
+    // We use difficultyCycle because it updates mid-song!
+    if (difficultyCycle == 0) 
+    {
+        // EASY MODE: The "Infinite Health" logic
+        if (!isGracePeriodActive)
         {
-            if (!isGracePeriodActive)
+            isGracePeriodActive = true;
+            if (feedbackText != null) feedbackText.text = "Ingat!";
+            Debug.Log("Easy Cycle: Grace active, no health lost.");
+        }
+        else
+        {
+            isGracePeriodActive = false;
+            Debug.Log("Easy Cycle: Damage blocked (Infinite).");
+        }
+        return; // Exit here so HealthManager is never touched
+    }
+
+    // 2. MEDIUM & HARD MODE: Actually take damage
+    if (HealthManager.Instance != null)
+    {
+        if (difficultyCycle == 2) // Hard Mode (Cycle 2)
+        {
+            Debug.Log("<color=red>Hard Cycle: Instant Death!</color>");
+            HealthManager.Instance.TakeDamage(HealthManager.Instance.maxHealth);
+            
+            if (heartIcons != null && heartIcons.Length > 0 && heartIcons[0] != null)
             {
-                isGracePeriodActive = true;
-                if (feedbackText != null) feedbackText.text = "Ingat!";
-                Debug.Log("Easy Mode: Grace active, no health lost.");
+                heartIcons[0].SetActive(false);
             }
-            else
-            {
-                isGracePeriodActive = false;
-                Debug.Log("Easy Mode: Infinite health active - Damage blocked.");
-            }
-            return; // Exit so HealthManager is never touched
+        }
+        else // Medium Mode (Cycle 1)
+        {
+            HealthManager.Instance.TakeDamage(1);
+            Debug.Log("Medium Cycle: 1 Life Lost.");
         }
 
-        // 2. MEDIUM & HARD MODE: Damage handling
-        if (HealthManager.Instance != null)
+        // 3. Check for Death
+        if (HealthManager.Instance.currentHealth <= 0)
         {
-            if (GameSettings.CurrentDifficulty == Difficulty.Hard)
-            {
-                Debug.Log("<color=red>Hard Mode: Instant Death!</color>");
-
-                // Take all lives in the backend
-                HealthManager.Instance.TakeDamage(HealthManager.Instance.maxHealth);
-
-                // --- NEW: Hide the single visible heart icon immediately ---
-                if (heartIcons != null && heartIcons.Length > 0 && heartIcons[0] != null)
-                {
-                    heartIcons[0].SetActive(false);
-                }
-            }
-            else // Medium Mode (Normal behavior)
-            {
-                HealthManager.Instance.TakeDamage(1);
-                Debug.Log("Medium Mode: 1 Life Lost.");
-            }
-
-            // 3. Check for Death to trigger the UI Panel
-            if (HealthManager.Instance.currentHealth <= 0)
-            {
-                TriggerGameOver();
-            }
+            TriggerGameOver();
         }
     }
+}
 
     private void TriggerGameOver()
     {
