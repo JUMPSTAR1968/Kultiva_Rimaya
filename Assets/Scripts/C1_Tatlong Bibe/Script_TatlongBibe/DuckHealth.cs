@@ -4,8 +4,12 @@ using UnityEngine;
 public class DuckHealth : MonoBehaviour
 {
     [Header("Sprite Settings")]
-    public Sprite damagedSprite;     // Drag your "Ouch" sprite here in the Inspector
-    private Sprite originalSprite;   // The script will remember the normal sprite here
+    public Sprite damagedSprite;
+    private Sprite originalSprite;
+
+    [Header("Easy Mode Tutorial")]
+    public float worldRewindDistance = 2.5f;
+    public float rewindDuration = 0.5f; // NEW: How many seconds the smooth slide takes!
 
     [Header("I-Frames Settings")]
     public float iFrameDuration = 2f;
@@ -17,7 +21,6 @@ public class DuckHealth : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // Save the normal sprite at the start of the game so we can switch back to it later
         if (spriteRenderer != null)
         {
             originalSprite = spriteRenderer.sprite;
@@ -26,45 +29,95 @@ public class DuckHealth : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // If we hit an obstacle and aren't invincible and the game isn't over
         if (collision.CompareTag("Obstacle") && !isInvincible && !MTB_GameManager.Instance.isGameOver)
         {
-            // NEW: Only remove a visual UI heart if we are NOT on Easy mode!
-            if (GameSettings.CurrentDifficulty != Difficulty.Easy)
+            if (GameSettings.CurrentDifficulty == Difficulty.Easy)
+            {
+                StartCoroutine(EasyHitRoutine());
+            }
+            else
             {
                 HealthManager.Instance.TakeDamage(1);
+                MTB_GameManager.Instance.LoseHealth();
+                StartCoroutine(FlashRoutine());
+            }
+        }
+    }
+
+    IEnumerator EasyHitRoutine()
+    {
+        isInvincible = true;
+        if (damagedSprite != null) spriteRenderer.sprite = damagedSprite;
+
+        // 1. FREEZE TIME IMMEDIATELY so the river stops flowing naturally
+        Time.timeScale = 0f;
+
+        // 2. Find everything we need to move
+        GameObject[] allObstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        LoopingBackground[] allBackgrounds = FindObjectsOfType<LoopingBackground>();
+
+        // 3. THE SMOOTH TRANSITION LOOP
+        float elapsed = 0f;
+        float speed = worldRewindDistance / rewindDuration; // Calculate distance to cover per second
+
+        while (elapsed < rewindDuration)
+        {
+            // We use unscaledDeltaTime because Time.timeScale is currently 0!
+            float step = speed * Time.unscaledDeltaTime;
+
+            // Slide all obstacles
+            foreach (GameObject obstacle in allObstacles)
+            {
+                if (obstacle != null)
+                {
+                    obstacle.transform.position += Vector3.right * step;
+                }
             }
 
-            MTB_GameManager.Instance.LoseHealth(); // Tell the manager we got hit!
+            // Slide all backgrounds
+            foreach (LoopingBackground bg in allBackgrounds)
+            {
+                if (bg != null)
+                {
+                    bg.transform.position += Vector3.right * step;
+                }
+            }
 
-            // The duck will still flash and play the "ouch" face, but won't lose health on Easy!
-            StartCoroutine(FlashRoutine());
+            elapsed += Time.unscaledDeltaTime;
+            yield return null; // Wait for the very next frame, then loop again
         }
+
+        // 4. Now that the slide is done, show the hand!
+        MTB_GameManager.Instance.ShowEasyTutorial();
+
+        // 5. Wait here until the player taps the screen (Manager unfreezes time)
+        yield return new WaitUntil(() => Time.timeScale > 0);
+
+        // 6. Transition straight into I-frames
+        StartCoroutine(FlashRoutine());
     }
 
     IEnumerator FlashRoutine()
     {
         isInvincible = true;
 
-        // 1. Instantly change to the damaged face!
         if (damagedSprite != null)
         {
             spriteRenderer.sprite = damagedSprite;
         }
 
-        // 2. Do the flashing effect
         float elapsed = 0;
         while (elapsed < iFrameDuration)
         {
-            spriteRenderer.enabled = !spriteRenderer.enabled; // Toggle visibility to flash
+            spriteRenderer.enabled = !spriteRenderer.enabled;
+
+            // Back to normal WaitForSeconds because time is unfrozen!
             yield return new WaitForSeconds(0.1f);
             elapsed += 0.1f;
         }
 
-        // 3. Ensure sprite is visible at the end
         spriteRenderer.enabled = true;
 
-        // 4. Change back to the normal face!
         if (originalSprite != null)
         {
             spriteRenderer.sprite = originalSprite;

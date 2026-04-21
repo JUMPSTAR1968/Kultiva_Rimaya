@@ -19,17 +19,17 @@ public class ObstacleSpawn : MonoBehaviour
         switch (GameSettings.CurrentDifficulty)
         {
             case Difficulty.Easy:
-                spawnRate = 3.0f; // Spawns every 2 seconds (Very slow, lots of breathing room)
+                spawnRate = 3.0f; 
                 Debug.Log("Easy Mode: Boulders spawning every 2 seconds.");
                 break;
 
             case Difficulty.Medium:
-                spawnRate = 2.0f; // Spawns every 1 second (Standard challenge)
+                spawnRate = 2.0f; 
                 Debug.Log("Medium Mode: Boulders spawning every 1 second.");
                 break;
 
             case Difficulty.Hard:
-                spawnRate = 2.0f; // Spawns every 0.45 seconds (Super fast, chaotic!)
+                spawnRate = 2.0f; 
                 Debug.Log("Hard Mode: Boulders spawning FAST!");
                 break;
         }
