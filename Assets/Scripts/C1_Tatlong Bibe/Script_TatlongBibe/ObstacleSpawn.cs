@@ -3,9 +3,9 @@ using UnityEngine;
 public class ObstacleSpawn : MonoBehaviour
 {
     [Header("Obstacle Setup")]
-    public GameObject[] obstaclePrefabs; // Drag your Log, Boulder, and Branch prefabs here
-    public float spawnRate = 1.0f;       // Seconds between each spawn
-    public float spawnX = 12f;           // Position to the right of the screen
+    public GameObject[] obstaclePrefabs;
+    public float spawnRate = 1.0f;
+    public float spawnX = 12f;
 
     [Header("River Boundaries")]
     public float riverTopY = 0.5f;
@@ -15,21 +15,31 @@ public class ObstacleSpawn : MonoBehaviour
 
     void Start()
     {
-        // THIS IS THE BRAIN: It reads the difficulty and sets the spawn rate!
+        // Difficulty code remains untouched as requested
         switch (GameSettings.CurrentDifficulty)
         {
             case Difficulty.Easy:
+<<<<<<< Updated upstream
                 spawnRate = 3.0f; 
+=======
+                spawnRate = 3.0f;
+>>>>>>> Stashed changes
                 Debug.Log("Easy Mode: Boulders spawning every 2 seconds.");
                 break;
-
             case Difficulty.Medium:
+<<<<<<< Updated upstream
                 spawnRate = 2.0f; 
+=======
+                spawnRate = 2.0f;
+>>>>>>> Stashed changes
                 Debug.Log("Medium Mode: Boulders spawning every 1 second.");
                 break;
-
             case Difficulty.Hard:
+<<<<<<< Updated upstream
                 spawnRate = 2.0f; 
+=======
+                spawnRate = 2.0f;
+>>>>>>> Stashed changes
                 Debug.Log("Hard Mode: Boulders spawning FAST!");
                 break;
         }
@@ -37,33 +47,43 @@ public class ObstacleSpawn : MonoBehaviour
 
     void Update()
     {
-        // Stop the timer if the game is over so boulders stop appearing
         if (MTB_GameManager.Instance != null && MTB_GameManager.Instance.isGameOver) return;
 
-        // Count up the timer
         timer += Time.deltaTime;
 
-        // Check if it's time to spawn a boulder
         if (timer >= spawnRate)
         {
             SpawnObstacle();
-            timer = 0f; // Reset the loop
+            timer = 0f;
         }
     }
 
     void SpawnObstacle()
     {
-        // Safety check
         if (obstaclePrefabs == null || obstaclePrefabs.Length == 0) return;
 
-        // Pick a random height within the river
-        float randomY = Random.Range(riverBottomY, riverTopY);
-        Vector3 spawnPos = new Vector3(spawnX, randomY, 0);
+        // 1. Pick a lane index: 0 (Bottom), 1 (Middle), or 2 (Top)
+        int lane = Random.Range(0, 3);
+        float spawnY = 0f;
 
-        // Pick a random prefab (Boulder, branch, etc.)
+        // 2. Calculate the specific Y based on the lane
+        if (lane == 0) // Bottom
+        {
+            spawnY = riverBottomY;
+        }
+        else if (lane == 1) // Middle
+        {
+            // The midpoint between Top and Bottom
+            spawnY = (riverTopY + riverBottomY) / 2f;
+        }
+        else // Top
+        {
+            spawnY = riverTopY;
+        }
+
+        Vector3 spawnPos = new Vector3(spawnX, spawnY, 0);
+
         int randomIndex = Random.Range(0, obstaclePrefabs.Length);
-
-        // Spawn it!
         Instantiate(obstaclePrefabs[randomIndex], spawnPos, Quaternion.identity);
     }
 }
