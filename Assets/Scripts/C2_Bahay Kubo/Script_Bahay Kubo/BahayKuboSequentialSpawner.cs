@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class BahayKuboSequentialSpawner : MonoBehaviour
@@ -24,17 +24,20 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
 
     [Header("Game State & UI")]
     public GameObject pausePanel;
-    public GameObject feedbackPopup; 
-    public Text feedbackText;        
+    public GameObject feedbackPopup;
+    public Text feedbackText;
     public Vector3 popupOffset = new Vector3(0, 50f, 0);
 
     private bool isGameOver = false;
     private List<GameObject> activeVegetables = new List<GameObject>();
     private int globalVegetableOffset = 0;
 
+    [Header("Health UI References")]
+    public GameObject[] heartIcons; // Drag your 3 Heart GameObjects here in the Inspector
+
     [Header("Grace Period")]
-    private bool isGracePeriodActive = false; 
-    private bool allowGracePeriod = true;    
+    private bool isGracePeriodActive = false;
+    private bool allowGracePeriod = true;
 
     void Start()
     {
@@ -49,7 +52,41 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         // 3. UI Setup
         if (pausePanel != null) pausePanel.SetActive(false);
         if (feedbackPopup != null) feedbackPopup.SetActive(false);
-        
+
+        // 4. Health UI Setup (Filtering hearts visually)
+        if (heartIcons != null && heartIcons.Length > 0)
+        {
+            if (GameSettings.CurrentDifficulty == Difficulty.Easy)
+            {
+                // Hide all hearts for Infinite mode
+                foreach (GameObject heart in heartIcons)
+                {
+                    if (heart != null) heart.SetActive(false);
+                }
+                Debug.Log("UI: Hearts hidden for Easy Mode.");
+            }
+            else if (GameSettings.CurrentDifficulty == Difficulty.Hard)
+            {
+                // Show only the first heart, hide the rest
+                for (int i = 0; i < heartIcons.Length; i++)
+                {
+                    if (heartIcons[i] != null)
+                    {
+                        heartIcons[i].SetActive(i == 0); // Active only if index is 0
+                    }
+                }
+                Debug.Log("UI: Only 1 heart visible for Hard Mode.");
+            }
+            else
+            {
+                // Medium Mode: Ensure all 3 are visible
+                foreach (GameObject heart in heartIcons)
+                {
+                    if (heart != null) heart.SetActive(true);
+                }
+            }
+        }
+
         SpawnCurrentBatch();
     }
 
@@ -57,27 +94,27 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     private void UpdateRulesForCycle(int cycle)
     {
         difficultyCycle = cycle;
-        
+
         if (cycle == 0) // EASY
-        { 
-            hitWindow = 0.8f; 
-            allowGracePeriod = true; 
+        {
+            hitWindow = 0.8f;
+            allowGracePeriod = true;
             Debug.Log("<color=green>BK: Starting Easy Mode</color>");
         }
         else if (cycle == 1) // MEDIUM
-        { 
-            hitWindow = 0.5f; 
-            allowGracePeriod = false; 
+        {
+            hitWindow = 0.5f;
+            allowGracePeriod = false;
             Debug.Log("<color=yellow>BK: Starting Medium Mode</color>");
         }
         else // HARD
-        { 
-            hitWindow = 0.3f; 
-            allowGracePeriod = false; 
+        {
+            hitWindow = 0.3f;
+            allowGracePeriod = false;
             Debug.Log("<color=red>BK: Starting Hard Mode</color>");
         }
-        
-        isGracePeriodActive = false; 
+
+        isGracePeriodActive = false;
     }
 
     void Update()
@@ -129,22 +166,49 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     {
         if (isGameOver) return;
 
-        if (HealthManager.Instance != null)
+        // 1. EASY MODE: The "Infinite Health" logic
+        if (GameSettings.CurrentDifficulty == Difficulty.Easy)
         {
-            if (allowGracePeriod && !isGracePeriodActive)
+            if (!isGracePeriodActive)
             {
                 isGracePeriodActive = true;
                 if (feedbackText != null) feedbackText.text = "Ingat!";
+                Debug.Log("Easy Mode: Grace active, no health lost.");
             }
             else
             {
-                isGracePeriodActive = false; 
-                HealthManager.Instance.TakeDamage(1);
-                
-                if (HealthManager.Instance.currentHealth <= 0)
+                isGracePeriodActive = false;
+                Debug.Log("Easy Mode: Infinite health active - Damage blocked.");
+            }
+            return; // Exit so HealthManager is never touched
+        }
+
+        // 2. MEDIUM & HARD MODE: Damage handling
+        if (HealthManager.Instance != null)
+        {
+            if (GameSettings.CurrentDifficulty == Difficulty.Hard)
+            {
+                Debug.Log("<color=red>Hard Mode: Instant Death!</color>");
+
+                // Take all lives in the backend
+                HealthManager.Instance.TakeDamage(HealthManager.Instance.maxHealth);
+
+                // --- NEW: Hide the single visible heart icon immediately ---
+                if (heartIcons != null && heartIcons.Length > 0 && heartIcons[0] != null)
                 {
-                    TriggerGameOver();
+                    heartIcons[0].SetActive(false);
                 }
+            }
+            else // Medium Mode (Normal behavior)
+            {
+                HealthManager.Instance.TakeDamage(1);
+                Debug.Log("Medium Mode: 1 Life Lost.");
+            }
+
+            // 3. Check for Death to trigger the UI Panel
+            if (HealthManager.Instance.currentHealth <= 0)
+            {
+                TriggerGameOver();
             }
         }
     }
@@ -160,7 +224,7 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     public void RestartGame()
     {
         isGameOver = false;
-        
+
         // Reset based on initial Menu choice
         int startingCycle = 0;
         if (GameSettings.CurrentDifficulty == Difficulty.Medium) startingCycle = 1;
@@ -169,26 +233,26 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         currentPhase = 0;
         globalVegetableOffset = 0;
         nextExpectedIndexInBeatmap = 0;
-        
+
         UpdateRulesForCycle(startingCycle);
 
         if (pausePanel != null) pausePanel.SetActive(false);
         if (HealthManager.Instance != null) HealthManager.Instance.ResetHealth();
-        
+
         if (bahayKuboAudio != null)
         {
             bahayKuboAudio.Stop();
             bahayKuboAudio.time = 0;
             bahayKuboAudio.Play();
         }
-        
+
         SpawnCurrentBatch();
     }
 
     public void SpawnCurrentBatch()
     {
         ClearGarden();
-        if (difficultyCycle > 2) return; 
+        if (difficultyCycle > 2) return;
 
         int countToSpawn = batchSizes[currentPhase];
         List<Vector2Int> allCells = GetShuffledCells();
@@ -209,7 +273,7 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
             if (clickScript != null)
             {
                 clickScript.spawner = this;
-                clickScript.vegetableID = nextExpectedIndexInBeatmap + i; 
+                clickScript.vegetableID = nextExpectedIndexInBeatmap + i;
             }
             activeVegetables.Add(newVeg);
         }
@@ -234,10 +298,10 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     private void HandleProgress()
     {
         nextExpectedIndexInBeatmap++;
-        
+
         int currentBatchStart = 0;
-        for(int i=0; i<currentPhase; i++) currentBatchStart += batchSizes[i];
-        currentBatchStart += (difficultyCycle * 18); 
+        for (int i = 0; i < currentPhase; i++) currentBatchStart += batchSizes[i];
+        currentBatchStart += (difficultyCycle * 18);
 
         if (nextExpectedIndexInBeatmap >= currentBatchStart + batchSizes[currentPhase])
         {
@@ -245,9 +309,9 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
 
             if (currentPhase >= batchSizes.Length)
             {
-                currentPhase = 0; 
-                globalVegetableOffset = 0; 
-                
+                currentPhase = 0;
+                globalVegetableOffset = 0;
+
                 int nextCycle = difficultyCycle + 1;
                 if (nextCycle <= 2)
                 {
