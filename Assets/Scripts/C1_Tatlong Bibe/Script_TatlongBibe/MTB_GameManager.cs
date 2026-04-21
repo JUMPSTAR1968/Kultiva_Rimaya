@@ -6,6 +6,10 @@ public class MTB_GameManager : MonoBehaviour
 {
     public static MTB_GameManager Instance;
 
+    [Header("Tutorial UI")]
+    public GameObject tutorialHand; // The hand image
+    private bool waitingForTutorialClick = false;
+
     [Header("Global Stats")]
     public int sharedHealth = 3;
     private int maxHealth = 3; // Remembers if the max is 3 (Medium) or 1 (Hard)
@@ -28,6 +32,8 @@ public class MTB_GameManager : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1f;
+        if (tutorialHand != null) tutorialHand.SetActive(false);
         // 1. Set the rules based on difficulty
         switch (GameSettings.CurrentDifficulty)
         {
@@ -52,6 +58,28 @@ public class MTB_GameManager : MonoBehaviour
 
         // 2. Refresh the UI immediately
         UpdateHeartsUI();
+    }
+
+    void Update()
+    {
+        // If we are paused for the tutorial, wait for a click
+        if (waitingForTutorialClick && (Input.GetMouseButtonDown(0) || Input.touchCount > 0))
+        {
+            ResumeFromTutorial();
+        }
+    }
+
+    public void ShowEasyTutorial()
+    {
+        if (tutorialHand != null) tutorialHand.SetActive(true);
+        waitingForTutorialClick = true;
+        Time.timeScale = 0f; // Freeze everything!
+    }
+    public void ResumeFromTutorial()
+    {
+        if (tutorialHand != null) tutorialHand.SetActive(false);
+        waitingForTutorialClick = false;
+        Time.timeScale = 1f; // Unfreeze!
     }
 
     public void LoseHealth()

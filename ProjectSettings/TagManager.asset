@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Activator
   - Obstacle
+  - BackgroundPiece
   layers:
   - Default
   - TransparentFX
