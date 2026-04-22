@@ -717,6 +717,21 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
+--- !u!1 &1024833833 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4749787191908610641, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
+  m_PrefabInstance: {fileID: 1024833832}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1024833834 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2177045172960505616, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
+  m_PrefabInstance: {fileID: 1024833832}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1024833835 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8038947950785147025, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
+  m_PrefabInstance: {fileID: 1024833832}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1118179708
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,11 +963,16 @@ MonoBehaviour:
   columns: 3
   rows: 3
   cellSize: 2
-  jitterAmount: 0
   bahayKuboAudio: {fileID: 1573765094}
   hitWindow: 1
   pausePanel: {fileID: 0}
-  restartButton: {fileID: 0}
+  feedbackPopup: {fileID: 0}
+  feedbackText: {fileID: 0}
+  popupOffset: {x: 0, y: 50, z: 0}
+  heartIcons:
+  - {fileID: 1024833835}
+  - {fileID: 1024833834}
+  - {fileID: 1024833833}
 --- !u!4 &1499728832
 Transform:
   m_ObjectHideFlags: 0
