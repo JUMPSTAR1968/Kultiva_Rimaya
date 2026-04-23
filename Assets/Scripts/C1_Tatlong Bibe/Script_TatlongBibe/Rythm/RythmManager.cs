@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class RythmManager : MonoBehaviour
 {
+    // --- RESTORED: The click script needs this to find the manager! ---
+    public static RythmManager Instance;
+
     public AudioSource songSource;
     public GameObject kwakPrefab;
     public RectTransform spawnZone;
@@ -10,17 +13,47 @@ public class RythmManager : MonoBehaviour
     public float leadTime = 1.0f; // Notes appear 1 second before the beat
     private int nextNoteIndex = 0;
 
+    private float previousSongTime = 0f;
+
+    // --- RESTORED: The click script needs this to know what the current time is! ---
+    public float currentSongTime;
+
+    void Awake()
+    {
+        // Set the instance when the game starts
+        Instance = this;
+    }
+
     void Start()
     {
-        if (songSource != null) songSource.Play();
+        if (songSource != null)
+        {
+            songSource.loop = true; // Make sure the AudioSource is set to loop!
+            songSource.Play();
+        }
     }
 
     void Update()
     {
-        if (songSource == null || nextNoteIndex >= kwakTimings.Length) return;
+        if (songSource == null) return;
+
+        // Keep our public variable updated for the dots to read
+        currentSongTime = songSource.time;
+
+        // --- Loop Detection ---
+        if (currentSongTime < previousSongTime)
+        {
+            nextNoteIndex = 0; // Reset our timing array back to the very first dot
+        }
+
+        // Save the time so we can check it again next frame
+        previousSongTime = currentSongTime;
+
+        // If we've spawned all the notes for this loop, just wait
+        if (nextNoteIndex >= kwakTimings.Length) return;
 
         // Spawn logic: Check if song time has reached (Target - LeadTime)
-        if (songSource.time >= kwakTimings[nextNoteIndex] - leadTime)
+        if (currentSongTime >= kwakTimings[nextNoteIndex] - leadTime)
         {
             SpawnKwak(kwakTimings[nextNoteIndex]);
             nextNoteIndex++;
