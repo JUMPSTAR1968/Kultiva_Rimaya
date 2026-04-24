@@ -8,29 +8,39 @@ public class VegetableClick : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private bool isFlashing = false;
+    private Vector3 originalScale;
 
-private void Awake()
-{
-    spriteRenderer = GetComponent<SpriteRenderer>();
-    originalScale = transform.localScale; // Capture the scale from the prefab
-}
+    [Header("Toddler Hint Settings")]
+    private bool isHintActive = false;
+    public float bounceSpeed = 6f;   // How fast it pulses
+    public float bounceAmount = 0.2f; // How much it grows (0.2 = 20%)
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalScale = transform.localScale; // Capture the base scale
+    }
+
+    private void Update()
+    {
+        // If this vegetable is currently the "Hint", make it pulse
+        if (isHintActive && !isFlashing)
+        {
+            float pulse = 1f + Mathf.Sin(Time.time * bounceSpeed) * bounceAmount;
+            transform.localScale = originalScale * pulse;
+        }
+    }
 
     private void OnMouseDown()
     {
-        // If we are currently flashing from a wrong click, 
-        // we might want to ignore extra clicks until it's done
         if (isFlashing) return;
 
         if (spawner != null)
         {
-            // Ask the spawner if this is the correct vegetable and timing
             spawner.TryHarvest(vegetableID, gameObject);
         }
     }
 
-    /// <summary>
-    /// Called by the Spawner when the user clicks the wrong vegetable.
-    /// </summary>
     public void FlashRed()
     {
         if (!isFlashing && gameObject.activeInHierarchy)
@@ -46,36 +56,35 @@ private void Awake()
 
         if (spriteRenderer != null)
         {
-            // Visual feedback: Turn Red and scale up slightly
             spriteRenderer.color = Color.red;
-            Vector3 originalScale = transform.localScale;
+            // Use originalScale so we don't accidentally capture a "pulsed" scale
             transform.localScale = originalScale * 1.1f;
 
-            // Wait for a short duration
             yield return new WaitForSeconds(0.2f);
 
-            // Return to normal
             spriteRenderer.color = originalColor;
             transform.localScale = originalScale;
         }
 
         isFlashing = false;
     }
-private Vector3 originalScale;
 
-public void SetHint(bool active)
-{
-    if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
-    
-    if (active)
+    public void SetHint(bool active)
     {
-        spriteRenderer.color = new Color(1f, 1f, 0.5f); // Yellow hint
-        transform.localScale = originalScale * 1.1f;    // Grow only 10% bigger
+        if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
+        
+        isHintActive = active;
+
+        if (active)
+        {
+            // Optional: Keep the yellow tint if it helps, or remove for pure white
+            spriteRenderer.color = new Color(1f, 1f, 0.7f); 
+        }
+        else
+        {
+            // Reset everything when hint is turned off
+            spriteRenderer.color = Color.white;
+            transform.localScale = originalScale; 
+        }
     }
-    else
-    {
-        spriteRenderer.color = Color.white;
-        transform.localScale = originalScale;           // Back to original
-    }
-}
 }

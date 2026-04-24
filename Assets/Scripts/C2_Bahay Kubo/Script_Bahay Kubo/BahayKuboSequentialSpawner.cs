@@ -33,65 +33,60 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     private int globalVegetableOffset = 0;
 
     [Header("Health UI References")]
-    public GameObject[] heartIcons; // Drag your 3 Heart GameObjects here in the Inspector
+    public GameObject[] heartIcons;
 
     [Header("Grace Period")]
     private bool isGracePeriodActive = false;
     private bool allowGracePeriod = true;
 
-void Start()
-{
-    // 1. Set starting point based on user choice
-    int startingCycle = 0;
-    if (GameSettings.CurrentDifficulty == Difficulty.Medium) startingCycle = 1;
-    else if (GameSettings.CurrentDifficulty == Difficulty.Hard) startingCycle = 2;
+    [Header("Hint State")]
+    private bool hintTriggered = false;
 
-    // 2. Initialize Rules (This now handles the Hearts automatically)
-    UpdateRulesForCycle(startingCycle);
-
-    // 3. UI Setup
-    if (pausePanel != null) pausePanel.SetActive(false);
-    if (feedbackPopup != null) feedbackPopup.SetActive(false);
-
-    SpawnCurrentBatch();
-}
-private void UpdateRulesForCycle(int cycle)
-{
-    difficultyCycle = cycle;
-    
-    // --- NEW: HANDLE HEART VISIBILITY MID-GAME ---
-    if (heartIcons != null && heartIcons.Length > 0)
+    void Start()
     {
-        if (cycle == 0) // Easy Mode
-        {
-            foreach (GameObject heart in heartIcons) if (heart != null) heart.SetActive(false);
-            hitWindow = 0.8f;
-            allowGracePeriod = true;
-            Debug.Log("<color=green>BK: Easy Mode - Hearts Hidden</color>");
-        }
-        else if (cycle == 1) // Medium Mode
-        {
-            // Turn hearts BACK ON when moving from Easy to Medium
-            foreach (GameObject heart in heartIcons) if (heart != null) heart.SetActive(true);
-            hitWindow = 0.5f;
-            allowGracePeriod = false;
-            Debug.Log("<color=yellow>BK: Medium Mode - Hearts Restored</color>");
-        }
-        else // Hard Mode
-        {
-            // Show only the first heart
-            for (int i = 0; i < heartIcons.Length; i++)
-            {
-                if (heartIcons[i] != null) heartIcons[i].SetActive(i == 0);
-            }
-            hitWindow = 0.3f;
-            allowGracePeriod = false;
-            Debug.Log("<color=red>BK: Hard Mode - One Heart Only</color>");
-        }
+        int startingCycle = 0;
+        if (GameSettings.CurrentDifficulty == Difficulty.Medium) startingCycle = 1;
+        else if (GameSettings.CurrentDifficulty == Difficulty.Hard) startingCycle = 2;
+
+        UpdateRulesForCycle(startingCycle);
+
+        if (pausePanel != null) pausePanel.SetActive(false);
+        if (feedbackPopup != null) feedbackPopup.SetActive(false);
+
+        SpawnCurrentBatch();
     }
 
-    isGracePeriodActive = false; 
-}
+    private void UpdateRulesForCycle(int cycle)
+    {
+        difficultyCycle = cycle;
+
+        if (heartIcons != null && heartIcons.Length > 0)
+        {
+            if (cycle == 0) // Easy
+            {
+                foreach (GameObject heart in heartIcons) if (heart != null) heart.SetActive(false);
+                hitWindow = 0.8f;
+                allowGracePeriod = true;
+            }
+            else if (cycle == 1) // Medium
+            {
+                foreach (GameObject heart in heartIcons) if (heart != null) heart.SetActive(true);
+                hitWindow = 0.5f;
+                allowGracePeriod = false;
+            }
+            else // Hard
+            {
+                for (int i = 0; i < heartIcons.Length; i++)
+                {
+                    if (heartIcons[i] != null) heartIcons[i].SetActive(i == 0);
+                }
+                hitWindow = 0.3f;
+                allowGracePeriod = false;
+            }
+        }
+        isGracePeriodActive = false;
+        hintTriggered = false;
+    }
 
     void Update()
     {
@@ -102,105 +97,112 @@ private void UpdateRulesForCycle(int cycle)
             float currentTime = bahayKuboAudio.time;
             float targetTime = SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].timestamp;
 
+            // Only trigger auto-hint if the song has passed the hit window
             if (currentTime > (targetTime + hitWindow))
             {
                 RemoveMissedVegetable(nextExpectedIndexInBeatmap);
+                if (difficultyCycle == 0)
+                {
+                    hintTriggered = true;
+                }
                 ApplyPenalty();
                 HandleProgress();
             }
         }
     }
 
-    public void TryHarvest(int clickedID, GameObject vegetableObj)
+public void TryHarvest(int clickedID, GameObject vegetableObj)
+{
+    if (isGameOver) return;
+
+    float clickTime = bahayKuboAudio.time;
+    float targetTimestamp = SongManager.Instance.beatmap[clickedID].timestamp;
+    float timeDifference = clickTime - targetTimestamp;
+
+    bool isCorrectVeggie = (clickedID == nextExpectedIndexInBeatmap);
+    bool isOnBeat = Mathf.Abs(timeDifference) <= hitWindow;
+
+    if (isCorrectVeggie && isOnBeat)
     {
-        if (isGameOver) return;
-
-        float clickTime = bahayKuboAudio.time;
-        if (SongManager.Instance == null || clickedID >= SongManager.Instance.beatmap.Count) return;
-
-        float targetTimestamp = SongManager.Instance.beatmap[clickedID].timestamp;
-        float timeDifference = clickTime - targetTimestamp;
-
-        bool isCorrectVeggie = (clickedID == nextExpectedIndexInBeatmap);
-        bool isOnBeat = Mathf.Abs(timeDifference) <= hitWindow;
-
-        if (isCorrectVeggie && isOnBeat)
-        {
-            activeVegetables.Remove(vegetableObj);
-            Destroy(vegetableObj);
-            HandleProgress();
-        }
-        else
-        {
-            string msg = !isCorrectVeggie ? "Mali!" : (timeDifference < 0 ? "Too Early!" : "Too Late!");
-            ShowFeedback(vegetableObj, msg);
-            ApplyPenalty();
-        }
+        activeVegetables.Remove(vegetableObj);
+        Destroy(vegetableObj);
+        HandleProgress();
     }
+    else
+    {
+        // --- LOOSER ANTI-EXPLOIT ---
+        // We only block the hint if they are clicking MORE than 0.5 seconds before the lyric.
+        // If they click 0.1s early, we now allow the hint to trigger.
+        bool isWayTooEarly = clickTime < (targetTimestamp - 1f);
+        
+        // Debugging: See why it's not pulsating
+        Debug.Log($"Click: {clickTime} | Target: {targetTimestamp} | Diff: {timeDifference} | TooEarly: {isWayTooEarly}");
+
+        if (difficultyCycle == 0 && !isWayTooEarly) 
+        {
+            hintTriggered = true; 
+            UpdateEasyHint(); // Force refresh
+        }
+
+        string msg = !isCorrectVeggie ? "Mali!" : (timeDifference < 0 ? "Too Early!" : "Too Late!");
+        ShowFeedback(vegetableObj, msg);
+        ApplyPenalty();
+    }
+}
 
 private void ApplyPenalty()
 {
     if (isGameOver) return;
 
-    // 1. Check current cycle (0 = Easy, 1 = Medium, 2 = Hard)
-    // We use difficultyCycle because it updates mid-song!
-    if (difficultyCycle == 0) 
+    if (difficultyCycle == 0)
     {
-        // EASY MODE: The "Infinite Health" logic
+        float currentTime = bahayKuboAudio.time;
+        float targetTime = SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].timestamp;
+
+        // Allow hint to trigger if we are within 0.5s of the vegetable start
+        if (currentTime >= (targetTime - 1.5f))
+        {
+            hintTriggered = true;
+            UpdateEasyHint();
+        }
+
         if (!isGracePeriodActive)
         {
             isGracePeriodActive = true;
             if (feedbackText != null) feedbackText.text = "Ingat!";
-            Debug.Log("Easy Cycle: Grace active, no health lost.");
         }
         else
         {
             isGracePeriodActive = false;
-            Debug.Log("Easy Cycle: Damage blocked (Infinite).");
         }
-        return; // Exit here so HealthManager is never touched
+        return; 
     }
 
-    // 2. MEDIUM & HARD MODE: Actually take damage
-    if (HealthManager.Instance != null)
-    {
-        if (difficultyCycle == 2) // Hard Mode (Cycle 2)
+        if (HealthManager.Instance != null)
         {
-            Debug.Log("<color=red>Hard Cycle: Instant Death!</color>");
-            HealthManager.Instance.TakeDamage(HealthManager.Instance.maxHealth);
-            
-            if (heartIcons != null && heartIcons.Length > 0 && heartIcons[0] != null)
+            if (difficultyCycle == 2) // Hard
             {
-                heartIcons[0].SetActive(false);
+                HealthManager.Instance.TakeDamage(HealthManager.Instance.maxHealth);
+                if (heartIcons != null && heartIcons.Length > 0 && heartIcons[0] != null)
+                    heartIcons[0].SetActive(false);
+            }
+            else // Medium
+            {
+                HealthManager.Instance.TakeDamage(1);
+            }
+
+            if (HealthManager.Instance.currentHealth <= 0)
+            {
+                TriggerGameOver();
             }
         }
-        else // Medium Mode (Cycle 1)
-        {
-            HealthManager.Instance.TakeDamage(1);
-            Debug.Log("Medium Cycle: 1 Life Lost.");
-        }
-
-        // 3. Check for Death
-        if (HealthManager.Instance.currentHealth <= 0)
-        {
-            TriggerGameOver();
-        }
     }
-}
 
-    private void TriggerGameOver()
-    {
-        isGameOver = true;
-        if (bahayKuboAudio != null) bahayKuboAudio.Stop();
-        ClearGarden();
-        if (pausePanel != null) pausePanel.SetActive(true);
-    }
+    // ... Rest of the helper methods (RestartGame, SpawnCurrentBatch, HandleProgress, etc.) remain the same ...
 
     public void RestartGame()
     {
         isGameOver = false;
-
-        // Reset based on initial Menu choice
         int startingCycle = 0;
         if (GameSettings.CurrentDifficulty == Difficulty.Medium) startingCycle = 1;
         else if (GameSettings.CurrentDifficulty == Difficulty.Hard) startingCycle = 2;
@@ -208,6 +210,7 @@ private void ApplyPenalty()
         currentPhase = 0;
         globalVegetableOffset = 0;
         nextExpectedIndexInBeatmap = 0;
+        hintTriggered = false;
 
         UpdateRulesForCycle(startingCycle);
 
@@ -257,15 +260,15 @@ private void ApplyPenalty()
 
     private void UpdateEasyHint()
     {
-        // Hint only shows if the CURRENT mode is Easy
-        bool showHint = (difficultyCycle == 0);
+        bool isEasyMode = (difficultyCycle == 0);
         foreach (GameObject veg in activeVegetables)
         {
             if (veg == null) continue;
             VegetableClick script = veg.GetComponent<VegetableClick>();
             if (script != null)
             {
-                script.SetHint(showHint && script.vegetableID == nextExpectedIndexInBeatmap);
+                bool isTarget = (script.vegetableID == nextExpectedIndexInBeatmap);
+                script.SetHint(isEasyMode && isTarget && hintTriggered);
             }
         }
     }
@@ -273,6 +276,7 @@ private void ApplyPenalty()
     private void HandleProgress()
     {
         nextExpectedIndexInBeatmap++;
+        hintTriggered = false; 
 
         int currentBatchStart = 0;
         for (int i = 0; i < currentPhase; i++) currentBatchStart += batchSizes[i];
@@ -281,19 +285,17 @@ private void ApplyPenalty()
         if (nextExpectedIndexInBeatmap >= currentBatchStart + batchSizes[currentPhase])
         {
             currentPhase++;
-
             if (currentPhase >= batchSizes.Length)
             {
                 currentPhase = 0;
                 globalVegetableOffset = 0;
-
                 int nextCycle = difficultyCycle + 1;
                 if (nextCycle <= 2)
                 {
                     UpdateRulesForCycle(nextCycle);
                     Invoke("SpawnCurrentBatch", 0.5f);
                 }
-                else { TriggerGameOver(); } // Won game
+                else { TriggerGameOver(); }
             }
             else
             {
@@ -302,6 +304,14 @@ private void ApplyPenalty()
             }
         }
         else { UpdateEasyHint(); }
+    }
+
+    private void TriggerGameOver()
+    {
+        isGameOver = true;
+        if (bahayKuboAudio != null) bahayKuboAudio.Stop();
+        ClearGarden();
+        if (pausePanel != null) pausePanel.SetActive(true);
     }
 
     private void ShowFeedback(GameObject vegetableObj, string message)
