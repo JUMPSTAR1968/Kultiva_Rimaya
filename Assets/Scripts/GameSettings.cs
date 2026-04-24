@@ -6,7 +6,7 @@ public enum Difficulty { Easy, Medium, Hard }
 public static class GameSettings
 {
     // Remembers the difficulty (Defaults to Medium)
-    public static Difficulty CurrentDifficulty = Difficulty.Medium;
+    public static Difficulty CurrentDifficulty = Difficulty.Easy;
 
     // Remembers which mini-game to load
     public static string TargetScene = "";
