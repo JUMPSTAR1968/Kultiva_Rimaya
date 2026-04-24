@@ -111,72 +111,72 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         }
     }
 
-public void TryHarvest(int clickedID, GameObject vegetableObj)
-{
-    if (isGameOver) return;
-
-    float clickTime = bahayKuboAudio.time;
-    float targetTimestamp = SongManager.Instance.beatmap[clickedID].timestamp;
-    float timeDifference = clickTime - targetTimestamp;
-
-    bool isCorrectVeggie = (clickedID == nextExpectedIndexInBeatmap);
-    bool isOnBeat = Mathf.Abs(timeDifference) <= hitWindow;
-
-    if (isCorrectVeggie && isOnBeat)
+    public void TryHarvest(int clickedID, GameObject vegetableObj)
     {
-        activeVegetables.Remove(vegetableObj);
-        Destroy(vegetableObj);
-        HandleProgress();
-    }
-    else
-    {
-        // --- LOOSER ANTI-EXPLOIT ---
-        // We only block the hint if they are clicking MORE than 0.5 seconds before the lyric.
-        // If they click 0.1s early, we now allow the hint to trigger.
-        bool isWayTooEarly = clickTime < (targetTimestamp - 1f);
-        
-        // Debugging: See why it's not pulsating
-        Debug.Log($"Click: {clickTime} | Target: {targetTimestamp} | Diff: {timeDifference} | TooEarly: {isWayTooEarly}");
+        if (isGameOver) return;
 
-        if (difficultyCycle == 0 && !isWayTooEarly) 
+        float clickTime = bahayKuboAudio.time;
+        float targetTimestamp = SongManager.Instance.beatmap[clickedID].timestamp;
+        float timeDifference = clickTime - targetTimestamp;
+
+        bool isCorrectVeggie = (clickedID == nextExpectedIndexInBeatmap);
+        bool isOnBeat = Mathf.Abs(timeDifference) <= hitWindow;
+
+        if (isCorrectVeggie && isOnBeat)
         {
-            hintTriggered = true; 
-            UpdateEasyHint(); // Force refresh
-        }
-
-        string msg = !isCorrectVeggie ? "Mali!" : (timeDifference < 0 ? "Too Early!" : "Too Late!");
-        ShowFeedback(vegetableObj, msg);
-        ApplyPenalty();
-    }
-}
-
-private void ApplyPenalty()
-{
-    if (isGameOver) return;
-
-    if (difficultyCycle == 0)
-    {
-        float currentTime = bahayKuboAudio.time;
-        float targetTime = SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].timestamp;
-
-        // Allow hint to trigger if we are within 0.5s of the vegetable start
-        if (currentTime >= (targetTime - 1.5f))
-        {
-            hintTriggered = true;
-            UpdateEasyHint();
-        }
-
-        if (!isGracePeriodActive)
-        {
-            isGracePeriodActive = true;
-            if (feedbackText != null) feedbackText.text = "Ingat!";
+            activeVegetables.Remove(vegetableObj);
+            Destroy(vegetableObj);
+            HandleProgress();
         }
         else
         {
-            isGracePeriodActive = false;
+            // --- LOOSER ANTI-EXPLOIT ---
+            // We only block the hint if they are clicking MORE than 0.5 seconds before the lyric.
+            // If they click 0.1s early, we now allow the hint to trigger.
+            bool isWayTooEarly = clickTime < (targetTimestamp - 1f);
+
+            // Debugging: See why it's not pulsating
+            Debug.Log($"Click: {clickTime} | Target: {targetTimestamp} | Diff: {timeDifference} | TooEarly: {isWayTooEarly}");
+
+            if (difficultyCycle == 0 && !isWayTooEarly)
+            {
+                hintTriggered = true;
+                UpdateEasyHint(); // Force refresh
+            }
+
+            string msg = !isCorrectVeggie ? "Mali!" : (timeDifference < 0 ? "Too Early!" : "Too Late!");
+            ShowFeedback(vegetableObj, msg);
+            ApplyPenalty();
         }
-        return; 
     }
+
+    private void ApplyPenalty()
+    {
+        if (isGameOver) return;
+
+        if (difficultyCycle == 0)
+        {
+            float currentTime = bahayKuboAudio.time;
+            float targetTime = SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].timestamp;
+
+            // Allow hint to trigger if we are within 0.5s of the vegetable start
+            if (currentTime >= (targetTime - 1.5f))
+            {
+                hintTriggered = true;
+                UpdateEasyHint();
+            }
+
+            if (!isGracePeriodActive)
+            {
+                isGracePeriodActive = true;
+                if (feedbackText != null) feedbackText.text = "Ingat!";
+            }
+            else
+            {
+                isGracePeriodActive = false;
+            }
+            return;
+        }
 
         if (HealthManager.Instance != null)
         {
@@ -225,6 +225,29 @@ private void ApplyPenalty()
         }
 
         SpawnCurrentBatch();
+    }
+
+    private void OnDrawGizmos()
+    {
+        // Sets the color of the grid lines in the Scene view
+        Gizmos.color = Color.yellow;
+
+        // Calculate the same offset used in your SpawnCurrentBatch logic
+        Vector2 gridOffset = new Vector2((columns * cellSize) / 2, (rows * cellSize) / 2);
+
+        for (int x = 0; x < columns; x++)
+        {
+            for (int y = 0; y < rows; y++)
+            {
+                // Calculate the center of each cell
+                float posX = (x * cellSize) - gridOffset.x + (cellSize / 2);
+                float posY = (y * cellSize) - gridOffset.y + (cellSize / 2);
+                Vector3 cellCenter = new Vector3(posX, posY, 0) + transform.position;
+
+                // Draw a wire cube representing the spawn area of one vegetable
+                Gizmos.DrawWireCube(cellCenter, new Vector3(cellSize, cellSize, 0.1f));
+            }
+        }
     }
 
     public void SpawnCurrentBatch()
@@ -276,7 +299,7 @@ private void ApplyPenalty()
     private void HandleProgress()
     {
         nextExpectedIndexInBeatmap++;
-        hintTriggered = false; 
+        hintTriggered = false;
 
         int currentBatchStart = 0;
         for (int i = 0; i < currentPhase; i++) currentBatchStart += batchSizes[i];

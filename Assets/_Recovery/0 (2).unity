@@ -229,8 +229,8 @@ Transform:
   m_GameObject: {fileID: 381275545}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.32, y: -2.17, z: 0}
-  m_LocalScale: {x: -1.0276475, y: 0.70455813, z: 1}
+  m_LocalPosition: {x: 0.07, y: -1.83, z: 0}
+  m_LocalScale: {x: -0.55, y: 0.72, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 458483465}
@@ -472,8 +472,8 @@ Transform:
   m_GameObject: {fileID: 738513091}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.555, y: -2.1753, z: 0}
-  m_LocalScale: {x: 1.012055, y: 0.9171464, z: 1}
+  m_LocalPosition: {x: 0.54, y: -1.79, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 458483465}
@@ -562,8 +562,8 @@ Transform:
   m_GameObject: {fileID: 759231068}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.11, y: 3.3323, z: 0}
-  m_LocalScale: {x: 1, y: 1.1233, z: 1}
+  m_LocalPosition: {x: 0.11, y: 3.05, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 458483465}
@@ -816,8 +816,8 @@ Transform:
   m_GameObject: {fileID: 1118179708}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.19, y: 3.3323, z: 0}
-  m_LocalScale: {x: 1, y: 1.1232, z: 1}
+  m_LocalPosition: {x: 0.19, y: 3.05, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 458483465}
@@ -906,7 +906,7 @@ Transform:
   m_GameObject: {fileID: 1250919750}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.35, y: 3.18, z: 0}
+  m_LocalPosition: {x: -4.71, y: 3.46, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -927,7 +927,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!114 &1499728831
 MonoBehaviour:
@@ -962,7 +962,7 @@ MonoBehaviour:
   - {fileID: 7727426619508953005, guid: 1a3f5353dda9c4d5fbccbbf325ae4ed1, type: 3}
   columns: 3
   rows: 3
-  cellSize: 2.05
+  cellSize: 2
   bahayKuboAudio: {fileID: 1573765094}
   hitWindow: 1
   pausePanel: {fileID: 0}
@@ -982,7 +982,7 @@ Transform:
   m_GameObject: {fileID: 1499728830}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.64, y: -2.25, z: 0}
+  m_LocalPosition: {x: 0.02, y: -1.88, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
