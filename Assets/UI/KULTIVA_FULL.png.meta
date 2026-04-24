@@ -1,0 +1,676 @@
+fileFormatVersion: 2
+guid: c3e57c0a9da56c04b9b7094a962efb46
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2576722186231600489
+    second: KULTIVA_FULL_0
+  - first:
+      213: -3991373418487535744
+    second: KULTIVA_FULL_1
+  - first:
+      213: 3603425402475537407
+    second: KULTIVA_FULL_2
+  - first:
+      213: 4677448837971325833
+    second: KULTIVA_FULL_3
+  - first:
+      213: 4920500903187837910
+    second: KULTIVA_FULL_4
+  - first:
+      213: -2479759072898191331
+    second: KULTIVA_FULL_5
+  - first:
+      213: -6890695894228665418
+    second: KULTIVA_FULL_6
+  - first:
+      213: -6832643449427148897
+    second: KULTIVA_FULL_7
+  - first:
+      213: -9081055761677036927
+    second: KULTIVA_FULL_8
+  - first:
+      213: -2569826142776219520
+    second: KULTIVA_FULL_9
+  - first:
+      213: 7456211227071422237
+    second: KULTIVA_FULL_10
+  - first:
+      213: 6888545024382334015
+    second: KULTIVA_FULL_11
+  - first:
+      213: 941513063229475920
+    second: KULTIVA_FULL_12
+  - first:
+      213: 7504108144952218908
+    second: KULTIVA_FULL_13
+  - first:
+      213: 69709639410673620
+    second: KULTIVA_FULL_14
+  - first:
+      213: 8114138087396699409
+    second: KULTIVA_FULL_15
+  - first:
+      213: 2018335958588198535
+    second: KULTIVA_FULL_16
+  - first:
+      213: -2285040123912105592
+    second: KULTIVA_FULL_17
+  - first:
+      213: -794953602433563273
+    second: KULTIVA_FULL_18
+  - first:
+      213: -7778440243858931267
+    second: KULTIVA_FULL_19
+  - first:
+      213: -6589678497694528359
+    second: KULTIVA_FULL_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: KULTIVA_FULL_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1455
+        height: 1451
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 965d3332d2b52c320800000000000000
+      internalID: 2576722186231600489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_1
+      rect:
+        serializedVersion: 2
+        x: 1655
+        y: 771
+        width: 517
+        height: 601
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0872d19e50bcb98c0800000000000000
+      internalID: -3991373418487535744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_2
+      rect:
+        serializedVersion: 2
+        x: 2731
+        y: 771
+        width: 191
+        height: 643
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff36c21df40f10230800000000000000
+      internalID: 3603425402475537407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_3
+      rect:
+        serializedVersion: 2
+        x: 2983
+        y: 765
+        width: 324
+        height: 587
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 983385a9fe2a9e040800000000000000
+      internalID: 4677448837971325833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_4
+      rect:
+        serializedVersion: 2
+        x: 3340
+        y: 1260
+        width: 206
+        height: 198
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d3ff736081294440800000000000000
+      internalID: 4920500903187837910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_5
+      rect:
+        serializedVersion: 2
+        x: 3569
+        y: 768
+        width: 492
+        height: 497
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d10f953f240269dd0800000000000000
+      internalID: -2479759072898191331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_6
+      rect:
+        serializedVersion: 2
+        x: 4072
+        y: 764
+        width: 457
+        height: 505
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bbf149b7945f50a0800000000000000
+      internalID: -6890695894228665418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_7
+      rect:
+        serializedVersion: 2
+        x: 2201
+        y: 764
+        width: 470
+        height: 493
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9fbeffcbf29d21a0800000000000000
+      internalID: -6832643449427148897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_8
+      rect:
+        serializedVersion: 2
+        x: 3347
+        y: 771
+        width: 192
+        height: 486
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 182d9b3f5eb99f180800000000000000
+      internalID: -9081055761677036927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_9
+      rect:
+        serializedVersion: 2
+        x: 1655
+        y: 10
+        width: 196
+        height: 598
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 088af491db4265cd0800000000000000
+      internalID: -2569826142776219520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_10
+      rect:
+        serializedVersion: 2
+        x: 1920
+        y: 7
+        width: 470
+        height: 498
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1f1fd73b98c97760800000000000000
+      internalID: 7456211227071422237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_11
+      rect:
+        serializedVersion: 2
+        x: 2450
+        y: 1
+        width: 323
+        height: 587
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f34f79dd337099f50800000000000000
+      internalID: 6888545024382334015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_12
+      rect:
+        serializedVersion: 2
+        x: 2791
+        y: 0
+        width: 479
+        height: 505
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05cce25842de01d00800000000000000
+      internalID: 941513063229475920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_13
+      rect:
+        serializedVersion: 2
+        x: 3308
+        y: 7
+        width: 346
+        height: 497
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c151eff6992f32860800000000000000
+      internalID: 7504108144952218908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_14
+      rect:
+        serializedVersion: 2
+        x: 3658
+        y: 0
+        width: 458
+        height: 505
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d76e763c88a7f000800000000000000
+      internalID: 69709639410673620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_15
+      rect:
+        serializedVersion: 2
+        x: 4154
+        y: 1
+        width: 422
+        height: 504
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11d6fb599953b9070800000000000000
+      internalID: 8114138087396699409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_16
+      rect:
+        serializedVersion: 2
+        x: 4618
+        y: 1
+        width: 323
+        height: 587
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78e0c095cd1920c10800000000000000
+      internalID: 2018335958588198535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_17
+      rect:
+        serializedVersion: 2
+        x: 4975
+        y: 495
+        width: 205
+        height: 200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88154bc2d18e940e0800000000000000
+      internalID: -2285040123912105592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_18
+      rect:
+        serializedVersion: 2
+        x: 5203
+        y: 3
+        width: 493
+        height: 497
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 775c70219e1c7f4f0800000000000000
+      internalID: -794953602433563273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_19
+      rect:
+        serializedVersion: 2
+        x: 5709
+        y: 0
+        width: 478
+        height: 505
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db18f266fcd6d0490800000000000000
+      internalID: -7778440243858931267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: KULTIVA_FULL_20
+      rect:
+        serializedVersion: 2
+        x: 4982
+        y: 7
+        width: 191
+        height: 486
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99c43e8e152cc84a0800000000000000
+      internalID: -6589678497694528359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      KULTIVA_FULL_0: 2576722186231600489
+      KULTIVA_FULL_1: -3991373418487535744
+      KULTIVA_FULL_10: 7456211227071422237
+      KULTIVA_FULL_11: 6888545024382334015
+      KULTIVA_FULL_12: 941513063229475920
+      KULTIVA_FULL_13: 7504108144952218908
+      KULTIVA_FULL_14: 69709639410673620
+      KULTIVA_FULL_15: 8114138087396699409
+      KULTIVA_FULL_16: 2018335958588198535
+      KULTIVA_FULL_17: -2285040123912105592
+      KULTIVA_FULL_18: -794953602433563273
+      KULTIVA_FULL_19: -7778440243858931267
+      KULTIVA_FULL_2: 3603425402475537407
+      KULTIVA_FULL_20: -6589678497694528359
+      KULTIVA_FULL_3: 4677448837971325833
+      KULTIVA_FULL_4: 4920500903187837910
+      KULTIVA_FULL_5: -2479759072898191331
+      KULTIVA_FULL_6: -6890695894228665418
+      KULTIVA_FULL_7: -6832643449427148897
+      KULTIVA_FULL_8: -9081055761677036927
+      KULTIVA_FULL_9: -2569826142776219520
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
