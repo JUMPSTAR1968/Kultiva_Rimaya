@@ -37,6 +37,10 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
 
     [Header("Grace Period")]
     private bool isGracePeriodActive = false;
+
+    [Header("Difficulty State")]
+    private bool mediumGracePointUsed = false; // Tracks if the first mistake was made in Medium
+
     private bool allowGracePeriod = true;
 
     [Header("Hint State")]
@@ -59,29 +63,27 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     private void UpdateRulesForCycle(int cycle)
     {
         difficultyCycle = cycle;
+        mediumGracePointUsed = false; // Reset grace state on new cycle
 
         if (heartIcons != null && heartIcons.Length > 0)
         {
-            if (cycle == 0) // Easy
+            if (cycle == 0) // Easy: Infinite Health
             {
                 foreach (GameObject heart in heartIcons) if (heart != null) heart.SetActive(false);
                 hitWindow = 0.8f;
-                allowGracePeriod = true;
             }
-            else if (cycle == 1) // Medium
+            else if (cycle == 1) // Medium: Grace Period (2 mistakes = 1 heart)
             {
                 foreach (GameObject heart in heartIcons) if (heart != null) heart.SetActive(true);
                 hitWindow = 0.5f;
-                allowGracePeriod = false;
             }
-            else // Hard
+            else // Hard: One Life
             {
                 for (int i = 0; i < heartIcons.Length; i++)
                 {
                     if (heartIcons[i] != null) heartIcons[i].SetActive(i == 0);
                 }
                 hitWindow = 0.3f;
-                allowGracePeriod = false;
             }
         }
         isGracePeriodActive = false;
@@ -131,7 +133,7 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         else
         {
             // --- LOOSER ANTI-EXPLOIT ---
-            // We only block the hint if they are clicking MORE than 0.5 seconds before the lyric.
+            // Only block the hint if they are clicking MORE than 1 second before the lyric.
             // If they click 0.1s early, we now allow the hint to trigger.
             bool isWayTooEarly = clickTime < (targetTimestamp - 1f);
 
@@ -150,55 +152,65 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         }
     }
 
+    // Extracted logic for readability
+    private void TriggerEasyHintLogic()
+    {
+        float currentTime = bahayKuboAudio.time;
+        float targetTime = SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].timestamp;
+
+        if (currentTime >= (targetTime - 1.5f))
+        {
+            hintTriggered = true;
+            UpdateEasyHint();
+        }
+    }
+
     private void ApplyPenalty()
     {
         if (isGameOver) return;
 
+        // --- EASY MODE ---
         if (difficultyCycle == 0)
         {
-            float currentTime = bahayKuboAudio.time;
-            float targetTime = SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].timestamp;
-
-            // Allow hint to trigger if we are within 0.5s of the vegetable start
-            if (currentTime >= (targetTime - 1.5f))
-            {
-                hintTriggered = true;
-                UpdateEasyHint();
-            }
-
-            if (!isGracePeriodActive)
-            {
-                isGracePeriodActive = true;
-                if (feedbackText != null) feedbackText.text = "Ingat!";
-            }
-            else
-            {
-                isGracePeriodActive = false;
-            }
+            // Simply trigger the hint, no health deduction
+            TriggerEasyHintLogic();
             return;
         }
 
         if (HealthManager.Instance != null)
         {
-            if (difficultyCycle == 2) // Hard
+            // --- HARD MODE ---
+            if (difficultyCycle == 2)
             {
+                // Instant death
                 HealthManager.Instance.TakeDamage(HealthManager.Instance.maxHealth);
                 if (heartIcons != null && heartIcons.Length > 0 && heartIcons[0] != null)
                     heartIcons[0].SetActive(false);
             }
-            else // Medium
+            // --- MEDIUM MODE ---
+            else if (difficultyCycle == 1)
             {
-                HealthManager.Instance.TakeDamage(1);
+                if (!mediumGracePointUsed)
+                {
+                    // First mistake: show warning but don't take health
+                    mediumGracePointUsed = true;
+                    if (feedbackText != null) feedbackText.text = "Ingat! (1/2)";
+                }
+                else
+                {
+                    // Second mistake: take health and reset grace counter
+                    HealthManager.Instance.TakeDamage(1);
+                    mediumGracePointUsed = false;
+                }
             }
 
+            // Check for Game Over after damage
             if (HealthManager.Instance.currentHealth <= 0)
             {
                 TriggerGameOver();
             }
         }
     }
-
-    // ... Rest of the helper methods (RestartGame, SpawnCurrentBatch, HandleProgress, etc.) remain the same ...
 
     public void RestartGame()
     {
