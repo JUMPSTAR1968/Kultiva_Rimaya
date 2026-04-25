@@ -40,9 +40,7 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
 
     [Header("Difficulty State")]
     private bool mediumGracePointUsed = false; // Tracks if the first mistake was made in Medium
-
-    private bool allowGracePeriod = true;
-
+    
     [Header("Hint State")]
     private bool hintTriggered = false;
 
