@@ -40,7 +40,7 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
 
     [Header("Difficulty State")]
     private bool mediumGracePointUsed = false; // Tracks if the first mistake was made in Medium
-    
+
     [Header("Hint State")]
     private bool hintTriggered = false;
 
@@ -311,32 +311,54 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         nextExpectedIndexInBeatmap++;
         hintTriggered = false;
 
-        int currentBatchStart = 0;
-        for (int i = 0; i < currentPhase; i++) currentBatchStart += batchSizes[i];
-        currentBatchStart += (difficultyCycle * 18);
+        // Calculate how many vegetables are in all phases up to the current one
+        int vegetablesInCompletedPhases = 0;
+        for (int i = 0; i < currentPhase; i++)
+        {
+            vegetablesInCompletedPhases += batchSizes[i];
+        }
 
-        if (nextExpectedIndexInBeatmap >= currentBatchStart + batchSizes[currentPhase])
+        // The threshold is: (Vegetables in past phases) + (Vegetables in the current phase)
+        int currentBatchThreshold = vegetablesInCompletedPhases + batchSizes[currentPhase];
+
+        // If the player cleared the last vegetable of the current batch
+        if (nextExpectedIndexInBeatmap >= currentBatchThreshold)
         {
             currentPhase++;
+
+            // Check if we finished all batches in the current difficulty cycle
             if (currentPhase >= batchSizes.Length)
             {
+                // Reset for the next cycle
                 currentPhase = 0;
-                globalVegetableOffset = 0;
+                // Since nextExpectedIndexInBeatmap keeps growing, we don't reset it,
+                // but we ensure the prefab offset continues or wraps.
+
                 int nextCycle = difficultyCycle + 1;
+
                 if (nextCycle <= 2)
                 {
                     UpdateRulesForCycle(nextCycle);
                     Invoke("SpawnCurrentBatch", 0.5f);
                 }
-                else { TriggerGameOver(); }
+                else
+                {
+                    // If Hard Mode (Cycle 2) is infinite, we just keep cycling Hard Mode
+                    UpdateRulesForCycle(2);
+                    Invoke("SpawnCurrentBatch", 0.5f);
+                }
             }
             else
             {
-                globalVegetableOffset += batchSizes[currentPhase - 1];
+                // Move to the next batch within the same cycle
+                globalVegetableOffset = nextExpectedIndexInBeatmap;
                 Invoke("SpawnCurrentBatch", 0.5f);
             }
         }
-        else { UpdateEasyHint(); }
+        else
+        {
+            UpdateEasyHint();
+        }
     }
 
     private void TriggerGameOver()
