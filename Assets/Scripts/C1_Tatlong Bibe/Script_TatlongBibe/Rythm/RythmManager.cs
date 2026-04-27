@@ -2,58 +2,48 @@ using UnityEngine;
 
 public class RythmManager : MonoBehaviour
 {
-    // --- RESTORED: The click script needs this to find the manager! ---
     public static RythmManager Instance;
 
+    [Header("Setup")]
     public AudioSource songSource;
     public GameObject kwakPrefab;
     public RectTransform spawnZone;
-    public float[] kwakTimings;
 
-    public float leadTime = 1.0f; // Notes appear 1 second before the beat
+    [Header("Rhythm Data")]
+    public float[] kwakTimings; // Every individual "Kwak" timestamp
+    public float leadTime = 1.0f; // Seconds before the beat the circle appears
+
     private int nextNoteIndex = 0;
-
     private float previousSongTime = 0f;
-
-    // --- RESTORED: The click script needs this to know what the current time is! ---
-    public float currentSongTime;
 
     void Awake()
     {
-        // Set the instance when the game starts
         Instance = this;
     }
 
+
     void Start()
     {
-        if (songSource != null)
-        {
-            songSource.loop = true; // Make sure the AudioSource is set to loop!
-            songSource.Play();
-        }
+        if (songSource != null) songSource.Play();
     }
 
     void Update()
     {
-        if (songSource == null) return;
+        if (songSource == null || nextNoteIndex >= kwakTimings.Length) return;
 
-        // Keep our public variable updated for the dots to read
-        currentSongTime = songSource.time;
+        float currentSongTime = songSource.time;
 
-        // --- Loop Detection ---
+        // LOOP DETECTION: Resets the sequence when the song restarts
         if (currentSongTime < previousSongTime)
         {
-            nextNoteIndex = 0; // Reset our timing array back to the very first dot
+            nextNoteIndex = 0;
         }
-
-        // Save the time so we can check it again next frame
         previousSongTime = currentSongTime;
 
-        // If we've spawned all the notes for this loop, just wait
-        if (nextNoteIndex >= kwakTimings.Length) return;
-
+        // SPAWN CLICKABLES: Check if it's time for the next "Kwak"
+        if (nextNoteIndex < kwakTimings.Length && currentSongTime >= kwakTimings[nextNoteIndex] - leadTime)
         // Spawn logic: Check if song time has reached (Target - LeadTime)
-        if (currentSongTime >= kwakTimings[nextNoteIndex] - leadTime)
+        if (songSource.time >= kwakTimings[nextNoteIndex] - leadTime)
         {
             SpawnKwak(kwakTimings[nextNoteIndex]);
             nextNoteIndex++;
@@ -63,14 +53,13 @@ public class RythmManager : MonoBehaviour
     void SpawnKwak(float targetTime)
     {
         GameObject newNote = Instantiate(kwakPrefab, spawnZone);
-        newNote.transform.localScale = Vector3.one; // Fix scale issues
+        newNote.transform.localScale = Vector3.one;
 
-        // Random position inside the spawnZone
         float rx = Random.Range(-spawnZone.rect.width / 2, spawnZone.rect.width / 2);
         float ry = Random.Range(-spawnZone.rect.height / 2, spawnZone.rect.height / 2);
         newNote.GetComponent<RectTransform>().anchoredPosition = new Vector2(rx, ry);
 
-        // Pass data to the circle
+        // Pass the timing data to the circle script
         newNote.GetComponent<KwakCircle>().Setup(targetTime, songSource, leadTime);
     }
 }

@@ -690,17 +690,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleSpawn
   kwakZones:
-  - sectionName: 
-    startTime: 26
-    endTime: 36
-  - sectionName: 
-    startTime: 0
-    endTime: 0
-  - sectionName: 
-    startTime: 0
-    endTime: 0
-  gracePeriod: 1
-  obstaclePrefab: {fileID: 8168060436436749290, guid: 73ad2dc1a510590448f821572dea76a1, type: 3}
+  - sectionName: '1st '
+    startTime: 27
+    endTime: 35
+  - sectionName: 2nd
+    startTime: 50
+    endTime: 60
+  - sectionName: 3rd
+    startTime: 74
+    endTime: 83
+  - sectionName: 4th
+    startTime: 98
+    endTime: 107
+  - sectionName: 5th
+    startTime: 122
+    endTime: 131
+  - sectionName: 6th
+    startTime: 146
+    endTime: 150
+  gracePeriod: 2
+  obstaclePrefab: {fileID: 765193003}
   songSource: {fileID: 1245916258}
   spawnRate: 5
   minY: -2.6
@@ -1176,6 +1185,11 @@ MonoBehaviour:
   topBorder: 1.3
   bottomBorder: -1.5
   safePassDistance: 1
+--- !u!1 &765193003 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8168060436436749290, guid: 73ad2dc1a510590448f821572dea76a1, type: 3}
+  m_PrefabInstance: {fileID: 7747620601368973274}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &800286173
 GameObject:
   m_ObjectHideFlags: 0
@@ -1920,7 +1934,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2018,12 +2032,44 @@ MonoBehaviour:
   kwakPrefab: {fileID: 8453761931572070500, guid: 8590c2e3774394547903420c133cde80, type: 3}
   spawnZone: {fileID: 1949716962}
   kwakTimings:
-  - 6.4
   - 27
   - 28
-  - 28
+  - 30
+  - 31
+  - 34
+  - 35
+  - 35
+  - 50
+  - 51
+  - 52
+  - 53
+  - 55
+  - 58
+  - 59
+  - 74
+  - 75
+  - 76
+  - 77
+  - 82
+  - 83
+  - 98
+  - 99
+  - 101
+  - 102
+  - 106
+  - 107
+  - 122
+  - 123
+  - 124
+  - 125
+  - 130
+  - 131
+  - 146
+  - 147
+  - 148
+  - 149
+  - 150
   leadTime: 1
-  currentSongTime: 0
 --- !u!1 &1249693558
 GameObject:
   m_ObjectHideFlags: 0
