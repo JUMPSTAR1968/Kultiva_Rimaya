@@ -691,15 +691,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleSpawn
   kwakZones:
   - sectionName: 
-    startTime: 26
-    endTime: 36
-  - sectionName: 
-    startTime: 0
-    endTime: 0
-  - sectionName: 
-    startTime: 0
-    endTime: 0
-  gracePeriod: 1
+    startTime: 21
+    endTime: 25
+  gracePeriod: 2
   obstaclePrefab: {fileID: 8168060436436749290, guid: 73ad2dc1a510590448f821572dea76a1, type: 3}
   songSource: {fileID: 1245916258}
   spawnRate: 5
@@ -1868,7 +1862,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 301996ce93996f5488cdbe06ec470c0b, type: 3}
+  m_Resource: {fileID: 8300000, guid: 13481530d7bde714b942a5c68587cb25, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1970,25 +1964,18 @@ MonoBehaviour:
   kwakPrefab: {fileID: 8453761931572070500, guid: 8590c2e3774394547903420c133cde80, type: 3}
   spawnZone: {fileID: 1949716962}
   kwakTimings:
-  - 26.5
-  - 28.7
-  - 30.6
-  - 34.3
-  - 36
-  - 36
-  - 50.6
-  - 54.3
-  - 58.5
-  - 68.4
-  - 73.3
-  - 82.8
-  - 87.6
-  - 121.2
-  - 123
-  - 135.6
-  - 138
-  - 140.4
+  - 22.66
+  - 23.17
+  - 24.11
+  - 24.64
+  - 25.11
+  - 26.13
+  - 26.65
+  - 27.09
+  - 30.57
+  - 31.08
   leadTime: 1
+  currentSongTime: 0
 --- !u!1 &1249693558
 GameObject:
   m_ObjectHideFlags: 0
