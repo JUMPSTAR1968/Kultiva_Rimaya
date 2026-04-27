@@ -689,23 +689,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99fd94cca79fd9a4ca267cea1949cc5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleSpawn
-  kwakZones:
-  - sectionName: 
-    startTime: 26
-    endTime: 36
-  - sectionName: 
-    startTime: 0
-    endTime: 0
-  - sectionName: 
-    startTime: 0
-    endTime: 0
-  gracePeriod: 1
-  obstaclePrefab: {fileID: 8168060436436749290, guid: 73ad2dc1a510590448f821572dea76a1, type: 3}
-  songSource: {fileID: 1245916258}
+  obstaclePrefabs:
+  - {fileID: 8168060436436749290, guid: 73ad2dc1a510590448f821572dea76a1, type: 3}
   spawnRate: 5
-  minY: -2.6
-  maxY: 1.5
   spawnX: 12
+  riverTopY: 1.5
+  riverBottomY: -2.6
 --- !u!4 &346919504
 Transform:
   m_ObjectHideFlags: 0

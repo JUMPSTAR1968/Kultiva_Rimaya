@@ -1,78 +1,69 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class ObstacleSpawn : MonoBehaviour
 {
-    [System.Serializable]
-    public struct RhythmZone
-    {
-        public string sectionName; // Just to help you organize in Inspector
-        public float startTime;    // Start of "Kwak Kwak"
-        public float endTime;      // End of "Kwak Kwak"
-    }
+    [Header("Obstacle Setup")]
+    public GameObject[] obstaclePrefabs; // Drag your Log, Boulder, and Branch prefabs here
+    public float spawnRate = 1.0f;       // Seconds between each spawn
+    public float spawnX = 12f;           // Position to the right of the screen
 
-    [Header("Rhythm Zones (Silence Boulders Here)")]
-    public RhythmZone[] kwakZones;
-    public float gracePeriod = 2.0f; // Seconds to clear boulders before/after
-
-    [Header("Obstacle Settings")]
-    public GameObject obstaclePrefab;
-    public AudioSource songSource;
-    public float spawnRate = 2f;
-    public float minY = -2.6f;
-    public float maxY = 1.5f;
-    public float spawnX = 10f;
+    [Header("River Boundaries")]
+    public float riverTopY = 0.5f;
+    public float riverBottomY = -1.5f;
 
     private float timer = 0f;
 
-    void Update()
+    void Start()
     {
-        if (this == null || songSource == null) return;
+        // THIS IS THE BRAIN: It reads the difficulty and sets the spawn rate!
+        switch (GameSettings.CurrentDifficulty)
+        {
+            case Difficulty.Easy:
+                spawnRate = 3.0f; 
+                Debug.Log("Easy Mode: Boulders spawning every 2 seconds.");
+                break;
 
-        // **FIXED**: Complete silence during kwak zones
-        if (IsInsideRhythmZone())
-        {
-            timer = 0f;  // Reset → resumes immediately after
-            return;
-        }
+            case Difficulty.Medium:
+                spawnRate = 2.0f; 
+                Debug.Log("Medium Mode: Boulders spawning every 1 second.");
+                break;
 
-        if (timer < spawnRate)
-        {
-            timer += Time.deltaTime;
-        }
-        else
-        {
-            if (obstaclePrefab != null)
-            {
-                SpawnObstacle();
-                timer = 0;
-            }
+            case Difficulty.Hard:
+                spawnRate = 2.0f; 
+                Debug.Log("Hard Mode: Boulders spawning FAST!");
+                break;
         }
     }
 
-    // This is the "Self-Sensing" logic
-    bool IsInsideRhythmZone()
+    void Update()
     {
-        // Get the current time of the music
-        float currentTime = songSource.time;
+        // Stop the timer if the game is over so boulders stop appearing
+        if (MTB_GameManager.Instance != null && MTB_GameManager.Instance.isGameOver) return;
 
-        foreach (RhythmZone zone in kwakZones)
+        // Count up the timer
+        timer += Time.deltaTime;
+
+        // Check if it's time to spawn a boulder
+        if (timer >= spawnRate)
         {
-            // Check if current time is within the zone (with grace period)
-            if (currentTime >= (zone.startTime - gracePeriod) &&
-                currentTime <= (zone.endTime + gracePeriod))
-            {
-                return true; // Silence mode ACTIVE
-            }
+            SpawnObstacle();
+            timer = 0f; // Reset the loop
         }
-        return false; // Normal mode ACTIVE
     }
 
     void SpawnObstacle()
     {
-        float randomY = Random.Range(minY, maxY);
-        Vector3 spawnPosition = new Vector3(spawnX, randomY, 0);
+        // Safety check
+        if (obstaclePrefabs == null || obstaclePrefabs.Length == 0) return;
 
-        // Create the boulder
-        Instantiate(obstaclePrefab, spawnPosition, transform.rotation);
+        // Pick a random height within the river
+        float randomY = Random.Range(riverBottomY, riverTopY);
+        Vector3 spawnPos = new Vector3(spawnX, randomY, 0);
+
+        // Pick a random prefab (Boulder, branch, etc.)
+        int randomIndex = Random.Range(0, obstaclePrefabs.Length);
+
+        // Spawn it!
+        Instantiate(obstaclePrefabs[randomIndex], spawnPos, Quaternion.identity);
     }
 }
