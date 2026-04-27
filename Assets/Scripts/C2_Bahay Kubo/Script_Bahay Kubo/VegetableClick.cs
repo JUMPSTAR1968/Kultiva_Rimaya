@@ -12,7 +12,7 @@ public class VegetableClick : MonoBehaviour
             // Instead of destroying itself, it asks the spawner: "Is it my turn?"
             spawner.TryHarvest(vegetableID, gameObject);
 
-            Debug.Log("nigga");
+            Debug.Log("timmyislittle");
         }
     }
 }

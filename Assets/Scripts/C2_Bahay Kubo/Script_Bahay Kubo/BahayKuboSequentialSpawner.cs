@@ -13,6 +13,7 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     private int[] batchSizes = { 4, 3, 4, 2, 4, 1 };
     private int currentPhase = 0;
     private int nextExpectedIndexInBeatmap = 0;
+    private float maxSongLength = 0;
 
     [Header("Grid Settings")]
     public int columns = 3;
@@ -36,6 +37,10 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     {
         if (pausePanel != null) pausePanel.SetActive(false);
         if (restartButton != null) restartButton.SetActive(true);
+
+        maxSongLength = bahayKuboAudio.clip.length;
+
+
         SpawnCurrentBatch();
     }
 
@@ -58,13 +63,26 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
                 HandleProgress();
             }
         }
+        else if (SongManager.Instance != null && nextExpectedIndexInBeatmap >= SongManager.Instance.beatmap.Count)
+        {
+            // Loop Checking
 
-        // Update Score Text
-        _scoreLabel.text = SongManager.Instance.ScoreCount.ToString();
+            currentPhase = 0;
+            globalVegetableOffset = 0;
+            nextExpectedIndexInBeatmap = 0;
+            bahayKuboAudio.time = 0;
+
+            Debug.Log("reset looping function");
+        }
+
+            // Update Score Text
+            _scoreLabel.text = SongManager.Instance.ScoreCount.ToString();
     }
 
     public void SpawnCurrentBatch()
     {
+        Debug.Log("Spawning Next Batch!");
+
         ClearGarden();
 
         // Safety check for phase looping
@@ -76,8 +94,7 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
 
         for (int i = 0; i < countToSpawn; i++)
         {
-            // Use % 18 so it always picks from your 18 prefabs even in Cycle 2 (indices 18-35)
-            int prefabIndex = (globalVegetableOffset + i) % 18;
+            int prefabIndex = (globalVegetableOffset + i);
             if (prefabIndex >= vegetablePrefabs.Length) break;
 
             Vector2Int cell = allCells[i];
@@ -150,6 +167,7 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
                 currentPhase = 0;
             }
 
+            // fuck you to whoever wrote this line...
             Invoke("SpawnCurrentBatch", 0.5f);
         }
     }

@@ -576,6 +576,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 60558674609736034, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
+      propertyPath: m_Name
+      value: Score Text
+      objectReference: {fileID: 0}
     - target: {fileID: 2305685865175397347, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1093,11 +1097,11 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: f17d4f7dec4a66647bd7b64b5ae564bc, type: 3}
+  m_Resource: {fileID: 8300000, guid: 5460a6fe671c75f468bf6960cd37e53e, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1435,42 +1439,6 @@ MonoBehaviour:
     timestamp: 44
   - vegetableName: Lingga
     timestamp: 50
-  - vegetableName: Sinkamas2
-    timestamp: 64
-  - vegetableName: Talong2
-    timestamp: 65
-  - vegetableName: Sigarilyas2
-    timestamp: 66
-  - vegetableName: Mani2
-    timestamp: 67
-  - vegetableName: Sitaw2
-    timestamp: 69
-  - vegetableName: Bataw2
-    timestamp: 70
-  - vegetableName: Patani2
-    timestamp: 72
-  - vegetableName: Kundol2
-    timestamp: 75
-  - vegetableName: Patola2
-    timestamp: 76
-  - vegetableName: Upo2
-    timestamp: 77
-  - vegetableName: Kalabasa2
-    timestamp: 78
-  - vegetableName: Labanos2
-    timestamp: 83
-  - vegetableName: Mustasa2
-    timestamp: 84
-  - vegetableName: Sibuyas2
-    timestamp: 86
-  - vegetableName: Kamatis2
-    timestamp: 87
-  - vegetableName: Bawang2
-    timestamp: 88
-  - vegetableName: Luya2
-    timestamp: 89
-  - vegetableName: Lingga2
-    timestamp: 95
 --- !u!4 &2071592003
 Transform:
   m_ObjectHideFlags: 0

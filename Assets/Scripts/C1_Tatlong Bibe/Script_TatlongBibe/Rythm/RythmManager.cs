@@ -14,10 +14,11 @@ public class RythmManager : MonoBehaviour
     private int nextNoteIndex = 0;
 
     private float previousSongTime = 0f;
+    private float maxSongLength = 0f;
 
     // --- RESTORED: The click script needs this to know what the current time is! ---
     public float currentSongTime;
-
+    
     void Awake()
     {
         // Set the instance when the game starts
@@ -30,6 +31,7 @@ public class RythmManager : MonoBehaviour
         {
             songSource.loop = true; // Make sure the AudioSource is set to loop!
             songSource.Play();
+            maxSongLength = songSource.clip.length;
         }
     }
 
@@ -39,6 +41,11 @@ public class RythmManager : MonoBehaviour
 
         // Keep our public variable updated for the dots to read
         currentSongTime = songSource.time;
+
+        if (currentSongTime > maxSongLength)
+        {
+            currentSongTime = 0;
+        }
 
         // --- Loop Detection ---
         if (currentSongTime < previousSongTime)
