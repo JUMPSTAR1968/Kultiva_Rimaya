@@ -2,6 +2,9 @@
 
 public class ObstacleSpawn : MonoBehaviour
 {
+    // 1. ADD THE INSTANCE SO RYTHMMANAGER CAN FIND IT!
+    public static ObstacleSpawn Instance;
+
     [System.Serializable]
     public struct RhythmZone
     {
@@ -17,18 +20,53 @@ public class ObstacleSpawn : MonoBehaviour
     [Header("Obstacle Settings")]
     public GameObject obstaclePrefab;
     public AudioSource songSource;
-    public float spawnRate = 2f;
+    public float spawnRate; // Removed default number so difficulty sets it
+    private float originalSpawnRate;
+
+    [Header("Difficulty Scaling (Hard Mode)")]
+    public float decreasePerLoop = 0.2f;
+    public float absoluteFastestSpawn = 0.3f;
+
     public float minY = -2.6f;
     public float maxY = 1.5f;
     public float spawnX = 10f;
 
     private float timer = 0f;
 
+    void Awake()
+    {
+        // Set the instance!
+        Instance = this;
+    }
+
+    void Start()
+    {
+        // 1. Check the difficulty the moment the scene loads
+        switch (GameSettings.CurrentDifficulty)
+        {
+            case Difficulty.Easy:
+                spawnRate = 5.0f;
+                break;
+            case Difficulty.Medium:
+                spawnRate = 5.0f;
+                break;
+            case Difficulty.Hard:
+                spawnRate = 5.0f;
+                break;
+            default:
+                spawnRate = 1.0f;
+                break;
+        }
+
+        // 2. Save this specific rate so we can reset it later
+        originalSpawnRate = spawnRate;
+    }
+
     void Update()
     {
         if (this == null || songSource == null) return;
 
-        // **FIXED**: Complete silence during kwak zones
+        // Complete silence during kwak zones
         if (IsInsideRhythmZone())
         {
             timer = 0f;  // Reset → resumes immediately after
@@ -49,7 +87,24 @@ public class ObstacleSpawn : MonoBehaviour
         }
     }
 
-    // This is the "Self-Sensing" logic
+    // NEW: Function to lower the spawn rate!
+    public void DecreaseSpawnRate()
+    {
+        // Only increase the chaos if they are playing on Hard Mode!
+        if (GameSettings.CurrentDifficulty == Difficulty.Hard)
+        {
+            spawnRate -= decreasePerLoop;
+
+            // Don't let it go crazy fast
+            if (spawnRate < absoluteFastestSpawn)
+            {
+                spawnRate = absoluteFastestSpawn;
+            }
+
+            Debug.Log("Song Looped! New spawn rate is: " + spawnRate);
+        }
+    }
+
     bool IsInsideRhythmZone()
     {
         // Get the current time of the music

@@ -42,9 +42,23 @@ public class RythmManager : MonoBehaviour
         currentSongTime = songSource.time;
 
         // 3. ALWAYS check for loops so the notes can reset when the song restarts!
+        // LOOP DETECTION: Resets the sequence when the song restarts
+        // LOOP DETECTION: Resets the sequence when the song restarts
         if (currentSongTime < previousSongTime)
         {
             nextNoteIndex = 0;
+
+            // 1. Tell the Game Manager to speed up movement
+            if (MTB_GameManager.Instance != null)
+            {
+                MTB_GameManager.Instance.IncreaseLoopSpeed();
+            }
+
+            // 2. THIS IS FIXED: It now talks to ObstacleSpawn without the "er"
+            if (ObstacleSpawn.Instance != null)
+            {
+                ObstacleSpawn.Instance.DecreaseSpawnRate();
+            }
         }
         previousSongTime = currentSongTime;
 
@@ -57,6 +71,8 @@ public class RythmManager : MonoBehaviour
             SpawnKwak(kwakTimings[nextNoteIndex]);
             nextNoteIndex++;
         }
+
+     
     }
 
     void SpawnKwak(float targetTime)

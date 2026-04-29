@@ -15,6 +15,10 @@ public class MTB_GameManager : MonoBehaviour
     private int maxHealth = 3; // Remembers if the max is 3 (Medium) or 1 (Hard)
     public bool isGameOver = false;
 
+    [Header("Difficulty Multiplier")]
+    public float globalSpeedMultiplier = 1f;
+    public float loopSpeedIncrease = 0.15f; // Increases speed by 15% every loop!
+
     [Header("HUD UI Elements")]
     public GameObject healthBarUI;
     public Image[] hudHearts; // Drag your 3 playing hearts here
@@ -32,6 +36,7 @@ public class MTB_GameManager : MonoBehaviour
 
     void Start()
     {
+        globalSpeedMultiplier = 1f;
         Time.timeScale = 1f;
         if (tutorialHand != null) tutorialHand.SetActive(false);
         // 1. Set the rules based on difficulty
@@ -58,6 +63,16 @@ public class MTB_GameManager : MonoBehaviour
 
         // 2. Refresh the UI immediately
         UpdateHeartsUI();
+    }
+
+    public void IncreaseLoopSpeed()
+    {
+        // Only increase speed if we are on Hard Mode!
+        if (GameSettings.CurrentDifficulty == Difficulty.Hard)
+        {
+            globalSpeedMultiplier += loopSpeedIncrease;
+            Debug.Log("Song Looped! Speed increased to: " + globalSpeedMultiplier);
+        }
     }
 
     void Update()
