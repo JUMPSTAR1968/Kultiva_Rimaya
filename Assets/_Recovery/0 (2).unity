@@ -690,11 +690,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObstacleSpawn
   kwakZones:
-  - sectionName: 
-    startTime: 21
-    endTime: 25
+  - sectionName: '1st '
+    startTime: 27
+    endTime: 35
+  - sectionName: 2nd
+    startTime: 50
+    endTime: 60
+  - sectionName: 3rd
+    startTime: 74
+    endTime: 83
+  - sectionName: 4th
+    startTime: 98
+    endTime: 107
+  - sectionName: 5th
+    startTime: 122
+    endTime: 131
+  - sectionName: 6th
+    startTime: 146
+    endTime: 150
   gracePeriod: 2
-  obstaclePrefab: {fileID: 8168060436436749290, guid: 73ad2dc1a510590448f821572dea76a1, type: 3}
+  obstaclePrefab: {fileID: 765193003}
   songSource: {fileID: 1245916258}
   spawnRate: 5
   minY: -2.6
@@ -909,6 +924,54 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &569483393
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 569483395}
+  - component: {fileID: 569483394}
+  m_Layer: 0
+  m_Name: Beat Mapper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &569483394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569483393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca410d1e439bb2146905106c2d7bb14c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BeatRecorder
+  songSource: {fileID: 1245916258}
+  tapKey: 32
+  printKey: 112
+  recordedTimings: []
+--- !u!4 &569483395
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569483393}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1314.2596, y: 118.63511, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &736114007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,6 +1185,11 @@ MonoBehaviour:
   topBorder: 1.3
   bottomBorder: -1.5
   safePassDistance: 1
+--- !u!1 &765193003 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8168060436436749290, guid: 73ad2dc1a510590448f821572dea76a1, type: 3}
+  m_PrefabInstance: {fileID: 7747620601368973274}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &800286173
 GameObject:
   m_ObjectHideFlags: 0
@@ -1862,11 +1930,11 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 13481530d7bde714b942a5c68587cb25, type: 3}
+  m_Resource: {fileID: 8300000, guid: 301996ce93996f5488cdbe06ec470c0b, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1964,18 +2032,44 @@ MonoBehaviour:
   kwakPrefab: {fileID: 8453761931572070500, guid: 8590c2e3774394547903420c133cde80, type: 3}
   spawnZone: {fileID: 1949716962}
   kwakTimings:
-  - 22.66
-  - 23.17
-  - 24.11
-  - 24.64
-  - 25.11
-  - 26.13
-  - 26.65
-  - 27.09
-  - 30.57
-  - 31.08
+  - 27
+  - 28
+  - 30
+  - 31
+  - 34
+  - 35
+  - 35
+  - 50
+  - 51
+  - 52
+  - 53
+  - 55
+  - 58
+  - 59
+  - 74
+  - 75
+  - 76
+  - 77
+  - 82
+  - 83
+  - 98
+  - 99
+  - 101
+  - 102
+  - 106
+  - 107
+  - 122
+  - 123
+  - 124
+  - 125
+  - 130
+  - 131
+  - 146
+  - 147
+  - 148
+  - 149
+  - 150
   leadTime: 1
-  currentSongTime: 0
 --- !u!1 &1249693558
 GameObject:
   m_ObjectHideFlags: 0
@@ -3227,3 +3321,4 @@ SceneRoots:
   - {fileID: 1145695564}
   - {fileID: 538511446}
   - {fileID: 1071972215}
+  - {fileID: 569483395}
