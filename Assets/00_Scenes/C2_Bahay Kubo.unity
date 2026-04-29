@@ -229,8 +229,8 @@ Transform:
   m_GameObject: {fileID: 381275545}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.07, y: -1.83, z: 0}
-  m_LocalScale: {x: -0.55, y: 0.72, z: 1}
+  m_LocalPosition: {x: 3.32, y: -2.17, z: 0}
+  m_LocalScale: {x: -1.0276475, y: 0.70455813, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 458483465}
@@ -472,8 +472,8 @@ Transform:
   m_GameObject: {fileID: 738513091}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.54, y: -1.79, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.555, y: -2.1753, z: 0}
+  m_LocalScale: {x: 1.012055, y: 0.9171464, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 458483465}
@@ -562,8 +562,8 @@ Transform:
   m_GameObject: {fileID: 759231068}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.11, y: 3.05, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.11, y: 3.3323, z: 0}
+  m_LocalScale: {x: 1, y: 1.1233, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 458483465}
@@ -717,6 +717,21 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
+--- !u!1 &1024833833 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4749787191908610641, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
+  m_PrefabInstance: {fileID: 1024833832}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1024833834 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2177045172960505616, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
+  m_PrefabInstance: {fileID: 1024833832}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1024833835 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8038947950785147025, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
+  m_PrefabInstance: {fileID: 1024833832}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1118179708
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,8 +816,8 @@ Transform:
   m_GameObject: {fileID: 1118179708}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.19, y: 3.05, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.19, y: 3.3323, z: 0}
+  m_LocalScale: {x: 1, y: 1.1232, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 458483465}
@@ -891,7 +906,7 @@ Transform:
   m_GameObject: {fileID: 1250919750}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.71, y: 3.46, z: 0}
+  m_LocalPosition: {x: -6.35, y: 3.18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -912,7 +927,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &1499728831
 MonoBehaviour:
@@ -947,12 +962,19 @@ MonoBehaviour:
   - {fileID: 7727426619508953005, guid: 1a3f5353dda9c4d5fbccbbf325ae4ed1, type: 3}
   columns: 3
   rows: 3
-  cellSize: 2
-  jitterAmount: 0
+  cellSize: 2.05
   bahayKuboAudio: {fileID: 1573765094}
   hitWindow: 1
   pausePanel: {fileID: 0}
   restartButton: {fileID: 0}
+  _scoreLabel: {fileID: 0}
+  feedbackPopup: {fileID: 0}
+  feedbackText: {fileID: 0}
+  popupOffset: {x: 0, y: 50, z: 0}
+  heartIcons:
+  - {fileID: 1024833835}
+  - {fileID: 1024833834}
+  - {fileID: 1024833833}
 --- !u!4 &1499728832
 Transform:
   m_ObjectHideFlags: 0
@@ -962,7 +984,7 @@ Transform:
   m_GameObject: {fileID: 1499728830}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.02, y: -1.88, z: 0}
+  m_LocalPosition: {x: 3.64, y: -2.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1079,7 +1101,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
