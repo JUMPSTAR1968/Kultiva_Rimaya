@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 56917f403f20e474980529ba72eede40
+guid: d6ae0df6367363647b09b45961220693
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 131568234011644117
-    second: Rimaya UI Button_Dark Green_0
+      213: 7380133706684184113
+    second: Rimaya Button Red_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Rimaya UI Button_Dark Green_0
+      name: Rimaya Button Red_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5d05dfb9c9c63d100800000000000000
-      internalID: 131568234011644117
+      spriteID: 1363ccd21808b6660800000000000000
+      internalID: 7380133706684184113
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 495fcf68a558c374eac89b09f0ec7343
+    spriteID: 9cf84cc575bec0a43918ae852abf3d33
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Rimaya UI Button_Dark Green_0: 131568234011644117
+      Rimaya Button Red_0: 7380133706684184113
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
