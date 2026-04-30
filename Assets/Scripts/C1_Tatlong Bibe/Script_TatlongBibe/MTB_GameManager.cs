@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI; // NEW: Required to change Images and Sprites!
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MTB_GameManager : MonoBehaviour
 {
@@ -18,6 +19,12 @@ public class MTB_GameManager : MonoBehaviour
     [Header("Difficulty Multiplier")]
     public float globalSpeedMultiplier = 1f;
     public float loopSpeedIncrease = 0.15f; // Increases speed by 15% every loop!
+
+    [Header("Score System")]
+    public TextMeshProUGUI scoreText;
+    public int currentScore = 0;
+    private float scoreTimer = 0f;
+    public float timePerPoint = 0.5f; // 1 point every 0.5 seconds!
 
     [Header("HUD UI Elements")]
     public GameObject healthBarUI;
@@ -81,6 +88,28 @@ public class MTB_GameManager : MonoBehaviour
         if (waitingForTutorialClick && (Input.GetMouseButtonDown(0) || Input.touchCount > 0))
         {
             ResumeFromTutorial();
+        }
+
+        // 1. Stop counting if the game is over!
+        if (isGameOver) return;
+
+        // 2. Count up the timer
+        scoreTimer += Time.deltaTime;
+
+        // 3. When the timer hits 0.5 seconds...
+        if (scoreTimer >= timePerPoint)
+        {
+            currentScore++;           // Add 1 point
+            scoreTimer = 0f;          // Reset the timer back to 0
+            UpdateScoreUI();          // Update the screen
+        }
+    }
+
+    void UpdateScoreUI()
+    {
+        if (scoreText != null)
+        {
+            scoreText.text = "Score: " + currentScore.ToString();
         }
     }
 
