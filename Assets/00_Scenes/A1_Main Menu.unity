@@ -423,7 +423,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -295}
-  m_SizeDelta: {x: 433.8929, y: 216.9465}
+  m_SizeDelta: {x: 430, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &271943908
 MonoBehaviour:
@@ -502,7 +502,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 5827526619862453978, guid: d76113ec5b3c0a64391fcb8ad027bb49, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -534,6 +534,7 @@ MonoBehaviour:
   shrinkScale: 0.9
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
+  overrideGhostRipple: 0
 --- !u!1 &323573912
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,7 +710,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 700, y: 300}
-  m_SizeDelta: {x: 185, y: 95}
+  m_SizeDelta: {x: 280, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &451016289
 MonoBehaviour:
@@ -788,7 +789,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 131568234011644117, guid: 56917f403f20e474980529ba72eede40, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -820,6 +821,7 @@ MonoBehaviour:
   shrinkScale: 0.9
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
+  overrideGhostRipple: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1154,7 +1156,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -700, y: 300}
-  m_SizeDelta: {x: 185, y: 95}
+  m_SizeDelta: {x: 280, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &675535379
 MonoBehaviour:
@@ -1233,7 +1235,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 1534504990287695008, guid: cc2bf68664f00e343bd5f24585040fe7, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1265,6 +1267,7 @@ MonoBehaviour:
   shrinkScale: 0.9
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
+  overrideGhostRipple: 0
 --- !u!1 &1137471865
 GameObject:
   m_ObjectHideFlags: 0
