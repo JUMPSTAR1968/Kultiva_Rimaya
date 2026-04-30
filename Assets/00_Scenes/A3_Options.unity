@@ -659,7 +659,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 700, y: 288.15}
-  m_SizeDelta: {x: 270, y: 140}
+  m_SizeDelta: {x: 280, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1406027690
 MonoBehaviour:
@@ -676,6 +676,7 @@ MonoBehaviour:
   shrinkScale: 0.9
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
+  overrideGhostRipple: 0
 --- !u!114 &1406027691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -753,7 +754,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: -2783676090397350245, guid: 3f756c4bac2f2b340947fa9f357e2aaf, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1074,7 +1075,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -690, y: 340.00003}
-  m_SizeDelta: {x: 433.8929, y: 216.9465}
+  m_SizeDelta: {x: 430, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2047728805
 MonoBehaviour:
@@ -1091,6 +1092,7 @@ MonoBehaviour:
   shrinkScale: 0.9
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
+  overrideGhostRipple: 0
 --- !u!114 &2047728806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1168,7 +1170,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 3502554476168435254, guid: ebdc81a08ec8bb947ba865f49844d45e, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
