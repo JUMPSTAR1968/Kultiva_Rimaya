@@ -1,48 +1,49 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
 public class PauseMenuController : MonoBehaviour
 {
-    [Header("UI References")]
     public GameObject pausePanel;
 
-    void Start()
-    {
-        pausePanel.SetActive(false);
-        Time.timeScale = 1f;
-    }
-
+    // --- NEW: The Instant Pause ---
     public void PauseGame()
     {
+        // 1. Play the universal click sound instantly
+        if (UniversalUIManager.Instance != null)
+        {
+            UniversalUIManager.Instance.PlayClickSound();
+        }
+
+        // 2. Freeze the game and show the panel IMMEDIATELY
         pausePanel.SetActive(true);
         Time.timeScale = 0f;
     }
 
-    // UPDATED: Now using Coroutine for smooth visual feedback
+    // --- The Delayed Un-Pauses ---
     public void ResumeGame()
     {
-        StartCoroutine(ResumeRoutine());
+        UniversalUIManager.Instance.TriggerCustomAction(() =>
+        {
+            pausePanel.SetActive(false);
+            Time.timeScale = 1f; // Unfreeze the game!
+        });
     }
 
-    IEnumerator ResumeRoutine()
+    public void RestartGame()
     {
-        // Wait for 0.15 seconds (Real time) so we see the button click animation
-        yield return new WaitForSecondsRealtime(0.15f);
-
-        pausePanel.SetActive(false);
-        Time.timeScale = 1f;
+        UniversalUIManager.Instance.TriggerCustomAction(() =>
+        {
+            Time.timeScale = 1f; // Always unfreeze before loading a scene!
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        });
     }
 
-    public void RestartLevel()
+    public void BackToMainMenu()
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    public void LoadMainMenu()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("A1_Main Menu");
+        UniversalUIManager.Instance.TriggerCustomAction(() =>
+        {
+            Time.timeScale = 1f;
+            SceneManager.LoadScene("A1_Main Menu"); // Replace with your actual menu scene name
+        });
     }
 }
