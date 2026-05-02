@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI; // NEW: Required to change Images and Sprites!
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -8,32 +8,37 @@ public class MTB_GameManager : MonoBehaviour
     public static MTB_GameManager Instance;
 
     [Header("Tutorial UI")]
-    public GameObject tutorialHand; // The hand image
+    public GameObject tutorialHand;
     private bool waitingForTutorialClick = false;
 
     [Header("Global Stats")]
     public int sharedHealth = 3;
-    private int maxHealth = 3; // Remembers if the max is 3 (Medium) or 1 (Hard)
+    private int maxHealth = 3;
     public bool isGameOver = false;
 
     [Header("Difficulty Multiplier")]
     public float globalSpeedMultiplier = 1f;
-    public float loopSpeedIncrease = 0.15f; // Increases speed by 15% every loop!
+    public float loopSpeedIncrease = 0.15f;
 
     [Header("Score System")]
     public TextMeshProUGUI scoreText;
-    public int currentScore = 0;
+    public float currentScore = 0f;
     private float scoreTimer = 0f;
-    public float timePerPoint = 0.5f; // 1 point every 0.5 seconds!
+    public float timePerPoint = 0.5f;
+
+    [Header("Score Multipliers")]
+    public float passiveScoreMultiplier = 1.0f;
+    public float boulderBonusPoints = 10f;
+    public float boulderMultiplier = 1.5f;
 
     [Header("HUD UI Elements")]
     public GameObject healthBarUI;
-    public Image[] hudHearts; // Drag your 3 playing hearts here
+    public Image[] hudHearts;
     public Sprite fullHeartSprite;
     public Sprite emptyHeartSprite;
 
     [Header("Game Over UI Elements")]
-    public Image[] gameOverHearts; // Drag the 3 hearts from the Game Over panel here
+    public Image[] gameOverHearts;
 
     void Awake()
     {
@@ -46,7 +51,7 @@ public class MTB_GameManager : MonoBehaviour
         globalSpeedMultiplier = 1f;
         Time.timeScale = 1f;
         if (tutorialHand != null) tutorialHand.SetActive(false);
-        // 1. Set the rules based on difficulty
+
         switch (GameSettings.CurrentDifficulty)
         {
             case Difficulty.Easy:
@@ -68,13 +73,11 @@ public class MTB_GameManager : MonoBehaviour
                 break;
         }
 
-        // 2. Refresh the UI immediately
         UpdateHeartsUI();
     }
 
     public void IncreaseLoopSpeed()
     {
-        // Only increase speed if we are on Hard Mode!
         if (GameSettings.CurrentDifficulty == Difficulty.Hard)
         {
             globalSpeedMultiplier += loopSpeedIncrease;
@@ -84,32 +87,44 @@ public class MTB_GameManager : MonoBehaviour
 
     void Update()
     {
-        // If we are paused for the tutorial, wait for a click
+        // --- NEW: THE HEALTH ENFORCER ---
+        // If a rogue script or your restart button tries to give you 3 lives on Hard Mode, block it!
+        if (GameSettings.CurrentDifficulty == Difficulty.Hard && sharedHealth > 1)
+        {
+            maxHealth = 1;
+            sharedHealth = 1;
+            UpdateHeartsUI();
+        }
+
         if (waitingForTutorialClick && (Input.GetMouseButtonDown(0) || Input.touchCount > 0))
         {
             ResumeFromTutorial();
         }
 
-        // 1. Stop counting if the game is over!
         if (isGameOver) return;
 
-        // 2. Count up the timer
         scoreTimer += Time.deltaTime;
 
-        // 3. When the timer hits 0.5 seconds...
         if (scoreTimer >= timePerPoint)
         {
-            currentScore++;           // Add 1 point
-            scoreTimer = 0f;          // Reset the timer back to 0
-            UpdateScoreUI();          // Update the screen
+            currentScore += (1f * passiveScoreMultiplier);
+            scoreTimer = 0f;
+            UpdateScoreUI();
         }
+    }
+
+    public void PassedBoulder()
+    {
+        if (isGameOver) return;
+        currentScore += (boulderBonusPoints * boulderMultiplier);
+        UpdateScoreUI();
     }
 
     void UpdateScoreUI()
     {
         if (scoreText != null)
         {
-            scoreText.text = "Score: " + currentScore.ToString();
+            scoreText.text = "Score: " + Mathf.FloorToInt(currentScore).ToString();
         }
     }
 
@@ -117,26 +132,22 @@ public class MTB_GameManager : MonoBehaviour
     {
         if (tutorialHand != null) tutorialHand.SetActive(true);
         waitingForTutorialClick = true;
-        Time.timeScale = 0f; // Freeze everything!
+        Time.timeScale = 0f;
     }
+
     public void ResumeFromTutorial()
     {
         if (tutorialHand != null) tutorialHand.SetActive(false);
         waitingForTutorialClick = false;
-        Time.timeScale = 1f; // Unfreeze!
+        Time.timeScale = 1f;
     }
 
     public void LoseHealth()
     {
         if (isGameOver) return;
-
-        // Ignore damage on Easy Mode
         if (GameSettings.CurrentDifficulty == Difficulty.Easy) return;
 
-        // Take damage
         sharedHealth--;
-
-        // Refresh the UI to show the empty hearts
         UpdateHeartsUI();
 
         if (sharedHealth <= 0)
@@ -145,35 +156,24 @@ public class MTB_GameManager : MonoBehaviour
         }
     }
 
-    // --- NEW: THE MAGIC UI UPDATER ---
     private void UpdateHeartsUI()
     {
-        // 1. Update the HUD Hearts
         for (int i = 0; i < hudHearts.Length; i++)
         {
-            if (i >= maxHealth)
-            {
-                hudHearts[i].enabled = false; // Hide completely on Hard Mode
-            }
+            if (i >= maxHealth) hudHearts[i].enabled = false;
             else
             {
                 hudHearts[i].enabled = true;
-                // Swap between Full and Empty sprite
                 hudHearts[i].sprite = (i < sharedHealth) ? fullHeartSprite : emptyHeartSprite;
             }
         }
 
-        // 2. Update the Game Over Hearts
         for (int i = 0; i < gameOverHearts.Length; i++)
         {
-            if (i >= maxHealth)
-            {
-                gameOverHearts[i].gameObject.SetActive(false); // Hide extra ducks/hearts on Hard
-            }
+            if (i >= maxHealth) gameOverHearts[i].gameObject.SetActive(false);
             else
             {
                 gameOverHearts[i].gameObject.SetActive(true);
-                // Swap between Full and Empty sprite
                 gameOverHearts[i].sprite = (i < sharedHealth) ? fullHeartSprite : emptyHeartSprite;
             }
         }
@@ -184,7 +184,13 @@ public class MTB_GameManager : MonoBehaviour
         isGameOver = true;
         Debug.Log("GAME OVER!");
         Time.timeScale = 0f;
+    }
 
-        // Note: Make sure another script (or this one) actually turns on the Game Over Panel!
+    // --- NEW: BULLETPROOF RESTART METHOD ---
+    // If your UI Restart Button isn't calling this yet, link it to this function!
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

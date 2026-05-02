@@ -1980,6 +1980,9 @@ MonoBehaviour:
   scoreText: {fileID: 427082996}
   currentScore: 0
   timePerPoint: 0.5
+  passiveScoreMultiplier: 1
+  boulderBonusPoints: 10
+  boulderMultiplier: 1.5
   healthBarUI: {fileID: 4216989302271574100}
   hudHearts:
   - {fileID: 4216989302271574103}
@@ -3129,6 +3132,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2242050571084023195, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1245916256}
+    - target: {fileID: 2242050571084023195, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RestartGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 2242050571084023195, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MTB_GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 2305685865175397347, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3251,7 +3266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7866154480443377589, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8898349580439503298, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
       propertyPath: m_AnchorMax.y
