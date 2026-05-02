@@ -5,8 +5,8 @@ public class HealthManager : MonoBehaviour
 {
     public static HealthManager Instance;
 
-    [Header("Game Modes")]
-    public bool isHardMode = false;
+    // We don't need the local 'isHardMode' boolean anymore, 
+    // because we are using the global GameSettings!
 
     [Header("Stats")]
     public int maxHealth = 3;
@@ -25,7 +25,16 @@ public class HealthManager : MonoBehaviour
 
     void Start()
     {
-        if (isHardMode) maxHealth = 1;
+        // FIXED: Now it reads from the exact same rules as the Game Manager!
+        if (GameSettings.CurrentDifficulty == Difficulty.Hard)
+        {
+            maxHealth = 1;
+        }
+        else
+        {
+            maxHealth = 3;
+        }
+
         currentHealth = maxHealth;
         UpdateHearts();
     }
@@ -39,13 +48,17 @@ public class HealthManager : MonoBehaviour
 
         if (currentHealth == 0)
         {
-            Debug.Log("GAME OVER! ZERO HEARTS!");
+            Debug.Log("HealthManager: GAME OVER! ZERO HEARTS!");
         }
     }
 
     // --- NEW: CALL THIS TO REFILL HEARTS ---
     public void ResetHealth()
     {
+        // Make sure it enforces difficulty when resetting!
+        if (GameSettings.CurrentDifficulty == Difficulty.Hard) maxHealth = 1;
+        else maxHealth = 3;
+
         currentHealth = maxHealth;
         UpdateHearts();
         Debug.Log("Health Reset to: " + currentHealth);

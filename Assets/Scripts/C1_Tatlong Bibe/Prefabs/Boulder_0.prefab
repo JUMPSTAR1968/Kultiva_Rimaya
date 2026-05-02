@@ -180,3 +180,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PhysicalObstacle
   scrollSpeed: 5
   deadZone: -15
+  duckXPosition: -7.25

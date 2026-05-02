@@ -10,33 +10,68 @@ public class RhythmZone
 
 public class ObstacleSpawner : MonoBehaviour
 {
+    // THIS IS THE CRUCIAL LINE! It lets RythmManager find it.
+    public static ObstacleSpawner Instance;
+
     [Header("Rhythm Zones (NO Spawning Here)")]
     public RhythmZone[] silenceZones;
-    public float gracePeriod = 1.0f;  // Extra buffer before/after zones
+    public float gracePeriod = 1.0f;
 
     [Header("Spawner Settings")]
     public GameObject obstaclePrefab;
-    public AudioSource songSource;    // Assign your song AudioSource
-    public float spawnRate = 2f;
+    public AudioSource songSource;
+    public float spawnRate;
+    private float originalSpawnRate;
+
+    [Header("Difficulty Scaling (Hard Mode)")]
+    public float decreasePerLoop = 0.2f;
+    public float absoluteFastestSpawn = 0.3f;
+
     public float minY = -2.6f;
     public float maxY = 1.5f;
     public float spawnX = 10f;
 
     private float timer = 0f;
 
+    void Awake()
+    {
+        // THIS IS CRUCIAL! Without this, the RythmManager thinks the spawner doesn't exist.
+        Instance = this;
+    }
+
+    void Start()
+    {
+        // 1. Check the difficulty the moment the scene loads
+        switch (GameSettings.CurrentDifficulty)
+        {
+            case Difficulty.Easy:
+                spawnRate = 2.0f;
+                break;
+            case Difficulty.Medium:
+                spawnRate = 1.0f;
+                break;
+            case Difficulty.Hard:
+                spawnRate = 0.6f;
+                break;
+            default: // Failsafe just in case difficulty isn't set yet
+                spawnRate = 1.0f;
+                break;
+        }
+
+        // 2. Save this specific rate so we can reset it later
+        originalSpawnRate = spawnRate;
+    }
+
     void Update()
     {
-        // Safety check
         if (songSource == null) return;
 
-        // **NEW**: Stop spawning during silence zones
         if (IsInSilenceZone())
         {
-            timer = 0f; // Reset so it resumes immediately after
+            timer = 0f;
             return;
         }
 
-        // Normal spawning logic
         if (timer < spawnRate)
         {
             timer += Time.deltaTime;
@@ -44,7 +79,25 @@ public class ObstacleSpawner : MonoBehaviour
         else
         {
             SpawnObstacle();
-            timer = 0;
+            timer = 0f;
+        }
+    }
+
+    public void DecreaseSpawnRate()
+    {
+        // Only increase the chaos if they are playing on Hard Mode!
+        if (GameSettings.CurrentDifficulty == Difficulty.Hard)
+        {
+            spawnRate -= decreasePerLoop;
+
+            // Don't let it go crazy fast
+            if (spawnRate < absoluteFastestSpawn)
+            {
+                spawnRate = absoluteFastestSpawn;
+            }
+
+            // We should see this in the console alongside your Game Manager log!
+            Debug.Log("Song Looped! New spawn rate is: " + spawnRate);
         }
     }
 
