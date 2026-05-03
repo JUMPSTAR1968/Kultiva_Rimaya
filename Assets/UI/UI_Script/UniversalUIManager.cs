@@ -42,6 +42,10 @@ public class UniversalUIManager : MonoBehaviour
             GameObject soundObj = new GameObject("UniversalSound");
             AudioSource source = soundObj.AddComponent<AudioSource>();
             source.clip = globalClickSound;
+
+            // --- NEW: Diplomatic Immunity for the audio! ---
+            source.ignoreListenerPause = true;
+
             source.Play();
             DontDestroyOnLoad(soundObj);
             Destroy(soundObj, globalClickSound.length);
