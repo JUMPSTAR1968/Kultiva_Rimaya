@@ -1,57 +1,49 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
 public class PauseMenuController : MonoBehaviour
 {
-    [Header("UI References")]
     public GameObject pausePanel;
 
-    void Start()
-    {
-        pausePanel.SetActive(false);
-        Time.timeScale = 1f;
-
-        // SAFETY: Make sure audio is always unpaused when a scene starts!
-        AudioListener.pause = false;
-    }
-
+    // --- NEW: The Instant Pause ---
     public void PauseGame()
     {
+        // 1. Play the universal click sound instantly
+        if (UniversalUIManager.Instance != null)
+        {
+            UniversalUIManager.Instance.PlayClickSound();
+        }
+
+        // 2. Freeze the game and show the panel IMMEDIATELY
         pausePanel.SetActive(true);
         Time.timeScale = 0f;
-
-        // NEW: This completely freezes ALL music and sound effects!
-        AudioListener.pause = true;
     }
 
+    // --- The Delayed Un-Pauses ---
     public void ResumeGame()
     {
-        StartCoroutine(ResumeRoutine());
+        UniversalUIManager.Instance.TriggerCustomAction(() =>
+        {
+            pausePanel.SetActive(false);
+            Time.timeScale = 1f; // Unfreeze the game!
+        });
     }
 
-    IEnumerator ResumeRoutine()
+    public void RestartGame()
     {
-        yield return new WaitForSecondsRealtime(0.15f);
-
-        pausePanel.SetActive(false);
-        Time.timeScale = 1f;
-
-        // NEW: Unpause the audio
-        AudioListener.pause = false;
+        UniversalUIManager.Instance.TriggerCustomAction(() =>
+        {
+            Time.timeScale = 1f; // Always unfreeze before loading a scene!
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        });
     }
 
-    public void RestartLevel()
+    public void BackToMainMenu()
     {
-        Time.timeScale = 1f;
-        AudioListener.pause = false;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    public void LoadMainMenu()
-    {
-        Time.timeScale = 1f;
-        AudioListener.pause = false;
-        SceneManager.LoadScene("A1_Main Menu");
+        UniversalUIManager.Instance.TriggerCustomAction(() =>
+        {
+            Time.timeScale = 1f;
+            SceneManager.LoadScene("A1_Main Menu"); // Replace with your actual menu scene name
+        });
     }
 }
