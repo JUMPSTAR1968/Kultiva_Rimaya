@@ -963,6 +963,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Results_Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2147966987048509478, guid: 3f3e269d07660664b926228119b8df1b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3816292130810154189, guid: 3f3e269d07660664b926228119b8df1b, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2223,7 +2227,6 @@ MonoBehaviour:
   songSource: {fileID: 1245916258}
   kwakPrefab: {fileID: 8453761931572070500, guid: 8590c2e3774394547903420c133cde80, type: 3}
   spawnZone: {fileID: 1949716962}
-  minSpawnDistance: 150
   kwakTimings:
   - 22.66
   - 23.17
