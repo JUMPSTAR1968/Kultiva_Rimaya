@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: f1514fd3af24a934d8c37e2849a6e354
+guid: ff135f4646f4057459a60ca982358af7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -9008214795995404085
-    second: Brown duck (hurt)_0
+      213: 5581130758254204558
+    second: Brown duck (Outlined)_0
   - first:
-      213: -4200073614608430063
-    second: Brown duck (hurt)_1
+      213: 4045157278507291124
+    second: Brown duck (Outlined)_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -99,30 +99,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Brown duck (hurt)_1
+      name: Brown duck (Outlined)_1
       rect:
         serializedVersion: 2
         x: 482
-        y: 611
+        y: 612
         width: 355
-        height: 226
+        height: 225
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,8 +118,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 11c06caec4756b5c0800000000000000
-      internalID: -4200073614608430063
+      spriteID: 4f15306dc19432830800000000000000
+      internalID: 4045157278507291124
       vertices: []
       indices: 
       edges: []
@@ -141,7 +128,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 903de89473ee97d4693beb8db1d902d6
+    spriteID: d811f63eb0d25ef49a2b857a818c00ce
     internalID: 0
     vertices: []
     indices: 
@@ -151,8 +138,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Brown duck (hurt)_0: -9008214795995404085
-      Brown duck (hurt)_1: -4200073614608430063
+      Brown duck (Outlined)_0: 5581130758254204558
+      Brown duck (Outlined)_1: 4045157278507291124
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

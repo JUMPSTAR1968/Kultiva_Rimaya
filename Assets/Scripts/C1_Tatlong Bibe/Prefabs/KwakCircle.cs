@@ -5,6 +5,10 @@ public class KwakCircle : MonoBehaviour
 {
     public RectTransform approachRing;
 
+    [Header("Visual Settings")]
+    public float startingRingScale = 4.0f; // For the outer ring
+    public float overallNoteSize = 2.0f;
+
     private float targetHitTime;
     private float leadTime;
     private AudioSource audioClock;
@@ -12,6 +16,11 @@ public class KwakCircle : MonoBehaviour
 
     private float perfectWindow = 0.12f;
     private float okWindow = 0.25f;
+
+    void Start()
+    {
+        transform.localScale = new Vector3(overallNoteSize, overallNoteSize, 1f);
+    }
 
     public void Setup(float target, AudioSource source, float lead)
     {
@@ -26,7 +35,8 @@ public class KwakCircle : MonoBehaviour
 
         float timeRemaining = targetHitTime - audioClock.time;
         float progress = 1.0f - (timeRemaining / leadTime);
-        float currentScale = Mathf.Lerp(3.0f, 1.0f, progress);
+        // Updated to use your new startingRingScale variable!
+        float currentScale = Mathf.Lerp(startingRingScale, 1.0f, progress);
 
         if (approachRing != null)
             approachRing.localScale = new Vector3(currentScale, currentScale, 1f);

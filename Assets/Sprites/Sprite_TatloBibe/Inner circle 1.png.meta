@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: f1514fd3af24a934d8c37e2849a6e354
+guid: fc0db9b6400d2964797b0bdd075c6489
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -9008214795995404085
-    second: Brown duck (hurt)_0
-  - first:
-      213: -4200073614608430063
-    second: Brown duck (hurt)_1
+      213: -8149481629697886885
+    second: Inner circle 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -99,40 +96,27 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Brown duck (hurt)_1
+      name: Inner circle 1_0
       rect:
         serializedVersion: 2
-        x: 482
-        y: 611
-        width: 355
-        height: 226
+        x: 835
+        y: 426
+        width: 299
+        height: 244
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 11c06caec4756b5c0800000000000000
-      internalID: -4200073614608430063
+      spriteID: b553946b2a937ee80800000000000000
+      internalID: -8149481629697886885
       vertices: []
       indices: 
       edges: []
@@ -141,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 903de89473ee97d4693beb8db1d902d6
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -151,8 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Brown duck (hurt)_0: -9008214795995404085
-      Brown duck (hurt)_1: -4200073614608430063
+      Inner circle 1_0: -8149481629697886885
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

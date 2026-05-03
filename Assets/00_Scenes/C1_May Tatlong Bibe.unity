@@ -1953,6 +1953,7 @@ GameObject:
   - component: {fileID: 1245916256}
   - component: {fileID: 1245916258}
   - component: {fileID: 1245916259}
+  - component: {fileID: 1245916260}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -2118,6 +2119,7 @@ MonoBehaviour:
   songSource: {fileID: 1245916258}
   kwakPrefab: {fileID: 8453761931572070500, guid: 8590c2e3774394547903420c133cde80, type: 3}
   spawnZone: {fileID: 1949716962}
+  minSpawnDistance: 300
   kwakTimings:
   - 22.66
   - 23.17
@@ -2131,6 +2133,30 @@ MonoBehaviour:
   - 31.08
   leadTime: 1
   currentSongTime: 0
+--- !u!114 &1245916260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245916255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1391e9ebe1062d49a467a00930ab3d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DuckChoreographer
+  songSource: {fileID: 1245916258}
+  fatDuck: {fileID: 2093061541}
+  fatDuckNormal: {fileID: -3972499574639609, guid: 7acb74d6182bcfb4d8e71fd97460cca4, type: 3}
+  fatDuckOutline: {fileID: 4045157278507291124, guid: ff135f4646f4057459a60ca982358af7, type: 3}
+  thinDuck: {fileID: 800286178}
+  thinDuckNormal: {fileID: 2214099503545579551, guid: ea96373c5730b2a44bc3d7bf3d9dd631, type: 3}
+  thinDuckOutline: {fileID: 3711536420399494102, guid: 1710780cc4da5db409bfdaf0c96ced7b, type: 3}
+  matabaTimings:
+  - 12.16
+  mapayatTimings:
+  - 13.19
+  highlightDuration: 0.5
 --- !u!1 &1249693558
 GameObject:
   m_ObjectHideFlags: 0
