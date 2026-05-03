@@ -30,18 +30,21 @@ public class HealthManager : MonoBehaviour
         UpdateHearts();
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damageAmount)
     {
-        currentHealth -= damage;
-        if (currentHealth < 0) currentHealth = 0;
-
-        UpdateHearts();
-
-        if (currentHealth == 0)
+        // --- NEW: THE ENDGAME TRIGGER ---
+        if (currentHealth <= 0)
         {
-            Debug.Log("GAME OVER! ZERO HEARTS!");
+            // Get your score from wherever you are tracking it!
+            // Example: int finalScore = FindFirstObjectByType<ScoreManager>().currentScore;
+            int finalScore = 123456; // Replace this placeholder with your actual score variable
+
+            // Fire the Game Over sequence (outOfLives = true)
+            FindFirstObjectByType<ResultsManager>().TriggerEndGame(true, finalScore, isHardMode);
         }
     }
+
+
 
     // --- NEW: CALL THIS TO REFILL HEARTS ---
     public void ResetHealth()
