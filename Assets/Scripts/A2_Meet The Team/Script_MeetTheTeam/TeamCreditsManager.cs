@@ -42,23 +42,18 @@ public class TeamCreditsManager : MonoBehaviour
         }
     }
 
-    // Instantaneous character swap!
+    // The buttons in your TeamGrid will call this function!
     public void ShowMember(int index)
     {
         if (index < 0 || index >= teamMembers.Length) return;
 
-        // 1. Tell the Universal Bouncer to play the sound INSTANTLY
-        if (UniversalUIManager.Instance != null)
-        {
-            UniversalUIManager.Instance.PlayClickSound();
-        }
-
         TeamMember selectedMember = teamMembers[index];
 
-        // 2. Update the image and text INSTANTLY
+        // 1. Update the image and make sure the Alpha is back to 1 (fully visible)
         displayPortrait.sprite = selectedMember.portrait;
         displayPortrait.color = new Color(1f, 1f, 1f, 1f);
 
+        // 2. Update the text
         displayName.text = selectedMember.memberNameAndRole;
         displayContributions.text = selectedMember.contributions;
     }
