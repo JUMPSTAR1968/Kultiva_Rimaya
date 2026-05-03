@@ -9,10 +9,6 @@ public class RythmManager : MonoBehaviour
     public GameObject kwakPrefab;
     public RectTransform spawnZone;
 
-    // NEW: How far apart circles must be from each other!
-    // You might need to tweak this number in the Inspector based on how big your circles are.
-    public float minSpawnDistance = 150f;
-
     [Header("Rhythm Data")]
     public float[] kwakTimings;
     public float leadTime = 1.0f;
@@ -39,20 +35,26 @@ public class RythmManager : MonoBehaviour
 
     void Update()
     {
+        // 1. Only stop if the song source is entirely missing
         if (songSource == null) return;
 
+        // 2. ALWAYS update the time so the Inspector keeps ticking
         currentSongTime = songSource.time;
 
-        // LOOP DETECTION
+        // 3. ALWAYS check for loops so the notes can reset when the song restarts!
+        // LOOP DETECTION: Resets the sequence when the song restarts
+        // LOOP DETECTION: Resets the sequence when the song restarts
         if (currentSongTime < previousSongTime)
         {
             nextNoteIndex = 0;
 
+            // 1. Tell the Game Manager to speed up movement
             if (MTB_GameManager.Instance != null)
             {
                 MTB_GameManager.Instance.IncreaseLoopSpeed();
             }
 
+            // 2. THIS IS FIXED: It now talks to ObstacleSpawn without the "er"
             if (ObstacleSpawn.Instance != null)
             {
                 ObstacleSpawn.Instance.DecreaseSpawnRate();
@@ -60,14 +62,17 @@ public class RythmManager : MonoBehaviour
         }
         previousSongTime = currentSongTime;
 
+        // 4. NOW we check if we've run out of notes. If we have, stop here before spawning.
         if (nextNoteIndex >= kwakTimings.Length) return;
 
-        // Spawn logic
+        // 5. Spawn logic
         if (currentSongTime >= kwakTimings[nextNoteIndex] - leadTime)
         {
             SpawnKwak(kwakTimings[nextNoteIndex]);
             nextNoteIndex++;
         }
+
+     
     }
 
     void SpawnKwak(float targetTime)
@@ -75,45 +80,10 @@ public class RythmManager : MonoBehaviour
         GameObject newNote = Instantiate(kwakPrefab, spawnZone);
         newNote.transform.localScale = Vector3.one;
 
-        // --- NEW: ANTI-OVERLAP RADAR ---
-        Vector2 finalPosition = Vector2.zero;
-        bool foundValidPos = false;
-        int maxAttempts = 15; // Try 15 times to find a good empty spot
+        float rx = Random.Range(-spawnZone.rect.width / 2, spawnZone.rect.width / 2);
+        float ry = Random.Range(-spawnZone.rect.height / 2, spawnZone.rect.height / 2);
+        newNote.GetComponent<RectTransform>().anchoredPosition = new Vector2(rx, ry);
 
-        for (int i = 0; i < maxAttempts; i++)
-        {
-            float rx = Random.Range(-spawnZone.rect.width / 2, spawnZone.rect.width / 2);
-            float ry = Random.Range(-spawnZone.rect.height / 2, spawnZone.rect.height / 2);
-            finalPosition = new Vector2(rx, ry);
-            foundValidPos = true;
-
-            // Look at every other circle currently on the screen
-            foreach (Transform child in spawnZone)
-            {
-                // Don't measure distance against itself
-                if (child == newNote.transform) continue;
-
-                // If this spot is too close to another circle, reject it and try again!
-                if (Vector2.Distance(child.GetComponent<RectTransform>().anchoredPosition, finalPosition) < minSpawnDistance)
-                {
-                    foundValidPos = false;
-                    break;
-                }
-            }
-
-            // If it survived the check without hitting anything, break the loop!
-            if (foundValidPos) break;
-        }
-
-        // Apply the final safe position
-        newNote.GetComponent<RectTransform>().anchoredPosition = finalPosition;
-
-        // --- NEW: CLICK PRIORITY (Z-ORDER) FIX ---
-        // This pushes the new circle to the very BACK layer. 
-        // Now, older circles will naturally sit on top of it, so they get clicked first!
-        newNote.transform.SetAsFirstSibling();
-
-        // Finish setup
         newNote.GetComponent<KwakCircle>().Setup(targetTime, songSource, leadTime);
     }
 }

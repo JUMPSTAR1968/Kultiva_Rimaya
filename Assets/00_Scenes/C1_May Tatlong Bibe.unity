@@ -3228,6 +3228,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
+=======
+    - target: {fileID: 7866154480443377589, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8898349580439503298, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8898349580439503298, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8898349580439503298, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8898349580439503298, guid: 792b2cbe1dfc7024b9222be72a4da709, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+>>>>>>> parent of f595f90 (Merge branch 'Speed-Multiplier' into dev)
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

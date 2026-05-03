@@ -58,27 +58,18 @@ public class MTB_GameManager : MonoBehaviour
                 maxHealth = 3;
                 sharedHealth = 3;
                 if (healthBarUI != null) healthBarUI.SetActive(false);
-
-                // NEW: Hide score on Easy
-                if (scoreText != null) scoreText.gameObject.SetActive(false);
                 break;
 
             case Difficulty.Medium:
                 maxHealth = 3;
                 sharedHealth = 3;
                 if (healthBarUI != null) healthBarUI.SetActive(true);
-
-                // NEW: Hide score on Medium
-                if (scoreText != null) scoreText.gameObject.SetActive(false);
                 break;
 
             case Difficulty.Hard:
                 maxHealth = 1;
                 sharedHealth = 1;
                 if (healthBarUI != null) healthBarUI.SetActive(true);
-
-                // NEW: Show score on Hard!
-                if (scoreText != null) scoreText.gameObject.SetActive(true);
                 break;
         }
 
