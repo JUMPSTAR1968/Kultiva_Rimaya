@@ -48,7 +48,9 @@ public class HealthManager : MonoBehaviour
 
         if (currentHealth == 0)
         {
+
             Debug.Log("HealthManager: GAME OVER! ZERO HEARTS!");
+
         }
     }
 
