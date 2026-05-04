@@ -20,36 +20,49 @@ public class PauseMenuController : MonoBehaviour
     {
         pausePanel.SetActive(true);
         Time.timeScale = 0f;
-
-        // NEW: This completely freezes ALL music and sound effects!
         AudioListener.pause = true;
     }
 
+    // --- 1. RESUME ---
     public void ResumeGame()
     {
         StartCoroutine(ResumeRoutine());
     }
 
-    IEnumerator ResumeRoutine()
+    private IEnumerator ResumeRoutine()
     {
-        yield return new WaitForSecondsRealtime(0.15f);
+        yield return new WaitForSecondsRealtime(1f);
 
         pausePanel.SetActive(false);
         Time.timeScale = 1f;
-
-        // NEW: Unpause the audio
         AudioListener.pause = false;
     }
 
+    // --- 2. RESTART ---
     public void RestartLevel()
     {
+        StartCoroutine(RestartRoutine());
+    }
+
+    private IEnumerator RestartRoutine()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+
         Time.timeScale = 1f;
         AudioListener.pause = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    // --- 3. MAIN MENU ---
     public void LoadMainMenu()
     {
+        StartCoroutine(MainMenuRoutine());
+    }
+
+    private IEnumerator MainMenuRoutine()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+
         Time.timeScale = 1f;
         AudioListener.pause = false;
         SceneManager.LoadScene("A1_Main Menu");
