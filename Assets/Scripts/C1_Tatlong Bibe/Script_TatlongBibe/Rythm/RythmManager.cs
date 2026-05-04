@@ -75,45 +75,48 @@ public class RythmManager : MonoBehaviour
         GameObject newNote = Instantiate(kwakPrefab, spawnZone);
         newNote.transform.localScale = Vector3.one;
 
-        // --- NEW: ANTI-OVERLAP RADAR ---
         Vector2 finalPosition = Vector2.zero;
         bool foundValidPos = false;
-        int maxAttempts = 15; // Try 15 times to find a good empty spot
 
-        for (int i = 0; i < maxAttempts; i++)
+        // NEW SMART RADAR: Start with your ideal distance
+        float currentTryDistance = minSpawnDistance;
+
+        // Phase loop: If it fails to find a spot, it shrinks the safe distance slightly and tries again!
+        for (int phase = 0; phase < 5; phase++)
         {
-            float rx = Random.Range(-spawnZone.rect.width / 2, spawnZone.rect.width / 2);
-            float ry = Random.Range(-spawnZone.rect.height / 2, spawnZone.rect.height / 2);
-            finalPosition = new Vector2(rx, ry);
-            foundValidPos = true;
-
-            // Look at every other circle currently on the screen
-            foreach (Transform child in spawnZone)
+            for (int i = 0; i < 30; i++) // Try 30 random spots per phase
             {
-                // Don't measure distance against itself
-                if (child == newNote.transform) continue;
+                float rx = Random.Range(-spawnZone.rect.width / 2, spawnZone.rect.width / 2);
+                float ry = Random.Range(-spawnZone.rect.height / 2, spawnZone.rect.height / 2);
+                finalPosition = new Vector2(rx, ry);
+                foundValidPos = true;
 
-                // If this spot is too close to another circle, reject it and try again!
-                if (Vector2.Distance(child.GetComponent<RectTransform>().anchoredPosition, finalPosition) < minSpawnDistance)
+                foreach (Transform child in spawnZone)
                 {
-                    foundValidPos = false;
-                    break;
+                    if (child == newNote.transform) continue;
+
+                    // Check distance using the CURRENT strictness
+                    if (Vector2.Distance(child.GetComponent<RectTransform>().anchoredPosition, finalPosition) < currentTryDistance)
+                    {
+                        foundValidPos = false;
+                        break;
+                    }
                 }
+
+                if (foundValidPos) break; // Found a good spot, break the 30-try loop!
             }
 
-            // If it survived the check without hitting anything, break the loop!
-            if (foundValidPos) break;
+            if (foundValidPos) break; // Found a good spot, break the Phase loop!
+
+            // If we get here, it means the screen is too crowded for this distance.
+            // Shrink the distance requirement by 25% and try again!
+            currentTryDistance *= 0.75f;
+            Debug.LogWarning("Spawn zone is crowded! Shrinking safe distance to: " + currentTryDistance);
         }
 
-        // Apply the final safe position
+        // Apply the final best position it could find
         newNote.GetComponent<RectTransform>().anchoredPosition = finalPosition;
-
-        // --- NEW: CLICK PRIORITY (Z-ORDER) FIX ---
-        // This pushes the new circle to the very BACK layer. 
-        // Now, older circles will naturally sit on top of it, so they get clicked first!
         newNote.transform.SetAsFirstSibling();
-
-        // Finish setup
         newNote.GetComponent<KwakCircle>().Setup(targetTime, songSource, leadTime);
     }
 }
