@@ -5,7 +5,6 @@ using System.Collections;
 
 public class FeedbackManager : MonoBehaviour
 {
-    // The name here must match your class name
     public static FeedbackManager Instance;
 
     [Header("UI References")]
@@ -28,7 +27,16 @@ public class FeedbackManager : MonoBehaviour
     {
         Debug.Log("FeedbackManager: Showing " + message);
 
+        // 1. Stop the previous fading animations
         StopAllCoroutines();
+
+        // --- NEW FIX: FORCE RESET THE RED SCREEN ---
+        // If an old red flash was interrupted, this instantly clears it 
+        // so it never gets stuck on screen!
+        if (missOverlay != null)
+        {
+            missOverlay.color = new Color(1, 0, 0, 0);
+        }
 
         feedbackText.text = message;
         feedbackText.color = color;
@@ -53,6 +61,10 @@ public class FeedbackManager : MonoBehaviour
             missOverlay.color = new Color(1, 0, 0, newAlpha);
             yield return null;
         }
+
+        // --- NEW FIX: SAFETY NET ---
+        // Force the alpha to exactly 0 at the very end of the animation
+        missOverlay.color = new Color(1, 0, 0, 0);
     }
 
     IEnumerator FadeText()
@@ -65,7 +77,6 @@ public class FeedbackManager : MonoBehaviour
         }
     }
 
-    // Add this inside FeedbackManager class
     void Update()
     {
         // Press the 'T' key while the game is running to test the Miss effect
