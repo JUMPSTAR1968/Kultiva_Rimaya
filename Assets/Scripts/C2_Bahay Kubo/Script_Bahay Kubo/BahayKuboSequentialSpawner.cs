@@ -42,7 +42,6 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
 
     void Start()
     {
-        // Initialize Difficulty based on GameSettings
         int startingCycle = 0;
         if (GameSettings.CurrentDifficulty == Difficulty.Medium) startingCycle = 1;
         else if (GameSettings.CurrentDifficulty == Difficulty.Hard) startingCycle = 2;
@@ -53,6 +52,8 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         if (restartButton != null) restartButton.SetActive(true);
         if (feedbackPopup != null) feedbackPopup.SetActive(false);
 
+        if (SongManager.Instance != null) SongManager.Instance.ResetScore();
+
         SpawnCurrentBatch();
     }
 
@@ -60,7 +61,6 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     {
         if (isGameOver || bahayKuboAudio == null || !bahayKuboAudio.isPlaying) return;
 
-        // Update Score UI
         if (SongManager.Instance != null && _scoreLabel != null)
         {
             _scoreLabel.text = SongManager.Instance.ScoreCount.ToString();
@@ -72,7 +72,11 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
             float currentTime = bahayKuboAudio.time;
             float targetTime = SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].timestamp;
 
-            if (currentTime > (targetTime + hitWindow))
+            // FIX: Added a late buffer specifically for Hard Mode (difficultyCycle == 2) 
+            // to prevent long lyrics from timing out too early.
+            float effectiveMissThreshold = (difficultyCycle == 2) ? hitWindow + 0.2f : hitWindow;
+
+            if (currentTime > (targetTime + effectiveMissThreshold))
             {
                 Debug.Log($"Missed {SongManager.Instance.beatmap[nextExpectedIndexInBeatmap].vegetableName}!");
                 RemoveMissedVegetable(nextExpectedIndexInBeatmap);
@@ -100,7 +104,7 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
             else if (cycle == 1) // Medium
             {
                 foreach (GameObject heart in heartIcons) if (heart != null) heart.SetActive(true);
-                hitWindow = 0.5f;
+                hitWindow = 0.6f;
             }
             else // Hard
             {
@@ -108,7 +112,8 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
                 {
                     if (heartIcons[i] != null) heartIcons[i].SetActive(i == 0);
                 }
-                hitWindow = 0.3f;
+                // FIX: Adjusted Hard hit window to 0.55f to accommodate syllable length
+                hitWindow = 0.55f;
             }
         }
         hintTriggered = false;
@@ -116,27 +121,21 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
 
     public void SpawnCurrentBatch()
     {
-        // 1. Force clear any lingering vegetables before spawning new ones
         ClearGarden();
 
-        // Safety check: Don't spawn if we've exceeded the beatmap
-        if (SongManager.Instance != null && nextExpectedIndexInBeatmap >= SongManager.Instance.beatmap.Count)
-        {
-            return;
-        }
+        if (SongManager.Instance != null && nextExpectedIndexInBeatmap >= SongManager.Instance.beatmap.Count) return;
 
         int countToSpawn = batchSizes[currentPhase];
         List<Vector2Int> allCells = GetShuffledCells();
-        Vector2 gridOffset = new Vector2((columns * cellSize) / 2, (rows * cellSize) / 2);
+        Vector2 gridOffset = new Vector2((columns * cellSize) / 2f, (rows * cellSize) / 2f);
 
         for (int i = 0; i < countToSpawn; i++)
         {
-            // Use the global offset to pick the prefab so they appear in song order
             int prefabIndex = (globalVegetableOffset + i) % vegetablePrefabs.Length;
 
             Vector2Int cell = allCells[i];
-            float posX = (cell.x * cellSize) - gridOffset.x + (cellSize / 2);
-            float posY = (cell.y * cellSize) - gridOffset.y + (cellSize / 2);
+            float posX = (cell.x * cellSize) - gridOffset.x + (cellSize / 2f);
+            float posY = (cell.y * cellSize) - gridOffset.y + (cellSize / 2f);
             Vector3 finalPos = new Vector3(posX, posY, 0) + transform.position;
 
             GameObject newVeg = Instantiate(vegetablePrefabs[prefabIndex], finalPos, Quaternion.identity, transform);
@@ -145,7 +144,6 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
             if (clickScript != null)
             {
                 clickScript.spawner = this;
-                // CRITICAL: ID must be relative to the global song index
                 clickScript.vegetableID = globalVegetableOffset + i;
             }
             activeVegetables.Add(newVeg);
@@ -170,14 +168,11 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         {
             activeVegetables.Remove(vegetableObj);
             Destroy(vegetableObj);
-
-            if (SongManager.Instance != null) SongManager.Instance.ScoreCount++;
-
+            SongManager.Instance.ScoreCount++;
             HandleProgress();
         }
         else
         {
-            // Easy mode hint logic
             bool isWayTooEarly = clickTime < (targetTimestamp - 1f);
             if (difficultyCycle == 0 && !isWayTooEarly)
             {
@@ -196,27 +191,20 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
         nextExpectedIndexInBeatmap++;
         hintTriggered = false;
 
-        // Calculate the end of the current visual batch
         int currentBatchEnd = globalVegetableOffset + batchSizes[currentPhase];
 
-        // If the player cleared the last vegetable of the current visual batch
         if (nextExpectedIndexInBeatmap >= currentBatchEnd)
         {
-            // Update the offset to the start of the NEW batch
             globalVegetableOffset = nextExpectedIndexInBeatmap;
             currentPhase++;
 
-            // Check if we finished the whole song/cycle
             if (currentPhase >= batchSizes.Length)
             {
                 currentPhase = 0;
                 int nextCycle = difficultyCycle + 1;
-
-                // Advance difficulty or loop Hard mode
                 UpdateRulesForCycle(Mathf.Min(nextCycle, 2));
             }
 
-            // Small delay to let the last vegetable "poof" before new ones appear
             CancelInvoke("SpawnCurrentBatch");
             Invoke("SpawnCurrentBatch", 0.3f);
         }
@@ -229,19 +217,18 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     private void ApplyPenalty()
     {
         if (isGameOver) return;
-
         if (SongManager.Instance != null) SongManager.Instance.ResetScore();
 
-        if (difficultyCycle == 0) return; // Easy mode: no damage
+        if (difficultyCycle == 0) return;
 
         if (HealthManager.Instance != null)
         {
-            if (difficultyCycle == 2) // Hard: Instant Death
+            if (difficultyCycle == 2)
             {
                 HealthManager.Instance.TakeDamage(HealthManager.Instance.maxHealth);
                 if (heartIcons.Length > 0 && heartIcons[0] != null) heartIcons[0].SetActive(false);
             }
-            else if (difficultyCycle == 1) // Medium: 2-hit grace
+            else if (difficultyCycle == 1)
             {
                 if (!mediumGracePointUsed)
                 {
@@ -364,21 +351,5 @@ public class BahayKuboSequentialSpawner : MonoBehaviour
     {
         foreach (GameObject veg in activeVegetables) if (veg != null) Destroy(veg);
         activeVegetables.Clear();
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Vector2 gridOffset = new Vector2((columns * cellSize) / 2, (rows * cellSize) / 2);
-        for (int x = 0; x < columns; x++)
-        {
-            for (int y = 0; y < rows; y++)
-            {
-                float posX = (x * cellSize) - gridOffset.x + (cellSize / 2);
-                float posY = (y * cellSize) - gridOffset.y + (cellSize / 2);
-                Vector3 cellCenter = new Vector3(posX, posY, 0) + transform.position;
-                Gizmos.DrawWireCube(cellCenter, new Vector3(cellSize, cellSize, 0.1f));
-            }
-        }
     }
 }
