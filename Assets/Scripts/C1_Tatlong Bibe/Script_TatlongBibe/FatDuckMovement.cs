@@ -10,50 +10,39 @@ public class FatDuckMovement : MonoBehaviour
     public float minY = -4.0f;
     public float maxY = 4.0f;
 
-    // --- NEW SECTIONS ADDED BELOW ---
     [Header("Weight Settings")]
     [Tooltip("Higher = Heavier/Fatter. Try 0.5 for heavy, 1.0 for very fat.")]
     [Range(0.01f, 2.0f)]
     public float smoothTime = 0.5f;
 
-    private float _yVelocity = 0.0f; // Required to track speed for SmoothDamp
-    // --------------------------------
+    private float _yVelocity = 0.0f;
 
     void Update()
     {
-        // If the game is stopped, stop all movement calculations immediately
-        if (MTB_GameManager.Instance != null && MTB_GameManager.Instance.isGameOver)
+        if (MTB_GameManager.Instance != null && MTB_GameManager.Instance.isGameOver) return;
+
+        // Safety check to ensure a mouse or touchscreen exists
+        if (Pointer.current == null) return;
+
+        // --- NEW: Using Pointer instead of Mouse for Mobile Support! ---
+        Vector2 screenPos = Pointer.current.position.ReadValue();
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, 10f));
+
+        if (Pointer.current.press.wasPressedThisFrame)
         {
-            return;
-        }
-
-        // ... your existing movement code here ...
-
-
-        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, 10f));
-
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(mouseWorldPos, Vector2.zero);
+            RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
             if (hit.collider != null && hit.collider.gameObject == gameObject)
             {
                 _isDragging = true;
-                _offset = transform.position - mouseWorldPos;
+                _offset = transform.position - worldPos;
             }
         }
 
-        if (_isDragging && Mouse.current.leftButton.isPressed)
+        if (_isDragging && Pointer.current.press.isPressed)
         {
-            // 1. Calculate the intended target position
-            float targetY = mouseWorldPos.y + _offset.y;
-
-            // 2. Clamp the value so it stays between min and max
+            float targetY = worldPos.y + _offset.y;
             targetY = Mathf.Clamp(targetY, minY, maxY);
 
-            // 3. APPLY HEAVINESS:
-            // This replaces the old instant movement. 
-            // It makes the duck "trail" behind the mouse vertically.
             float sluggishY = Mathf.SmoothDamp(
                 transform.position.y,
                 targetY,
@@ -61,14 +50,14 @@ public class FatDuckMovement : MonoBehaviour
                 smoothTime
             );
 
-            // 4. Apply the position
+            // X is locked to transform.position.x so it ONLY moves up and down!
             transform.position = new Vector3(transform.position.x, sluggishY, transform.position.z);
         }
 
-        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        if (Pointer.current.press.wasReleasedThisFrame)
         {
             _isDragging = false;
-            _yVelocity = 0; // Stop the movement instantly when released
+            _yVelocity = 0;
         }
     }
 }

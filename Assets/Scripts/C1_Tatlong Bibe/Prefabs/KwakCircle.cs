@@ -54,18 +54,35 @@ public class KwakCircle : MonoBehaviour
         float diff = audioClock.time - targetHitTime;
         float absDiff = Mathf.Abs(diff);
 
-        // Updated these lines to point to FeedbackManager
         if (absDiff <= perfectWindow)
         {
             FeedbackManager.Instance.ShowFeedback("PERFECT!", Color.cyan);
+
+            // --- NEW: Add 10 Points ---
+            if (MTB_GameManager.Instance != null)
+            {
+                MTB_GameManager.Instance.AddScore(10f);
+            }
         }
         else if (diff > perfectWindow && diff <= okWindow)
         {
             FeedbackManager.Instance.ShowFeedback("LATE", Color.yellow);
+
+            // --- NEW: Add 5 Points ---
+            if (MTB_GameManager.Instance != null)
+            {
+                MTB_GameManager.Instance.AddScore(5f);
+            }
         }
         else if (diff < -perfectWindow && diff >= -okWindow)
         {
             FeedbackManager.Instance.ShowFeedback("EARLY", Color.orange);
+
+            // --- NEW: Add 5 Points ---
+            if (MTB_GameManager.Instance != null)
+            {
+                MTB_GameManager.Instance.AddScore(5f);
+            }
         }
         else
         {
@@ -79,8 +96,26 @@ public class KwakCircle : MonoBehaviour
     private void TriggerMiss()
     {
         if (isProcessed) return;
-        // Updated this line to point to FeedbackManager
+
+        // Show the red MISS text and flash
         FeedbackManager.Instance.ShowFeedback("MISS", Color.red);
+
+        // --- NEW: DEAL DAMAGE! ---
+        // We use the same logic from DuckHealth to hurt the player
+        if (HealthManager.Instance != null)
+        {
+            HealthManager.Instance.TakeDamage(1);
+        }
+
+        if (MTB_GameManager.Instance != null)
+        {
+            // Only trigger LoseHealth if the game isn't already over
+            if (!MTB_GameManager.Instance.isGameOver)
+            {
+                MTB_GameManager.Instance.LoseHealth();
+            }
+        }
+
         FinishNote();
     }
 

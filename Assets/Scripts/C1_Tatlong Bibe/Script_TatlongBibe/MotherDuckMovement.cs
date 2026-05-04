@@ -21,14 +21,13 @@ public class MotherDuckAI : MonoBehaviour
 
     private DuckState currentState = DuckState.Normal;
     private float targetY;
-    private float fixedX;
-    private Vector2 originalPos;
 
+    // REMOVED fixedX entirely!
+    private Vector2 originalPos;
     private Transform currentObstacle;
 
     void Start()
     {
-        fixedX = transform.position.x;
         targetY = transform.position.y;
         originalPos = this.transform.position;
     }
@@ -71,7 +70,10 @@ public class MotherDuckAI : MonoBehaviour
 
         float currentSpeed = (targetY == originalPos.y) ? returnSpeed : dodgeSpeed;
         float newY = Mathf.MoveTowards(transform.position.y, targetY, currentSpeed * Time.deltaTime);
-        transform.position = new Vector3(fixedX, newY, 0);
+
+        // THE FIX: Use transform.position.x directly so it doesn't override the ScreenAligner!
+        // Also keep the original Z position just in case
+        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
     }
 
     void HandleObstacleDetection()
@@ -114,11 +116,11 @@ public class MotherDuckAI : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(new Vector3(fixedX - 2, topBorder, 0), new Vector3(fixedX + 2, topBorder, 0));
-        Gizmos.DrawLine(new Vector3(fixedX - 2, bottomBorder, 0), new Vector3(fixedX + 2, bottomBorder, 0));
+        float drawX = transform.position.x; // Use actual position for Gizmos
+        Gizmos.DrawLine(new Vector3(drawX - 2, topBorder, 0), new Vector3(drawX + 2, topBorder, 0));
+        Gizmos.DrawLine(new Vector3(drawX - 2, bottomBorder, 0), new Vector3(drawX + 2, bottomBorder, 0));
 
         Gizmos.color = Color.red;
-        float drawX = Application.isPlaying ? fixedX : transform.position.x;
         Gizmos.DrawLine(new Vector3(drawX, transform.position.y, 0), new Vector3(drawX + lookAheadDistance, transform.position.y, 0));
     }
 }

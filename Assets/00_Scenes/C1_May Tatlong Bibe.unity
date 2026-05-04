@@ -1069,6 +1069,7 @@ GameObject:
   - component: {fileID: 736114011}
   - component: {fileID: 736114010}
   - component: {fileID: 736114013}
+  - component: {fileID: 736114014}
   m_Layer: 0
   m_Name: Brown duck (Transparent)_0
   m_TagString: Untagged
@@ -1268,6 +1269,19 @@ MonoBehaviour:
   topBorder: 1.3
   bottomBorder: -1.5
   safePassDistance: 1
+--- !u!114 &736114014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736114007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9a04513098c3984f8ea1060e1814629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScreenAligner
+  screenPositionX: 0.15
 --- !u!1 &800286173
 GameObject:
   m_ObjectHideFlags: 0
@@ -1363,7 +1377,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -1481,7 +1495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9a04513098c3984f8ea1060e1814629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScreenAligner
-  screenPositionX: 0.468
+  screenPositionX: 0.478
 --- !u!1 &836699572
 GameObject:
   m_ObjectHideFlags: 0
@@ -3059,7 +3073,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9a04513098c3984f8ea1060e1814629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScreenAligner
-  screenPositionX: 0.298
+  screenPositionX: 0.317
 --- !u!1001 &2120812898
 PrefabInstance:
   m_ObjectHideFlags: 0

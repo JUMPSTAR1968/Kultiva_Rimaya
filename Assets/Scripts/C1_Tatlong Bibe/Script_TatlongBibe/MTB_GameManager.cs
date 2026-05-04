@@ -44,6 +44,9 @@ public class MTB_GameManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+
+        // --- THE FIX: Unfreeze time immediately on restart! ---
+        Time.timeScale = 1f;
     }
 
     void Start()
@@ -201,5 +204,21 @@ public class MTB_GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // --- NEW: Add Score Method ---
+    public void AddScore(float pointsToAdd)
+    {
+        // Don't add score if the game is over
+        if (isGameOver) return;
+
+        currentScore += pointsToAdd;
+
+        // Update the UI text if it exists
+        if (scoreText != null)
+        {
+            // You can format this however your score text normally looks!
+            scoreText.text = "Score: " + Mathf.FloorToInt(currentScore).ToString();
+        }
     }
 }
