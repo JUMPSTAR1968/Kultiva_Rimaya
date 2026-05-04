@@ -634,6 +634,7 @@ GameObject:
   - component: {fileID: 137283596}
   - component: {fileID: 137283595}
   - component: {fileID: 137283598}
+  - component: {fileID: 137283599}
   m_Layer: 5
   m_Name: Brylle
   m_TagString: Untagged
@@ -729,6 +730,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 137283599}
+        m_TargetAssemblyTypeName: VoiceButton, Assembly-CSharp
+        m_MethodName: Speak
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &137283596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -783,6 +796,19 @@ MonoBehaviour:
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
   overrideGhostRipple: 0
+--- !u!114 &137283599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137283593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56ba6fe59db85f499de9d9a29b92a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VoiceButton
+  myVoiceClip: {fileID: 8300000, guid: 95b9ec6a7c965c24fa0d9ce15a81dbd4, type: 3}
 --- !u!1 &350843056
 GameObject:
   m_ObjectHideFlags: 0
@@ -1312,6 +1338,7 @@ GameObject:
   - component: {fileID: 584362889}
   - component: {fileID: 584362888}
   - component: {fileID: 584362891}
+  - component: {fileID: 584362892}
   m_Layer: 5
   m_Name: Andrei
   m_TagString: Untagged
@@ -1407,6 +1434,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 584362892}
+        m_TargetAssemblyTypeName: VoiceButton, Assembly-CSharp
+        m_MethodName: Speak
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &584362889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1461,6 +1500,19 @@ MonoBehaviour:
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
   overrideGhostRipple: 0
+--- !u!114 &584362892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584362886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56ba6fe59db85f499de9d9a29b92a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VoiceButton
+  myVoiceClip: {fileID: 8300000, guid: 2e993d7c7b664984eb6452809c4e0632, type: 3}
 --- !u!1 &665449427
 GameObject:
   m_ObjectHideFlags: 0
@@ -1702,6 +1754,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 810542663}
   m_CullTransparentMesh: 1
+--- !u!1 &893485817
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 893485819}
+  - component: {fileID: 893485818}
+  m_Layer: 0
+  m_Name: Universal_Voice_Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &893485818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893485817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c99d539a6bfbe54a9f24db10525a5ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UniversalVoiceManager
+  voiceSource: {fileID: 0}
+--- !u!4 &893485819
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893485817}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 949.61646, y: 514.9064, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &956692007
 GameObject:
   m_ObjectHideFlags: 0
@@ -2094,6 +2191,7 @@ GameObject:
   - component: {fileID: 1155538225}
   - component: {fileID: 1155538224}
   - component: {fileID: 1155538227}
+  - component: {fileID: 1155538228}
   m_Layer: 5
   m_Name: Jedi
   m_TagString: Untagged
@@ -2189,6 +2287,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1155538228}
+        m_TargetAssemblyTypeName: VoiceButton, Assembly-CSharp
+        m_MethodName: Speak
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1155538225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2243,6 +2353,19 @@ MonoBehaviour:
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
   overrideGhostRipple: 0
+--- !u!114 &1155538228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155538222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56ba6fe59db85f499de9d9a29b92a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VoiceButton
+  myVoiceClip: {fileID: 8300000, guid: c1d174420a28ae24689d1b786c506009, type: 3}
 --- !u!1 &1161424365
 GameObject:
   m_ObjectHideFlags: 0
@@ -2256,6 +2379,7 @@ GameObject:
   - component: {fileID: 1161424368}
   - component: {fileID: 1161424367}
   - component: {fileID: 1161424370}
+  - component: {fileID: 1161424371}
   m_Layer: 5
   m_Name: Mateo
   m_TagString: Untagged
@@ -2351,6 +2475,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1161424371}
+        m_TargetAssemblyTypeName: VoiceButton, Assembly-CSharp
+        m_MethodName: Speak
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1161424368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2405,6 +2541,19 @@ MonoBehaviour:
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
   overrideGhostRipple: 0
+--- !u!114 &1161424371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161424365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56ba6fe59db85f499de9d9a29b92a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VoiceButton
+  myVoiceClip: {fileID: 8300000, guid: c95c317fa8f8d444fab83e361ba4a5c7, type: 3}
 --- !u!1 &1164052804
 GameObject:
   m_ObjectHideFlags: 0
@@ -2857,6 +3006,7 @@ GameObject:
   - component: {fileID: 1365771122}
   - component: {fileID: 1365771121}
   - component: {fileID: 1365771124}
+  - component: {fileID: 1365771125}
   m_Layer: 5
   m_Name: Isaiah
   m_TagString: Untagged
@@ -2952,6 +3102,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1365771125}
+        m_TargetAssemblyTypeName: VoiceButton, Assembly-CSharp
+        m_MethodName: Speak
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1365771122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3006,6 +3168,19 @@ MonoBehaviour:
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
   overrideGhostRipple: 0
+--- !u!114 &1365771125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365771119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56ba6fe59db85f499de9d9a29b92a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VoiceButton
+  myVoiceClip: {fileID: 8300000, guid: 8b6fdc445f993de4d86655f2bee0c5e6, type: 3}
 --- !u!1 &1410922505
 GameObject:
   m_ObjectHideFlags: 0
@@ -3460,6 +3635,7 @@ GameObject:
   - component: {fileID: 1714592796}
   - component: {fileID: 1714592795}
   - component: {fileID: 1714592799}
+  - component: {fileID: 1714592800}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -3602,6 +3778,19 @@ MonoBehaviour:
   displayPortrait: {fileID: 122771944}
   displayName: {fileID: 1214246607}
   displayContributions: {fileID: 397913491}
+--- !u!114 &1714592800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714592794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 389442c753827e84481eeaad34ad824e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneIntroVoice
+  introClip: {fileID: 8300000, guid: 6afaddb062e2ef145ab0ce4ceeb985b2, type: 3}
 --- !u!1 &1806811764
 GameObject:
   m_ObjectHideFlags: 0
@@ -3615,6 +3804,7 @@ GameObject:
   - component: {fileID: 1806811767}
   - component: {fileID: 1806811766}
   - component: {fileID: 1806811769}
+  - component: {fileID: 1806811770}
   m_Layer: 5
   m_Name: Theo
   m_TagString: Untagged
@@ -3710,6 +3900,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1806811770}
+        m_TargetAssemblyTypeName: VoiceButton, Assembly-CSharp
+        m_MethodName: Speak
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1806811767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3764,6 +3966,19 @@ MonoBehaviour:
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
   overrideGhostRipple: 0
+--- !u!114 &1806811770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806811764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56ba6fe59db85f499de9d9a29b92a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VoiceButton
+  myVoiceClip: {fileID: 8300000, guid: ae917e834e8f9254f901b04004bfcd76, type: 3}
 --- !u!1 &1874313464
 GameObject:
   m_ObjectHideFlags: 0
@@ -3927,6 +4142,7 @@ GameObject:
   - component: {fileID: 1939912655}
   - component: {fileID: 1939912654}
   - component: {fileID: 1939912657}
+  - component: {fileID: 1939912658}
   m_Layer: 5
   m_Name: Arjan
   m_TagString: Untagged
@@ -4022,6 +4238,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1939912658}
+        m_TargetAssemblyTypeName: VoiceButton, Assembly-CSharp
+        m_MethodName: Speak
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1939912655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4076,6 +4304,19 @@ MonoBehaviour:
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
   overrideGhostRipple: 0
+--- !u!114 &1939912658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1939912652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56ba6fe59db85f499de9d9a29b92a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VoiceButton
+  myVoiceClip: {fileID: 8300000, guid: 928384ee0c58e534a930c69a511167cc, type: 3}
 --- !u!1 &1957673637
 GameObject:
   m_ObjectHideFlags: 0
@@ -4385,6 +4626,7 @@ GameObject:
   - component: {fileID: 2134906762}
   - component: {fileID: 2134906761}
   - component: {fileID: 2134906764}
+  - component: {fileID: 2134906765}
   m_Layer: 5
   m_Name: JC
   m_TagString: Untagged
@@ -4480,6 +4722,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2134906765}
+        m_TargetAssemblyTypeName: VoiceButton, Assembly-CSharp
+        m_MethodName: Speak
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2134906762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4534,6 +4788,19 @@ MonoBehaviour:
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
   overrideGhostRipple: 0
+--- !u!114 &2134906765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134906759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56ba6fe59db85f499de9d9a29b92a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VoiceButton
+  myVoiceClip: {fileID: 8300000, guid: 73d210499a0ec6944acfbbcf7c4258bd, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4543,3 +4810,4 @@ SceneRoots:
   - {fileID: 1714592798}
   - {fileID: 665449430}
   - {fileID: 1459640577}
+  - {fileID: 893485819}
