@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 271943909}
   - component: {fileID: 271943908}
   - component: {fileID: 271943911}
+  - component: {fileID: 271943912}
   m_Layer: 5
   m_Name: START
   m_TagString: Untagged
@@ -352,6 +353,18 @@ MonoBehaviour:
           m_StringArgument: B_Game Select
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 271943912}
+        m_TargetAssemblyTypeName: VoiceButton, Assembly-CSharp
+        m_MethodName: Speak
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &271943909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,6 +419,19 @@ MonoBehaviour:
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
   overrideGhostRipple: 0
+--- !u!114 &271943912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271943906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56ba6fe59db85f499de9d9a29b92a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VoiceButton
+  myVoiceClip: {fileID: 8300000, guid: 69caa6fd76af4ff408e5fb15b2aa6d31, type: 3}
 --- !u!1 &323573912
 GameObject:
   m_ObjectHideFlags: 0
@@ -556,6 +582,7 @@ GameObject:
   - component: {fileID: 451016290}
   - component: {fileID: 451016289}
   - component: {fileID: 451016292}
+  - component: {fileID: 451016293}
   m_Layer: 5
   m_Name: Team
   m_TagString: Untagged
@@ -693,6 +720,19 @@ MonoBehaviour:
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
   overrideGhostRipple: 0
+--- !u!114 &451016293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451016287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56ba6fe59db85f499de9d9a29b92a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VoiceButton
+  myVoiceClip: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1002,6 +1042,7 @@ GameObject:
   - component: {fileID: 675535380}
   - component: {fileID: 675535379}
   - component: {fileID: 675535382}
+  - component: {fileID: 675535383}
   m_Layer: 5
   m_Name: Options
   m_TagString: Untagged
@@ -1085,6 +1126,18 @@ MonoBehaviour:
           m_StringArgument: A3_Options
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 675535383}
+        m_TargetAssemblyTypeName: VoiceButton, Assembly-CSharp
+        m_MethodName: Speak
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &675535380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1139,6 +1192,76 @@ MonoBehaviour:
   rippleExpansionSize: 1.8
   rippleFadeTime: 0.4
   overrideGhostRipple: 0
+--- !u!114 &675535383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675535377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56ba6fe59db85f499de9d9a29b92a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VoiceButton
+  myVoiceClip: {fileID: 8300000, guid: d7fba0cf297bd7d48bdb9ed3032a257e, type: 3}
+--- !u!1001 &1021769025
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3616355517476313648, guid: 841d12a3233755c4aae240af614b52f1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 911.3922
+      objectReference: {fileID: 0}
+    - target: {fileID: 3616355517476313648, guid: 841d12a3233755c4aae240af614b52f1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 504.704
+      objectReference: {fileID: 0}
+    - target: {fileID: 3616355517476313648, guid: 841d12a3233755c4aae240af614b52f1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3616355517476313648, guid: 841d12a3233755c4aae240af614b52f1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3616355517476313648, guid: 841d12a3233755c4aae240af614b52f1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3616355517476313648, guid: 841d12a3233755c4aae240af614b52f1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3616355517476313648, guid: 841d12a3233755c4aae240af614b52f1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3616355517476313648, guid: 841d12a3233755c4aae240af614b52f1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3616355517476313648, guid: 841d12a3233755c4aae240af614b52f1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3616355517476313648, guid: 841d12a3233755c4aae240af614b52f1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7065139266616967028, guid: 841d12a3233755c4aae240af614b52f1, type: 3}
+      propertyPath: m_Name
+      value: Universal_Voice_Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 841d12a3233755c4aae240af614b52f1, type: 3}
 --- !u!1 &1137471865
 GameObject:
   m_ObjectHideFlags: 0
@@ -1613,3 +1736,4 @@ SceneRoots:
   - {fileID: 1626462592}
   - {fileID: 1149976195}
   - {fileID: 1932289009573955901}
+  - {fileID: 1021769025}
