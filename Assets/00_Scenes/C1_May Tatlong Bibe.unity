@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: 65877297}
   - component: {fileID: 65877296}
   - component: {fileID: 65877295}
+  - component: {fileID: 65877300}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -323,6 +324,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &65877300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65877294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dba35ccfe3c54b64f822c8fefe10001f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraWidthFixer
+  defaultOrthoSize: 5
 --- !u!1 &96016180
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,6 +346,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 96016181}
+  - component: {fileID: 96016182}
   m_Layer: 0
   m_Name: Parallax_Far
   m_TagString: Untagged
@@ -357,6 +372,19 @@ Transform:
   - {fileID: 836699573}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &96016182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 96016180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6512ad4daa80ada46bcb80cd16842a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoVerticalStretch
+  stretchIntensity: 1
 --- !u!1 &120676794
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,6 +394,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 120676795}
+  - component: {fileID: 120676796}
   m_Layer: 0
   m_Name: Parallax_Near
   m_TagString: BackgroundPiece
@@ -391,6 +420,19 @@ Transform:
   - {fileID: 1343390692}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &120676796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120676794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6512ad4daa80ada46bcb80cd16842a8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoVerticalStretch
+  stretchIntensity: 0.28
 --- !u!1 &151713630
 GameObject:
   m_ObjectHideFlags: 0
