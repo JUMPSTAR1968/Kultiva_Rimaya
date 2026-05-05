@@ -303,6 +303,7 @@ GameObject:
   m_Component:
   - component: {fileID: 458483465}
   - component: {fileID: 458483464}
+  - component: {fileID: 458483466}
   m_Layer: 0
   m_Name: background_0
   m_TagString: Untagged
@@ -377,8 +378,8 @@ Transform:
   m_GameObject: {fileID: 458483463}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1252, y: 0.0158, z: 0}
-  m_LocalScale: {x: 1.0106, y: 1.0022, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.76037544, y: 1.0022, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 759231070}
@@ -388,6 +389,18 @@ Transform:
   - {fileID: 381275546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &458483466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458483463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83fa8b79d507c0040bf8b7c2408cdc6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BackgroundFitter
 --- !u!1 &738513091
 GameObject:
   m_ObjectHideFlags: 0

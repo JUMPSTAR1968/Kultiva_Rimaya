@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem; // --- NEW: Required to read mobile touches! ---
 
 public class VegetableClick : MonoBehaviour
 {
@@ -29,9 +30,27 @@ public class VegetableClick : MonoBehaviour
             float pulse = 1f + Mathf.Sin(Time.time * bounceSpeed) * bounceAmount;
             transform.localScale = originalScale * pulse;
         }
+
+        // --- THE FIX: Mobile Touch & Mouse Click Detection ---
+        if (Pointer.current != null && Pointer.current.press.wasPressedThisFrame)
+        {
+            // Find exactly where the player touched the screen
+            Vector2 screenPos = Pointer.current.position.ReadValue();
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(screenPos.x, screenPos.y, 10f));
+
+            // Shoot a tiny laser to see what they tapped on
+            RaycastHit2D hit = Physics2D.Raycast(worldPos, Vector2.zero);
+
+            // If the laser hits THIS specific vegetable's collider, harvest it!
+            if (hit.collider != null && hit.collider.gameObject == gameObject)
+            {
+                AttemptHarvest();
+            }
+        }
     }
 
-    private void OnMouseDown()
+    // --- REPLACED: We swapped OnMouseDown() for this custom method ---
+    private void AttemptHarvest()
     {
         if (isFlashing) return;
 
@@ -72,19 +91,19 @@ public class VegetableClick : MonoBehaviour
     public void SetHint(bool active)
     {
         if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
-        
+
         isHintActive = active;
 
         if (active)
         {
             // Optional: Keep the yellow tint if it helps, or remove for pure white
-            spriteRenderer.color = new Color(1f, 1f, 0.7f); 
+            spriteRenderer.color = new Color(1f, 1f, 0.7f);
         }
         else
         {
             // Reset everything when hint is turned off
             spriteRenderer.color = Color.white;
-            transform.localScale = originalScale; 
+            transform.localScale = originalScale;
         }
     }
 }

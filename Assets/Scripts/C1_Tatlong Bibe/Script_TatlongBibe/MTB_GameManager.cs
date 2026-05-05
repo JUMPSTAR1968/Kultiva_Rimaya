@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class MTB_GameManager : MonoBehaviour
@@ -108,7 +109,20 @@ public class MTB_GameManager : MonoBehaviour
             UpdateHeartsUI();
         }
 
-        if (waitingForTutorialClick && (Input.GetMouseButtonDown(0) || Input.touchCount > 0))
+        // THE NEW WAY:
+        // Check if there is a mouse click OR a screen tap using the new system
+        bool tapOrClick = false;
+
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            tapOrClick = true;
+        }
+        else if (Touchscreen.current != null && Touchscreen.current.primaryTouch.press.wasPressedThisFrame)
+        {
+            tapOrClick = true;
+        }
+
+        if (waitingForTutorialClick && tapOrClick)
         {
             ResumeFromTutorial();
         }

@@ -77,12 +77,5 @@ public class FeedbackManager : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        // Press the 'T' key while the game is running to test the Miss effect
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            ShowFeedback("MISS", Color.red);
-        }
-    }
+   
 }
